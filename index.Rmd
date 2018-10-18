@@ -14,3 +14,13 @@ I can link directly to my [about page](about.html)
 
 ### Picture of the sky
 <img src="pic.png" style="width:75%">
+
+### I can add code@
+```{r}
+library(tidyverse)
+
+tibble(
+  x=1:10
+)
+```
+
