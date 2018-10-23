@@ -1,11 +1,11 @@
 ---
 title: "Code"
 ---
-### I can add code
+This is some code... 
 ```{r}
 library(tidyverse)
-
-tibble(
-  x = 1:10
-)
+library(viridis)
+library(p8105.datasets)
+library(plotly)
 ```
+
