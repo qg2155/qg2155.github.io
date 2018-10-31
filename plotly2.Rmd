@@ -22,7 +22,12 @@ rest_inspec %>%
   group_by(boro, grade) %>% 
   summarize(n = n()) %>%
   plot_ly(x = ~boro, y = ~n, type = 'bar',
-          name = ~grade, color = ~grade) 
+          name = ~grade, color = ~grade) %>% 
+  layout(
+    title = "Count of grades (A, B, C) by borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Number of grade")
+  )
 ```
 
 Distribution of scores by years
@@ -33,9 +38,13 @@ rest_inspec %>%
   filter(!is.na(score),
          year != 2012) %>% 
   group_by(year, score) %>% 
-  summarize(avg_score = mean(score)) %>% 
-  plot_ly(x = ~year, y = ~avg_score, color = ~year, type = 'box')
-
+  summarize(avg_scores = mean(score)) %>% 
+  plot_ly(x = ~year, y = ~avg_scores, color = ~year, type = 'box') %>% 
+  layout(
+    title = "Distribution of scores by years",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Scores")
+  )
 ```
 
 Average score by borough over time
@@ -48,6 +57,11 @@ rest_inspec %>%
          year != 2012) %>% 
   group_by(boro, year) %>% 
   summarize(avg_score = mean(score)) %>% 
-  plot_ly(x = ~year, y = ~avg_score, color = ~boro, type = 'scatter', mode = 'lines')
+  plot_ly(x = ~year, y = ~avg_score, color = ~boro, type = 'scatter', mode = 'lines') %>% 
+  layout(
+    title = "Average scores across years by borough",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Average scores")
+  )
 ```
 

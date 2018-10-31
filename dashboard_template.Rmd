@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Plotly Flexdashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -7,29 +7,71 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
 library(flexdashboard)
 ```
 
-Column {data-width=650}
+Column {data-width=600}
 -----------------------------------------------------------------------
 
 ### Chart A
 
 ```{r}
-
+rest_inspec %>%
+  separate(grade_date, into = c("year", "month", "day"), sep = "-") %>% 
+  select(-month, -day) %>%
+  filter(!is.na(score),
+         year != 2012) %>% 
+  group_by(year, score) %>% 
+  summarize(avg_score = mean(score)) %>% 
+  plot_ly(x = ~year, y = ~avg_score, color = ~year, type = 'box') %>% 
+  layout(
+    title = "Distribution of scores by years",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Average scores")
+  )
 ```
 
-Column {data-width=350}
+Column {data-width=400}
 -----------------------------------------------------------------------
 
 ### Chart B
 
 ```{r}
-
+rest_inspec %>% 
+  filter(boro != "Missing", 
+        grade %in% c("A", "B", "C")) %>% 
+  group_by(boro, grade) %>% 
+  summarize(n = n()) %>%
+  plot_ly(x = ~boro, y = ~n, type = 'bar',
+          name = ~grade, color = ~grade) %>% 
+  layout(
+    title = "Count of grades (A, B, C) by borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Number of grade")
+  )
 ```
 
 ### Chart C
 
 ```{r}
-
+rest_inspec %>%
+  separate(grade_date, into = c("year", "month", "day"), sep = "-") %>% 
+  select(-month, -day) %>%
+  filter(boro != "Missing",
+         !is.na(score),
+         year != 2012) %>% 
+  group_by(boro, year) %>% 
+  summarize(avg_score = mean(score)) %>% 
+  plot_ly(x = ~year, y = ~avg_score, color = ~boro, type = 'scatter', mode = 'lines') %>% 
+  layout(
+    title = "Average scores across years by borough",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Average scores")
+  )
 ```
+
+
+

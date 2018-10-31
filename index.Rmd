@@ -8,7 +8,13 @@ My name is Helen Guan.
 
 I am a second year MPH student at Columbia University Mailman School of Public Health. My concentration is in Epidemiology and my certificate is Epidemiology of Chronic Diseases. 
 
+* To learn more about me check out my [about page](about.html).
 
-To learn more about me check out my [about page](about.html).
+* Check out my [plotly page](dashboard_template.html) for graphs that I made using the NYC Restaurant Inspections dataset!
 
-Check out my [plotly page](plotly.html) for graphs that I made using the NYC Restaurant Inspections dataset!
+## Fun Fact
+I am from Hawaii! 
+Here is a picture of the beach that I took this past summer
+
+<img src = "waikiki2.png" style = "width:105%">
+
