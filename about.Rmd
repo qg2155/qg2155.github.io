@@ -1,9 +1,40 @@
 ---
-title: "About"
+title: "About Me"
 ---
 
-### About this site
+### Education
+* Columbia University Mailman School of Public Health
+    * Master of Public Health in Epidemiology
+    * Expected Graduation May 2019
+     
+* Boston Univeristy
+    * Bachelor of Science in Health Science
+    * May 2017
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+### Research / Work Experience 
+* Columbia University College of Physicians & Surgeons
+    * Department of Neurology
+    * Graduate Researcher 
+    * January 2018 - Present
+    
+    
+* NYU Langone Health
+    * Section for Health Equity
+    * Research Intern 
+    * May – August 2018
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+* Massachusetts General Hospital
+    * Neuroendocrine Unit
+    * Research Intern
+    * September 2016 - May 2017
+
+* Boston University School of Public Health
+    * Department of Epidemiology
+    * Undergraduate Researcher 
+    * Sept. 2015 – Jan. 2017
+
+* Boston University
+    * Student Health Services: Wellness & Prevention
+    * Student Health Ambassador                         
+    * Sept. 2015 – May 2017 
+
