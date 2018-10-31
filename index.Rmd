@@ -1,26 +1,14 @@
 ---
-title: "Holy cow!"
+title: "Welcome"
 ---
 
-### I have a webpage!
 
-And I can put all kinds of stuff on it!
+### Hello! 
+My name is Helen Guan.
 
-### Add some links
+I am a second year MPH student at Columbia University Mailman School of Public Health. My concentration is in Epidemiology and my certificate is Epidemiology of Chronic Diseases. 
 
-I like [google](https://www.google.com/)
 
-I can link directly to my [about page](about.html)
+To learn more about me check out my [about page](about.html).
 
-### Picture of the sky
-<img src="pic.png" style="width:75%">
-
-### I can add code
-```{r}
-library(tidyverse)
-
-tibble(
-  x = 1:10
-)
-```
-Check out my [code](code.html)
+Check out my [plotly page](plotly.html) for graphs that I made using the NYC Restaurant Inspections dataset!

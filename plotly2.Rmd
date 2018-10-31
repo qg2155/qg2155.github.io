@@ -1,0 +1,53 @@
+---
+title: "plotly2"
+---
+
+```{r}
+library(tidyverse)
+library(viridis)
+library(p8105.datasets)
+library(plotly)
+```
+
+Set up dataset
+```{r}
+data(rest_inspec)
+```
+
+Count of grades(A, B, C) among boroughs 
+```{r bargraph}
+rest_inspec %>% 
+  filter(boro != "Missing", 
+        grade %in% c("A", "B", "C")) %>% 
+  group_by(boro, grade) %>% 
+  summarize(n = n()) %>%
+  plot_ly(x = ~boro, y = ~n, type = 'bar',
+          name = ~grade, color = ~grade) 
+```
+
+Distribution of scores by years
+```{r boxplot}
+rest_inspec %>%
+  separate(grade_date, into = c("year", "month", "day"), sep = "-") %>% 
+  select(-month, -day) %>%
+  filter(!is.na(score),
+         year != 2012) %>% 
+  group_by(year, score) %>% 
+  summarize(avg_score = mean(score)) %>% 
+  plot_ly(x = ~year, y = ~avg_score, color = ~year, type = 'box')
+
+```
+
+Average score by borough over time
+```{r}
+rest_inspec %>%
+  separate(grade_date, into = c("year", "month", "day"), sep = "-") %>% 
+  select(-month, -day) %>%
+  filter(boro != "Missing",
+         !is.na(score),
+         year != 2012) %>% 
+  group_by(boro, year) %>% 
+  summarize(avg_score = mean(score)) %>% 
+  plot_ly(x = ~year, y = ~avg_score, color = ~boro, type = 'scatter', mode = 'lines')
+```
+
