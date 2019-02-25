@@ -1,0 +1,147 @@
+---
+title: "Resume"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+### Education 
+<i class="fa fa-graduation-cap" aria-hidden="true"></i> **Columbia University Mailman School of Public Health** *May 2019*  
+     * Master of Public Health in Epidemiology, *Cumulative GPA: 3.92*      
+     * Certificate in Epidemiology of Chronic Disease
+
+<i class="fa fa-graduation-cap" aria-hidden="true"></i> **Boston University** *May 2017*  
+     * Bachelor of Science in Health Science 
+     
+<i class="fa fa-graduation-cap" aria-hidden="true"></i> **Moanalua High School** *May 2013*  
+     * Valedictorian 
+
+<br>
+    
+### Research Experience
+<i class="fa fa-briefcase" aria-hidden="true"></i> **NYC Department of Health and Mental Hygiene** (New York, NY)    
+<i class="fa fa-user" aria-hidden="true"></i> Data Communications Intern (HRTP)    
+*October 2018 - Present*    
+* Analyze NYC population-level datasets (e.g., Community Health Survey) using SAS & SUDAAN    
+* Improve the department’s MS Access database by restructuring data tables and reformatting data types  
+* Develop SQL queries with multi-table joins to produce reports on the status of over 200 DOH publications   
+* Summarize statistical findings and create charts and figures for Epi Data Brief publications  
+* Conduct literature reviews to establish background information for project proposals and report writing   
+
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **Columbia University College of Physicians & Surgeons** (New York, NY)     
+<i class="fa fa-user" aria-hidden="true"></i> Graduate Student Researcher                                                  
+*January 2018 - Present*  
+* Develop thesis proposal and conduct literature review on predictors of Alzheimer’s disease  
+* Use R to extract and clean datasets that contain information for over 2000 participants   
+* Perform statistical analyses (linear and logistic regressions) of longitudinal data using R  
+* Write manuscript for project and will present project poster at New York City Epidemiology Forum (NYCEF) 2019  
+
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **NYU Langone Health** (New York, NY)      
+<i class="fa fa-user" aria-hidden="true"></i> Graduate Research Intern    
+*May – August 2018*    
+* Cleaned and analyzed hospital patient satisfaction data for pain management to generate reports on observed trends  
+* Developed culturally relevant topic guide and conducted thorough interviews about pain management  
+* Assessed and extracted information from over 62 peer-reviewed articles for systematic literature review   
+* Summarized literature findings for paper and created outline for systematic literature review manuscript  
+* Presented poster at the Center for Asian American Health Conference & Columbia Epi Department Practicum Day  
+
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **Massachusetts General Hospital** (Boston, MA)      
+<i class="fa fa-user" aria-hidden="true"></i> Research Intern & Undergraduate Research Opportunities Program (UROP)    
+*September 2016 - May 2017*    
+* Entered in data from patient visits and laboratory results for research studies on acromegaly and depression   
+* Used Excel and JMP to clean datasets and to perform descriptive analysis  
+* Compared group test results using ANOVA and tested for predictors using multivariate regression analysis   
+* Prepared tables and figures for manuscript and research poster   
+
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **Boston University School of Public Health** (Boston, MA)      
+<i class="fa fa-user" aria-hidden="true"></i> Undergraduate Researcher & Undergraduate Research Opportunities Program (UROP)    
+*Sept. 2015 – Jan. 2017*    
+* UROP: Awarded funding to examine the relationship between perceived stress and development of metabolic syndrome in over 200 older adults in Boston  
+* Used SAS to merge and clean datasets containing health information from over 200 older adults   
+* Performed statistical analyses such as descriptive statistics and multivariable regression in SAS   
+* Prepared tables and figures for research poster and participated in the writing of the manuscript  
+* Created and presented research poster at Boston University’s 19th Annual Undergraduate Research Symposium     
+
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **Partners Connected Health** (Boston, MA)    
+<i class="fa fa-user" aria-hidden="true"></i> Research Intern    
+*June – September 2016*    
+* Recruited and screened participants for studies that test effectiveness of digital health devices   
+* Explained study details and reviewed consent forms with participants prior to enrollment   
+* Obtained test results from electronic medical record system (EPIC) and entered into REDCap for analysis   
+* Worked in interdisciplinary team to create research proposal for technological intervention in elderly patient care  
+
+<i class="fa fa-briefcase" aria-hidden="true"></i> **Boston University & Chestnut Park Assisted Living** (Boston, MA)    
+<i class="fa fa-user" aria-hidden="true"></i> Research Assistant    
+*September 2015 – May 2016*     
+* Conducted interviews and focus groups with nursing home residents at weekly visits     
+* Administered assessment scales to collect data and inputted into SPSS for statistical analysis  
+* Collaborated with PI on research poster that was presented at Association for Psychological Science Convention   
+
+<br>
+
+### Clinical Experience 
+
+<i class="fa fa-medkit" aria-hidden="true"></i> **Maunalani Nursing Homes & Rehabilitation Center** (Honolulu, HI)  
+<i class="fa fa-user" aria-hidden="true"></i> Nurse Assistant Training  
+*May – August 2015*  
+* Assisted residents with bathing, dressing, grooming, and helping with meals  
+* Monitored and recorded vital signs of all residents on Memory Floor unit   
+* Facilitated group activities: Bingo, Music Therapy, Trivia  
+* Transferred residents using assistive devices  
+
+<i class="fa fa-medkit" aria-hidden="true"></i> **Compass on the Bay Senior Living Residences** (Boston, MA)  
+<i class="fa fa-user" aria-hidden="true"></i> Volunteer  
+*September – December 2014*  
+* Facilitated social activities for residents with dementia  
+* Transferred residents using assistive devices   
+ 
+<br>
+
+### Activities & Honors  
+<i class="fa fa-users" aria-hidden="true"></i> **Student Health Services: Boston University** (Boston, MA)  
+<i class="fa fa-user" aria-hidden="true"></i> Student Health Ambassador  
+*September 2015 – Present*  
+* Serve as a liaison between Student Health Services and student body  
+* Facilitate campus wide workshops related to topics such as mental health, sexual health, and alcohol/drug awareness   
+* Assemble and distribute wellness kits to expand campus health education initiatives   
+* Presented to peer health educators from colleges across New England at BACCHUS Initiatives of NASPA 2015    
+
+<i class="fa fa-users" aria-hidden="true"></i> **Gates Millennium Scholarship: Bill & Melinda Gates Foundation**  
+<i class="fa fa-user" aria-hidden="true"></i> Scholar & Ambassador  
+*April 2013 – Present*  
+* Recipient of Gates Millennium Scholarship – Awarded to 1,000 out of 54,000+ applicants to aid in funding all * expenses of undergraduate and graduate studies   
+* Organize and facilitate workshops for local high school students to provide guidance on college applications  
+* Mentor high school students on scholarships and FAFSA applications  
+* Mentor new scholars in college adjustment and answer questions regarding scholarship  
+
+<i class="fa fa-users" aria-hidden="true"></i> **First Generation Student Group** (Boston, MA)  
+*2013 – 2017*   
+<i class="fa fa-users" aria-hidden="true"></i> **Hawaii Cultural Association** (Boston, MA)  
+*2014 – 2015*   
+
+<i class="fa fa-star" aria-hidden="true"></i> **Gromet Foundation Scholar** (Honolulu, HI)    
+*2013 – Present*  
+<i class="fa fa-star" aria-hidden="true"></i> **Hawaii Community Foundation Scholar** (Honolulu, HI)  
+*2013 – 2017*  
+
+<br>    
+
+### Skills
+<i class="fa fa-laptop" aria-hidden="true"></i> **Programs**  
+SAS (SUDAAN), R, MS Access, MySQL, QGIS, GitHub, REDCap, JMP, SPSS, NVivo, EMR-EPIC
+
+<i class="fa fa-globe" aria-hidden="true"></i> **Languages**  
+Fleunt proficiency in Chinese (Mandarin & Cantonese) 
+
+<br>
+
+### Relevant Coursework
+Data Science, Relational Database, Epidemiology (I,II,III), Analysis of Categorical Data, Applied Regression (I, II)
+
+

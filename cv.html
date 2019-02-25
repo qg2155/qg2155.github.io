@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Resume</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About Me</a>
+</li>
+<li>
+  <a href="cv.html">Resume</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Sample Work
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="exercise.html">Exercise Data</a>
+    </li>
+    <li>
+      <a href="blah.html">something else</a>
+    </li>
+    <li>
+      <a href="election.html">Elections Data</a>
+    </li>
+    <li>
+      <a href="dashboard_template.html">NYC Restaurant Grades Plotly</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="research.html">Research Posters</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Personal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="travel.html">Travel</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;qg2155@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/qiuxiahelenguan/">
+    <span class="fa fa fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/qg2155/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Resume</h1>
+
+</div>
+
+
+<div id="education" class="section level3">
+<h3>Education</h3>
+<p><i class="fa fa-graduation-cap" aria-hidden="true"></i> <strong>Columbia University Mailman School of Public Health</strong> <em>May 2019</em><br />
+* Master of Public Health in Epidemiology, <em>Cumulative GPA: 3.92</em><br />
+* Certificate in Epidemiology of Chronic Disease</p>
+<p><i class="fa fa-graduation-cap" aria-hidden="true"></i> <strong>Boston University</strong> <em>May 2017</em><br />
+* Bachelor of Science in Health Science</p>
+<p><i class="fa fa-graduation-cap" aria-hidden="true"></i> <strong>Moanalua High School</strong> <em>May 2013</em><br />
+* Valedictorian</p>
+<p><br></p>
+</div>
+<div id="research-experience" class="section level3">
+<h3>Research Experience</h3>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>NYC Department of Health and Mental Hygiene</strong> (New York, NY)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Data Communications Intern (HRTP)<br />
+<em>October 2018 - Present</em><br />
+* Analyze NYC population-level datasets (e.g., Community Health Survey) using SAS &amp; SUDAAN<br />
+* Improve the department’s MS Access database by restructuring data tables and reformatting data types<br />
+* Develop SQL queries with multi-table joins to produce reports on the status of over 200 DOH publications<br />
+* Summarize statistical findings and create charts and figures for Epi Data Brief publications<br />
+* Conduct literature reviews to establish background information for project proposals and report writing</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>Columbia University College of Physicians &amp; Surgeons</strong> (New York, NY)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Graduate Student Researcher<br />
+<em>January 2018 - Present</em><br />
+* Develop thesis proposal and conduct literature review on predictors of Alzheimer’s disease<br />
+* Use R to extract and clean datasets that contain information for over 2000 participants<br />
+* Perform statistical analyses (linear and logistic regressions) of longitudinal data using R<br />
+* Write manuscript for project and will present project poster at New York City Epidemiology Forum (NYCEF) 2019</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>NYU Langone Health</strong> (New York, NY)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Graduate Research Intern<br />
+<em>May – August 2018</em><br />
+* Cleaned and analyzed hospital patient satisfaction data for pain management to generate reports on observed trends<br />
+* Developed culturally relevant topic guide and conducted thorough interviews about pain management<br />
+* Assessed and extracted information from over 62 peer-reviewed articles for systematic literature review<br />
+* Summarized literature findings for paper and created outline for systematic literature review manuscript<br />
+* Presented poster at the Center for Asian American Health Conference &amp; Columbia Epi Department Practicum Day</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>Massachusetts General Hospital</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Research Intern &amp; Undergraduate Research Opportunities Program (UROP)<br />
+<em>September 2016 - May 2017</em><br />
+* Entered in data from patient visits and laboratory results for research studies on acromegaly and depression<br />
+* Used Excel and JMP to clean datasets and to perform descriptive analysis<br />
+* Compared group test results using ANOVA and tested for predictors using multivariate regression analysis<br />
+* Prepared tables and figures for manuscript and research poster</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>Boston University School of Public Health</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Undergraduate Researcher &amp; Undergraduate Research Opportunities Program (UROP)<br />
+<em>Sept. 2015 – Jan. 2017</em><br />
+* UROP: Awarded funding to examine the relationship between perceived stress and development of metabolic syndrome in over 200 older adults in Boston<br />
+* Used SAS to merge and clean datasets containing health information from over 200 older adults<br />
+* Performed statistical analyses such as descriptive statistics and multivariable regression in SAS<br />
+* Prepared tables and figures for research poster and participated in the writing of the manuscript<br />
+* Created and presented research poster at Boston University’s 19th Annual Undergraduate Research Symposium</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>Partners Connected Health</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Research Intern<br />
+<em>June – September 2016</em><br />
+* Recruited and screened participants for studies that test effectiveness of digital health devices<br />
+* Explained study details and reviewed consent forms with participants prior to enrollment<br />
+* Obtained test results from electronic medical record system (EPIC) and entered into REDCap for analysis<br />
+* Worked in interdisciplinary team to create research proposal for technological intervention in elderly patient care</p>
+<p><i class="fa fa-briefcase" aria-hidden="true"></i> <strong>Boston University &amp; Chestnut Park Assisted Living</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Research Assistant<br />
+<em>September 2015 – May 2016</em><br />
+* Conducted interviews and focus groups with nursing home residents at weekly visits<br />
+* Administered assessment scales to collect data and inputted into SPSS for statistical analysis<br />
+* Collaborated with PI on research poster that was presented at Association for Psychological Science Convention</p>
+<p><br></p>
+</div>
+<div id="clinical-experience" class="section level3">
+<h3>Clinical Experience</h3>
+<p><i class="fa fa-medkit" aria-hidden="true"></i> <strong>Maunalani Nursing Homes &amp; Rehabilitation Center</strong> (Honolulu, HI)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Nurse Assistant Training<br />
+<em>May – August 2015</em><br />
+* Assisted residents with bathing, dressing, grooming, and helping with meals<br />
+* Monitored and recorded vital signs of all residents on Memory Floor unit<br />
+* Facilitated group activities: Bingo, Music Therapy, Trivia<br />
+* Transferred residents using assistive devices</p>
+<p><i class="fa fa-medkit" aria-hidden="true"></i> <strong>Compass on the Bay Senior Living Residences</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Volunteer<br />
+<em>September – December 2014</em><br />
+* Facilitated social activities for residents with dementia<br />
+* Transferred residents using assistive devices</p>
+<p><br></p>
+</div>
+<div id="activities-honors" class="section level3">
+<h3>Activities &amp; Honors</h3>
+<p><i class="fa fa-users" aria-hidden="true"></i> <strong>Student Health Services: Boston University</strong> (Boston, MA)<br />
+<i class="fa fa-user" aria-hidden="true"></i> Student Health Ambassador<br />
+<em>September 2015 – Present</em><br />
+* Serve as a liaison between Student Health Services and student body<br />
+* Facilitate campus wide workshops related to topics such as mental health, sexual health, and alcohol/drug awareness<br />
+* Assemble and distribute wellness kits to expand campus health education initiatives<br />
+* Presented to peer health educators from colleges across New England at BACCHUS Initiatives of NASPA 2015</p>
+<p><i class="fa fa-users" aria-hidden="true"></i> <strong>Gates Millennium Scholarship: Bill &amp; Melinda Gates Foundation</strong><br />
+<i class="fa fa-user" aria-hidden="true"></i> Scholar &amp; Ambassador<br />
+<em>April 2013 – Present</em><br />
+* Recipient of Gates Millennium Scholarship – Awarded to 1,000 out of 54,000+ applicants to aid in funding all * expenses of undergraduate and graduate studies<br />
+* Organize and facilitate workshops for local high school students to provide guidance on college applications<br />
+* Mentor high school students on scholarships and FAFSA applications<br />
+* Mentor new scholars in college adjustment and answer questions regarding scholarship</p>
+<p><i class="fa fa-users" aria-hidden="true"></i> <strong>First Generation Student Group</strong> (Boston, MA)<br />
+<em>2013 – 2017</em><br />
+<i class="fa fa-users" aria-hidden="true"></i> <strong>Hawaii Cultural Association</strong> (Boston, MA)<br />
+<em>2014 – 2015</em></p>
+<p><i class="fa fa-star" aria-hidden="true"></i> <strong>Gromet Foundation Scholar</strong> (Honolulu, HI)<br />
+<em>2013 – Present</em><br />
+<i class="fa fa-star" aria-hidden="true"></i> <strong>Hawaii Community Foundation Scholar</strong> (Honolulu, HI)<br />
+<em>2013 – 2017</em></p>
+<p><br></p>
+</div>
+<div id="skills" class="section level3">
+<h3>Skills</h3>
+<p><i class="fa fa-laptop" aria-hidden="true"></i> <strong>Programs</strong><br />
+SAS (SUDAAN), R, MS Access, MySQL, QGIS, GitHub, REDCap, JMP, SPSS, NVivo, EMR-EPIC</p>
+<p><i class="fa fa-globe" aria-hidden="true"></i> <strong>Languages</strong><br />
+Fleunt proficiency in Chinese (Mandarin &amp; Cantonese)</p>
+<p><br></p>
+</div>
+<div id="relevant-coursework" class="section level3">
+<h3>Relevant Coursework</h3>
+<p>Data Science, Relational Database, Epidemiology (I,II,III), Analysis of Categorical Data, Applied Regression (I, II)</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

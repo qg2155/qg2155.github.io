@@ -3,13 +3,33 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
+    - text: "About Me"
       href: about.html
-    - text: "Plotly"
-      href: dashboard_template.html
+    - text: "Resume"
+      href: cv.html
+    - text: Sample Work 
+      menu:
+        - text: Exercise Data 
+          href: exercise.html
+        - text: something else
+          href: blah.html
+        - text: Elections Data
+          href: election.html
+        - text: "NYC Restaurant Grades Plotly"
+          href: dashboard_template.html
+    - text: "Research Posters"
+      href: research.html
+    - text: Personal 
+      menu:
+      - text: Travel 
+        href: travel.html
     - icon: fa-envelope fa-lg
       href: mailto:<qg2155@cumc.columbia.edu>
+    - icon: fa fa-linkedin
+      href: https://www.linkedin.com/in/qiuxiahelenguan/
     - icon: fa-github fa-lg
       href: http://github.com/qg2155/
 output:
-  html_document
+  html_document:
+    theme: cosmo
+

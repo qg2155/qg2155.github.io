@@ -11,6 +11,8 @@ title: "About Me"
     * Bachelor of Science in Health Science
     * May 2017
 
+<br><br><br> 
+
 ### Research / Work Experience 
 * Columbia University College of Physicians & Surgeons
     * Department of Neurology
