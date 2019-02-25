@@ -9,10 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Helen" />
 
 
-<title>exercise</title>
+<title>Exercise Data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -170,6 +172,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -204,7 +301,7 @@ $(document).ready(function () {
       <a href="exercise.html">Exercise Data</a>
     </li>
     <li>
-      <a href="blah.html">something else</a>
+      <a href="assignment.html">Sample Assignment</a>
     </li>
     <li>
       <a href="election.html">Elections Data</a>
@@ -256,35 +353,296 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">exercise</h1>
-<h4 class="author"><em>Helen</em></h4>
-<h4 class="date"><em>2/24/2019</em></h4>
+<h1 class="title toc-ignore">Exercise Data</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>This is a sample of my work for the Data Science course (P8105) that I took as a part of my masters program.<br />
+We were given a csv file with several months worth of data collected from a patient’s accelerometerdevice. The goal was to understand patterns of physical activity over long periods of time.</p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="exercise_files/figure-html/pressure-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="data-cleaning" class="section level2">
+<h2>Data Cleaning</h2>
+<pre class="r"><code>acce_data = original_acce_data %&gt;% 
+  janitor::clean_names() %&gt;% 
+  gather(key = minutes, value = activity, activity_1:activity_1440) %&gt;% 
+  separate(minutes, into = c(&quot;remove_1&quot;, &quot;min_day&quot;), sep = &quot;_&quot;) %&gt;% 
+  select(-remove_1) %&gt;% 
+  mutate(day = factor(day, levels = str_c(c(&quot;Sunday&quot;, &quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;))), 
+         min_day = as.numeric(min_day)) </code></pre>
+<p>The original dataset had 1442 columns and 329 rows. There are 47 weeks of data and 1440 columns representing the activity level for every minute each day. To clean the data, I used “gather” to create a min_day variable specifying the minute of the day and an activity variable for the actual activity measurement data.</p>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory Analysis</h2>
+<ul>
+<li><p>The overall average activity is 240.34, with standard deviation of 415.53. The median activity is 43. The activity levels range from 1.041710^{4} to 1.</p></li>
+<li><p>Top 5 weeks with highest average activity</p></li>
+</ul>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(week) %&gt;% 
+  summarize(avg_act = mean(activity),
+            sd_act = sd(activity)) %&gt;%
+  filter(min_rank(desc(avg_act)) &lt; 6) %&gt;% 
+  arrange(desc(avg_act)) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">week</th>
+<th align="right">avg_act</th>
+<th align="right">sd_act</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">320.61</td>
+<td align="right">523.79</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">319.93</td>
+<td align="right">479.38</td>
+</tr>
+<tr class="odd">
+<td align="right">37</td>
+<td align="right">316.44</td>
+<td align="right">444.49</td>
+</tr>
+<tr class="even">
+<td align="right">36</td>
+<td align="right">315.39</td>
+<td align="right">509.06</td>
+</tr>
+<tr class="odd">
+<td align="right">46</td>
+<td align="right">307.40</td>
+<td align="right">522.47</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Top 5 weeks with lowest average activity</li>
+</ul>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(week) %&gt;% 
+  summarize(avg_act = mean(activity),
+            sd_act = sd(activity)) %&gt;%
+  filter(min_rank(avg_act) &lt; 6) %&gt;% 
+  arrange(avg_act) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">week</th>
+<th align="right">avg_act</th>
+<th align="right">sd_act</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1.11</td>
+<td align="right">4.56</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">53.52</td>
+<td align="right">233.39</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">73.02</td>
+<td align="right">229.05</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">163.72</td>
+<td align="right">331.69</td>
+</tr>
+<tr class="odd">
+<td align="right">31</td>
+<td align="right">166.74</td>
+<td align="right">338.75</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Comparing each week’s average activity to overall average</li>
+</ul>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(week) %&gt;% 
+  summarize(week_avg = mean(activity)) %&gt;% 
+  mutate(week_change = week_avg - 240.337) %&gt;% 
+  ggplot(aes(x = week, y = week_change)) +
+    geom_bar(stat = &quot;identity&quot;, fill = &quot;steelblue&quot;) +
+    scale_x_continuous(breaks = c(1:47)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = &quot;Weekly average activity level in comparison to overall average&quot;,
+      x = &quot;Week&quot;,
+      y = &quot;Difference between week and overall average&quot;,
+      caption = &quot;Overall average activity across all weeks is 240.337&quot;
+    )</code></pre>
+<p><img src="exercise_files/figure-html/compare%20average-1.png" width="90%" /></p>
+<ul>
+<li>From this graph, we can see that the participant had activity levels below average within the first few weeks weeks. In the middle of the time period, participant had around average activity level with a few exceptions for dips. However, participant had consistently higher than average activity levels starting at week 35.</li>
+</ul>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<div id="linear-regression" class="section level3">
+<h3>Linear Regression</h3>
+<pre class="r"><code>act_week_lm &lt;- lm(acce_data$activity ~ acce_data$week)
+summary(act_week_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = acce_data$activity ~ acce_data$week)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+##  -303.1  -231.0  -181.1    91.6 10132.3 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    173.77657    1.22191  142.22   &lt;2e-16 ***
+## acce_data$week   2.77335    0.04432   62.57   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 413.8 on 473758 degrees of freedom
+## Multiple R-squared:  0.008196,   Adjusted R-squared:  0.008194 
+## F-statistic:  3915 on 1 and 473758 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ul>
+<li><p>Results from linear regression shows that at an alpha level of 0.05, week is significantly associated with activity level (T-statistic 62.57, p-value: &lt;2e-16).</p></li>
+<li><p>With every 1 week increase in time, the activity level rises by about 2.773 units on average.</p></li>
+</ul>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(week) %&gt;% 
+  summarize(avg_act_wk = mean(activity)) %&gt;% 
+  ggplot(aes(x = week, y = avg_act_wk)) +
+    geom_point() +
+    geom_line() +
+    geom_smooth(method = lm, se = FALSE) +
+    scale_x_continuous(breaks = c(1:47)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = &quot;Average activity for each week&quot;,
+      x = &quot;Week&quot;,
+      y = &quot;Average activiy&quot;,
+      caption = &quot;Blue line is the Linear Regression Line&quot;
+    )</code></pre>
+<p><img src="exercise_files/figure-html/graph%20week-1.png" width="90%" /></p>
+<p>This graph shows that the average activity per minute has an overall upward trend as week increases. The linear regression line is also plotted, showing that on average the participant gains 2.773 units of activity per week. Additionally, we can see from the graph that weeks 3 and 4 had observably low to almost none activity levels. It could be hypothesized that the participant did not feel well during those two weeks. The activity levels became much more consistent beginning at week 20.</p>
+</div>
+<div id="day-of-week" class="section level3">
+<h3>Day of week</h3>
+<ul>
+<li>Overall average and SD of activity for each day of the week</li>
+</ul>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(day) %&gt;% 
+  summarize(avg_act_day = mean(activity),
+            sd_act_day = sd(activity)) %&gt;%
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">day</th>
+<th align="right">avg_act_day</th>
+<th align="right">sd_act_day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sunday</td>
+<td align="right">249.71</td>
+<td align="right">510.46</td>
+</tr>
+<tr class="even">
+<td align="left">Monday</td>
+<td align="right">220.35</td>
+<td align="right">369.17</td>
+</tr>
+<tr class="odd">
+<td align="left">Tuesday</td>
+<td align="right">213.26</td>
+<td align="right">352.49</td>
+</tr>
+<tr class="even">
+<td align="left">Wednesday</td>
+<td align="right">236.19</td>
+<td align="right">376.11</td>
+</tr>
+<tr class="odd">
+<td align="left">Thursday</td>
+<td align="right">247.17</td>
+<td align="right">387.30</td>
+</tr>
+<tr class="even">
+<td align="left">Friday</td>
+<td align="right">270.76</td>
+<td align="right">461.99</td>
+</tr>
+<tr class="odd">
+<td align="left">Saturday</td>
+<td align="right">244.93</td>
+<td align="right">424.81</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(week, day) %&gt;% 
+  summarize(avg_act_day = mean(activity)) %&gt;% 
+  ggplot(aes(x = day, y = avg_act_day, color = day)) +
+  geom_boxplot() +
+  labs(
+      title = &quot;Average activity for each day of week&quot;,
+      x = &quot;Day of week&quot;,
+      y = &quot;Average activiy&quot;
+  )</code></pre>
+<p><img src="exercise_files/figure-html/graph%20day-1.png" width="90%" /></p>
+<p>This graph shows that the participant has highest average activity around the end of week and weekends and lowest at the beginning of the week. Friday in particular has the highest average and Tuesday has the lowest average activity. Sunday has the largest range whereas midweek, especially Wednesday, has the smallest range. There are also multiple outliers for low average activity levels across days of the week. However, Saturday has two outliers for very high average activity levels.</p>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(day, min_day) %&gt;% 
+  ggplot(aes(x = min_day, y = activity, color = day)) +
+    geom_smooth(se = FALSE) +
+    facet_grid(~day) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = &quot;Average activity at each minute across days of week&quot;,
+      x = &quot;Minute of day&quot;,
+      y = &quot;Average activiy&quot;
+    )</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="exercise_files/figure-html/graph%20day%20time-1.png" width="90%" /></p>
+<p>This graph shows the average activity level per minute across days of the week. The participant is most active throughout the day on Sunday and during evenings of Thursdays and Fridays. The hook on Saturday also shows that he sleeps latest around Friday nights - Saturday midnight. Additionally, he has low activity levels on Mondays and Tuesdays.</p>
+</div>
+<div id="hour-activity" class="section level3">
+<h3>24-Hour Activity</h3>
+<pre class="r"><code>acce_data %&gt;% 
+  group_by(min_day) %&gt;% 
+  summarize(avg_all = mean(activity)) %&gt;% 
+  ggplot(aes(x = min_day, y = avg_all)) +
+    geom_point() +
+    scale_x_continuous(breaks = c(1, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1260, 1320, 1380, 1440)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = &quot;Average activity across minutes of day&quot;,
+      x = &quot;Minutes of day&quot;,
+      y = &quot;Average activity&quot;
+    )</code></pre>
+<p><img src="exercise_files/figure-html/24%20hour-1.png" width="90%" /></p>
+<p>This graph shows low activity for hours in which participant is asleep. Activity level is usually high during wake hours from 540th minute (9 AM) to 1260th minute (9 PM). The participant sometimes has more activity at midnight on some days compared to others.</p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 

@@ -1,30 +1,208 @@
 ---
-title: "election"
-author: "Helen"
-date: "2/24/2019"
-output: html_document
+title: <center> Midterm Election 2018
+author: <center> Amadeia Rector | Courtney Chan | Pei Yang Hsieh | Helen Guan | Francois Ban 
+output:
+  html_document: 
+    toc: true
+    toc_float: true
 ---
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
+
+<center>
+### Ted Cruz vs. Beto O'Rourke  
+
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
+
+<center>
+<img src="candidates.png" style="width:55%"> 
+
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
+
+### Texas Midterm Election Results  
+
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
+
+Check out the interactive map below of Texas! Click on each county to see information about the election results.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tigris)
+library(rvest)
+library(leaflet)
+library(dplyr)
+library(tidyverse)
+library(purrr)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r cleaning data for use with map, include=FALSE, message=FALSE}
+#original data
+url = "https://www.nytimes.com/elections/results/texas-senate"
+nytimes_data = read_html(url, col_types = "ccdd")
+#convert votes and percent to numeric
+table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[2]] %>%
+  html_table() %>% 
+  slice(1:(n() - 1)) %>% 
+  select(-Rpt.) %>% 
+  janitor::clean_names()
+#remove the commas in the numbers first
+table_county$cruz <- gsub(",","",table_county$cruz)
+table_county$o_rourke <- gsub(",","",table_county$o_rourke)
+table_county$dikeman <- gsub(",","",table_county$dikeman)
+table_county = 
+  table_county %>% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
+table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
+#county names misspelled (was causing issues with merging later on)
+#reading in topic searches by districts using google trend data
+district_searches = read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_26Sep2018.csv")
+TX_searches = 
+  district_searches %>% janitor::clean_names() %>% 
+  filter(state == "TX")
+#reading in congress districts
+id <- "1mpBjlmy5CThvrPGgAqlEP2x7OFvnF4VH" # google file ID
+congress_district = read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
+congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
+congress_district$county_name = str_replace(congress_district$county_name,"MuCulloch","McCulloch")
+#misspelled counties discovered while exploring data when merging later on
+#cleaning and merging all three files from NYT, congressional districts file, and district topic searches
+TX_searches =
+  TX_searches %>% 
+  separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
+  mutate(district_num = as.numeric(district_num)) %>% 
+  select(district_num, most_searched = first, x2003_invasion_of_iraq:women_s_health) 
+nested_congress =
+  congress_district %>% 
+  nest(county_name) 
+	
+merged_searches= merge(TX_searches, nested_congress, by="district_num", all=TRUE) %>% 
+  unnest() 
+#rename variable county_name
+merged_searches = merged_searches %>% 
+  select(district_num, county=county_name, everything())
+merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRUE)
+gis = merged_nyt_searches %>% 
+  select(county, most_searched, cruz, o_rourke, dikeman) %>% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat>=1),
+         winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke"))
+gis = unique(gis) 
+gis = gis %>% 
+nest(most_searched) 
+listcollapse = function(x){
+  paste(unlist(x), collapse = ", ")
+}
+gis = gis %>% 
+  mutate( most_searched = map(data, listcollapse)) %>% 
+  select(-data)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r GIS file merge, include=FALSE}
+texas_counties = counties(state = "48",year = "2017") #Texas fips code is 48, using most recent census data, 2017
+tx_midterms = geo_join(texas_counties, gis, "NAME", "county")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r specifying what goes into map, include=FALSE}
+pal = colorFactor(c("blue", "red"), tx_midterms$status)
+popup = paste(sep = "<br/>",
+              paste0("<b>Winner: </b>", tx_midterms$winner),
+              paste0("<b>County: </b>", tx_midterms$county),
+              paste0("<b>Votes for Ted Cruz: </b>", tx_midterms$cruz),
+              paste0("<b>Votes for Beto O'Rourke: </b>", tx_midterms$o_rourke),
+              paste0("<b>Votes for Neal Dikeman: </b>", tx_midterms$dikeman),
+              paste0("<b>Most searched topics over one month prior: </b>", tx_midterms$most_searched))
+```
+
+```{r making the map using leaflet, echo=FALSE}
+leaflet(tx_midterms) %>% 
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolygons(fillColor= ~pal(status),
+              color = "black",
+              popup = popup,
+              fillOpacity = 0.5,
+              weight = 0.5) %>% 
+  addLegend(position = "bottomleft",
+            colors = c("blue", "red"),
+            labels = c("Democrat", "Republican"),
+            opacity = 1,
+            title = "2018 Texas Senate Election Results")
+```
+
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
+
+### Project Summary
+
+For our project, due to the relevant political climate and our interest in analyzing civic engagement amongst American votes, we chose to focus on Texas because of the close race between Beto O’Rourke and Ted Cruz. We thus decided to analyze Google Trends data for the 2018 midterm elections in comparison with the number of votes each candidate received within each county/congressional district within Texas. We created graphs to showcase interesting trends, created an interactive map indicating number of votes per county and most searched topics and performed linear regressions and a Fisher’s Exact test to analyze pertinent relationships.
+
+### Project Scope
+
+We focused our project on Google Trends searches for September 2018, specifically for the top 5 most highly searched topics. We narrowed down our geographic location to Texas and three Senate candidates: Beto O’Rourke, Ted Cruz, and Neal Dikeman. 
+
+### Data
+
+We used data from Google Trends Datastore for data on the top searched issues by U.S. Congressional District. In addition, we scraped election results data from a New York Times article on the midterm elections.
+
+### Approaches
+
+As shown in the plot below, we focused on O’Rourke and Ted Cruz because Dikeman had far fewer votes.  Furthermore, for more feasible statistical analyses, we focused on the top 5 most highly searched topics. We used a Fisher’s exact test to examine the relationship between topics searched and political party. We performed a linear regression model to examine the relationship between # of votes for each candidate and the top 5 searched topics: healthcare, immigration, medicaid, medicare, and september 11 attack.
+
+### Visualizations
+
+```{r making 1st web table into tibbles, include=FALSE}
+table_overall = (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[1]] %>%
+  html_table()
+```
+
+```{r tidy overall, include=FALSE}
+#remove the commas in the numbers first
+table_overall$Votes <- gsub(",","",table_overall$Votes)
+table_overall$Pct. <- gsub("%","",table_overall$Pct.)
+#convert votes and percent to numeric
+table_overall = 
+  table_overall %>% 
+  mutate(Votes = as.numeric(Votes), Pct. = as.numeric(Pct.))
+```
+
+```{r bar_plot, echo=FALSE}
+bar_overall =
+  table_overall %>% 
+  mutate(Candidate = as.factor(Candidate)) %>% 
+  mutate(Candidate = forcats::fct_reorder(Candidate, Votes)) %>% 
+  ggplot(aes(x = Candidate, y = Votes, fill = Party)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Number of Votes per Candidate",
+    x = "Candidate",
+    y = "Number of Votes"
+  ) +
+  scale_x_discrete(labels = c("Cruz* Ted Cruz*" = "Ted Cruz", "O'Rourke Beto O'Rourke" = "Beto O'Rourke",
+                              "Dikeman Neal Dikeman" = "Neal Dikeman"))
+  
+bar_overall
+```
+
+We also created four graphs displaying trends we noticed. The first graph displays the number of votes received for each candidate, amongst the top five counties with the most votes. The second graph displays, based on party affiliation, the frequency of searches of the top five most searched topics. The third graph shows the search frequencies, of the top five most searched topics, amongst the five most populated districts in Texas. The last graph shows the search frequencies for the most searched topic, health care, across all districts in Texas.
+
+### Results
+We performed multiple linear regressions, using the search frequencies of each of the five most searched topics as predictors and the number of votes for each candidate as the outcome variable. We found a statistically significant relationship between frequency of immigration searches with the number of votes each candidate received, and between frequency of September 11th attacks searches and the number of votes each candidate received. The other three predictors - Medicaid, Medicare and Healthcare - did not result in statistically significant results.
+
+For the Fisher’s exact test, we did not find a statistically significant relationship between health topics and which political party the counties voted for.
+
+<br>
+<br>
+
+Click [here](https://github.com/Amadeia/p8105_final_project_report/blob/master/p8105_final_project_report.md) for a link to our full report.
+
+</center>

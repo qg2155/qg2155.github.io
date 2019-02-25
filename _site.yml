@@ -11,8 +11,8 @@ navbar:
       menu:
         - text: Exercise Data 
           href: exercise.html
-        - text: something else
-          href: blah.html
+        - text: Sample Assignment
+          href: assignment.html
         - text: Elections Data
           href: election.html
         - text: "NYC Restaurant Grades Plotly"

@@ -6,6 +6,10 @@ output:
     toc_float: true
 ---
 
+<head>
+<link rel="stylesheet" type="text/css" href="y.css">
+</head>
+
 ### Education 
 <i class="fa fa-graduation-cap" aria-hidden="true"></i> **Columbia University Mailman School of Public Health** *May 2019*  
      * Master of Public Health in Epidemiology, *Cumulative GPA: 3.92*      

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Sample Assignment</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About Me</a>
+</li>
+<li>
+  <a href="cv.html">Resume</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Sample Work
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="exercise.html">Exercise Data</a>
+    </li>
+    <li>
+      <a href="assignment.html">Sample Assignment</a>
+    </li>
+    <li>
+      <a href="election.html">Elections Data</a>
+    </li>
+    <li>
+      <a href="dashboard_template.html">NYC Restaurant Grades Plotly</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="research.html">Research Posters</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Personal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="travel.html">Travel</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;qg2155@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/qiuxiahelenguan/">
+    <span class="fa fa fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/qg2155/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Sample Assignment</h1>
+
+</div>
+
+
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>This is a sample assignment that I completed for my Data Science course.<br />
+In this assignment, we were given three different datasets to analyze.<br />
+* Part 1: BRFSS Data<br />
+Analyze overall health ratings across states from 2002 to 2010.<br />
+* Part 2: Instacart Data<br />
+Analyze ordered items and ordering trends of people’s purchases from Instacart.<br />
+* Part 3: NY NOAA Data<br />
+Analyze temperature and precipitation trends in New York.</p>
+</div>
+<div id="part1" class="section level2">
+<h2>Part1</h2>
+<div id="clean-dataset" class="section level3">
+<h3>Clean dataset</h3>
+<pre class="r"><code>brfss_data = brfss_smart2010 %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(topic == &quot;Overall Health&quot;) %&gt;% 
+  mutate(response = factor(response, levels = str_c(c(&quot;Excellent&quot; , &quot;Very good&quot;, &quot;Good&quot;, &quot;Fair&quot;, &quot;Poor&quot;))))</code></pre>
+</div>
+<div id="summarize-distinct-locations" class="section level3">
+<h3>Summarize distinct locations</h3>
+<pre class="r"><code>brfss_data %&gt;% 
+  filter(year == 2002) %&gt;% 
+  group_by(locationabbr) %&gt;%
+  summarize(n_locations = n_distinct(locationdesc))</code></pre>
+<pre><code>## # A tibble: 49 x 2
+##    locationabbr n_locations
+##    &lt;chr&gt;              &lt;int&gt;
+##  1 AK                     1
+##  2 AL                     1
+##  3 AR                     1
+##  4 AZ                     2
+##  5 CA                     1
+##  6 CO                     4
+##  7 CT                     7
+##  8 DC                     1
+##  9 DE                     3
+## 10 FL                     7
+## # ... with 39 more rows</code></pre>
+<p>In 2002, there were 3 states that were observed at 7 locations. These 3 states were CT, FL, and NC.</p>
+</div>
+<div id="create-spaghetti-plot-of-number-locations" class="section level3">
+<h3>Create spaghetti plot of number locations</h3>
+<pre class="r"><code>brfss_data %&gt;% 
+  group_by(locationabbr, year) %&gt;%
+  summarize(n_locations = n_distinct(locationdesc)) %&gt;% 
+  ggplot(aes(x = year, y = n_locations, color = locationabbr)) + 
+    geom_point() + geom_line()</code></pre>
+<p><img src="assignment_files/figure-html/spaghetti%20plot-1.png" width="90%" /></p>
+<p>This spaghetti plot shows the number of locations in each state from 2002 to 2010. Florida in particular seems to have over 40 distinct locations in two different time points. Majority of states seem to have around 0 to 10 different locations across the years.</p>
+</div>
+<div id="table-for-mean-and-standard-deviation-of-excellent-responses-in-ny" class="section level3">
+<h3>Table for mean and standard deviation of “Excellent” responses in NY</h3>
+<pre class="r"><code>brfss_data %&gt;%
+  group_by(year) %&gt;% 
+  filter(year == 2002 | year == 2006 | year == 2010) %&gt;% 
+  spread(key = response, value = data_value) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(locationabbr == &quot;NY&quot;) %&gt;% 
+  summarize(mean_excellent = mean(excellent, na.rm = TRUE),
+            sd_excellent = sd(excellent, na.rm = TRUE)) %&gt;% 
+  knitr::kable(digits = 1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">mean_excellent</th>
+<th align="right">sd_excellent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2002</td>
+<td align="right">24.0</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="even">
+<td align="right">2006</td>
+<td align="right">22.5</td>
+<td align="right">4.0</td>
+</tr>
+<tr class="odd">
+<td align="right">2010</td>
+<td align="right">22.7</td>
+<td align="right">3.6</td>
+</tr>
+</tbody>
+</table>
+<p>Witin the state of New York, 2002 has the highest average of 24% for excellent responses, and a standard deviation of 4.5. Year 2006 has an average of 22.5% and standard deviation of 4.0. Year 2010 has an average of 22.7% and standard deviation of 3.6.</p>
+</div>
+<div id="plot-for-distribution-of-each-response-category-across-states" class="section level3">
+<h3>Plot for distribution of each response category across states</h3>
+<pre class="r"><code>brfss_data %&gt;% 
+  group_by(year, locationabbr, response) %&gt;%
+  summarize(mean_response = mean(data_value, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = year, y = mean_response)) +
+    geom_violin() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    facet_grid(. ~ response) </code></pre>
+<p><img src="assignment_files/figure-html/five%20plots-1.png" width="90%" /></p>
+<p>Across all states and years, the response category of “Very good” seems to have the highest average, followed by “Good”, “Excellent”, “Fair”, and “Poor”. Average excellent responses range from 12 to almost 30%. Very good ranges from 16 to 43%. Good ranges from 24 to 36%. Fair ranges from 5 to 17%. Poor ranges from 2 to 9%. Very good responses seem to have the most variance whereas poor responses seem to have the least variance.</p>
+</div>
+</div>
+<div id="part-2" class="section level2">
+<h2>Part 2</h2>
+<div id="clean-dataset-1" class="section level3">
+<h3>Clean dataset</h3>
+<pre class="r"><code>instacart_data = instacart %&gt;% 
+  janitor::clean_names() </code></pre>
+<p>This instacart dataset has 15 variables and 1384617 observations. The variables are order_id, product_id, add_to_cart_order, reordered, user_id, eval_set, order_number, order_dow, order_hour_of_day, days_since_prior_order, product_name, aisle_id, department_id, aisle, and department. Out of all these variables, the key ones include order_id, product_id, reordered, order_dow, order_hour_of_day, days_since_prior_order, product_name, aisle, and department. These variables can give us a lot of information on popularity of different products, and customer behaviors (day and time or orderes, days in between orders).</p>
+<p>Here is a demonstration of reading observation for customer with user_id 1: This customer’s order_id is 1187899, and they ordered 11 items in this order. The products they ordered are added to cart in this order: soda, organic string cheese, 0% greek strained yogurt, XL paper towel rolls, milk chocolate almonds, postachios, cinnamon toast crunch, aged white cheddar popcorn, organic whole milk, organic half &amp; half, and zero calorie cola. Most of these items belong in the snacks and dairy eggs departments. This ordered was placed on a Thursday and 8 AM. It has been 14 days since their prior order.</p>
+</div>
+<div id="aisles-and-most-items-ordered" class="section level3">
+<h3>Aisles and most items ordered</h3>
+<pre class="r"><code>instacart_data %&gt;% 
+  group_by(aisle_id) %&gt;% 
+  summarize(n_most_ordered = n()) %&gt;% 
+  arrange(desc(n_most_ordered)) </code></pre>
+<pre><code>## # A tibble: 134 x 2
+##    aisle_id n_most_ordered
+##       &lt;int&gt;          &lt;int&gt;
+##  1       83         150609
+##  2       24         150473
+##  3      123          78493
+##  4      120          55240
+##  5       21          41699
+##  6      115          36617
+##  7       84          32644
+##  8      107          31269
+##  9       91          26240
+## 10      112          23635
+## # ... with 124 more rows</code></pre>
+<p>There are 134 aisles. Aisle 83 has the most item ordered from because 150609 items were ordered from that aisle. This is followed by aisle 24 with 150473 items, and aisle 123 with 78493 items.</p>
+</div>
+<div id="plot-for-number-of-items-ordered-in-each-aisle" class="section level3">
+<h3>Plot for number of items ordered in each aisle</h3>
+<pre class="r"><code>instacart_data %&gt;% 
+  group_by(aisle_id) %&gt;% 
+  summarize(n_most_ordered = n()) %&gt;%
+  arrange(desc(n_most_ordered)) %&gt;% 
+  mutate(aisle_id = as.factor(aisle_id)) %&gt;% 
+  mutate(aisle_id = forcats::fct_reorder(aisle_id, n_most_ordered)) %&gt;% 
+  ggplot(aes(x = aisle_id, y = n_most_ordered)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    labs(
+      title = &quot;Items ordered from aisle&quot;,
+      x = &quot;Aisle ID&quot;,
+      y = &quot;Count of items&quot;
+    ) + 
+  scale_x_discrete(breaks = c(&quot;132&quot;, &quot;68&quot;, &quot;39&quot;, &quot;60&quot;, &quot;1&quot;, &quot;89&quot;, &quot;23&quot;, &quot;4&quot;, &quot;108&quot;, &quot;78&quot; , &quot;83&quot;))</code></pre>
+<p><img src="assignment_files/figure-html/aisle%20plot-1.png" width="90%" /></p>
+<p>This bar graph shows that two aisles in particular have a much greater items ordered compared to the rest of the aisles. On the other end, there are also a good number of aisles that have barely any items ordered. A majority of the aisles get anywhere around 0 to 25000 items ordred.</p>
+</div>
+<div id="table-for-most-popular-item-in-each-of-the-three-aisles" class="section level3">
+<h3>Table for most popular item in each of the three aisles</h3>
+<pre class="r"><code>instacart_data %&gt;% 
+  group_by(aisle, product_name) %&gt;% 
+  filter(aisle %in% c(&quot;baking ingredients&quot;, &quot;dog food care&quot;, &quot;packaged vegetables fruits&quot;)) %&gt;% 
+  summarize(n_ordered = n()) %&gt;% 
+  arrange(desc(n_ordered)) %&gt;%
+  top_n(1) %&gt;% 
+  knitr::kable()</code></pre>
+<pre><code>## Selecting by n_ordered</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">aisle</th>
+<th align="left">product_name</th>
+<th align="right">n_ordered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">packaged vegetables fruits</td>
+<td align="left">Organic Baby Spinach</td>
+<td align="right">9784</td>
+</tr>
+<tr class="even">
+<td align="left">baking ingredients</td>
+<td align="left">Light Brown Sugar</td>
+<td align="right">499</td>
+</tr>
+<tr class="odd">
+<td align="left">dog food care</td>
+<td align="left">Snack Sticks Chicken &amp; Rice Recipe Dog Treats</td>
+<td align="right">30</td>
+</tr>
+</tbody>
+</table>
+<p>The most popular product in the “packaged vegetables fruits” aisle is Organic Baby Spinach. It was ordered 9784 times. The most popular product in the “baking ingredients” aisle is Light Brown Sugar. It was ordered 499 times. The most popular product in the “dog food care” aisle is Snack Sticks Chicken &amp; Rice Recipe Dog Treats. It was ordered 30 times.</p>
+</div>
+<div id="table-for-pink-lady-apples-and-coffee-ice-cream-order-times" class="section level3">
+<h3>Table for Pink Lady Apples and Coffee Ice Cream Order Times</h3>
+<pre class="r"><code>instacart_data %&gt;% 
+  select(order_id, product_id, order_dow, order_hour_of_day, product_name, aisle_id) %&gt;% 
+  filter(product_name %in% c(&quot;Pink Lady Apples&quot;, &quot;Coffee Ice Cream&quot;)) %&gt;% 
+  group_by(product_name, order_dow) %&gt;%
+  summarize(mean_order_hour = mean(order_hour_of_day)) %&gt;% 
+  spread(key = order_dow, value = mean_order_hour) %&gt;% 
+  knitr::kable(digits = 2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">product_name</th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+<th align="right">5</th>
+<th align="right">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Coffee Ice Cream</td>
+<td align="right">13.77</td>
+<td align="right">14.32</td>
+<td align="right">15.38</td>
+<td align="right">15.32</td>
+<td align="right">15.22</td>
+<td align="right">12.26</td>
+<td align="right">13.83</td>
+</tr>
+<tr class="even">
+<td align="left">Pink Lady Apples</td>
+<td align="right">13.44</td>
+<td align="right">11.36</td>
+<td align="right">11.70</td>
+<td align="right">14.25</td>
+<td align="right">11.55</td>
+<td align="right">12.78</td>
+<td align="right">11.94</td>
+</tr>
+</tbody>
+</table>
+<p>The average order time for Coffee Ice Cream ranges from 12:26 to 15:38 throughout the week. The day with the earliest average order time is Friday and the day with the latest average order time is Tuesday. Pink Lady Apples have an overall earlier average order time than Coffee Ice Cream. The range for Pink Lady Apples average order times are 11:36 to 14:25. The day with the earliest average order time is Monday and the day with the latest average order time is Wednesday.</p>
+</div>
+</div>
+<div id="part-3" class="section level2">
+<h2>Part 3</h2>
+<div id="clean-dataset-2" class="section level3">
+<h3>Clean dataset</h3>
+<pre class="r"><code>noaa_data = ny_noaa %&gt;% 
+  janitor::clean_names() %&gt;% 
+  separate(date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;date&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(prcp = prcp/10,
+         tmax = as.numeric(tmax)/10,
+         tmin = as.numeric(tmin)/10
+         ) </code></pre>
+<p>Cleaned variable names and separated date into year, month, and date columns. Transformed the precipitation values from tenths of mm to mm by dividing original values by 10. Same is done to transform the minimum and maximum temperatures from tenths of Celsius to Celsius.</p>
+</div>
+<div id="to-find-the-proportion-of-missing-values" class="section level3">
+<h3>To find the proportion of missing values</h3>
+<pre class="r"><code>noaa_data %&gt;% 
+  summarize(n_missing_prcp = mean(is.na(prcp)),
+            n_missing_snow = mean(is.na(snow)),
+            n_missing_snwd = mean(is.na(snwd)),
+            n_missing_tmax = mean(is.na(tmax)),
+            n_missing_tmin = mean(is.na(tmin))
+            )</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   n_missing_prcp n_missing_snow n_missing_snwd n_missing_tmax
+##            &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+## 1         0.0562          0.147          0.228          0.437
+## # ... with 1 more variable: n_missing_tmin &lt;dbl&gt;</code></pre>
+<p>This NY NOAA dataset has 9 variables and 2595176 observations. The original 7 variables are id, date, prcp, snow, snwd, tmax, and tmin. After separting date into year, month, and day, there are now an additional 2 variables to make a total of 9 variables in the cleaned dataset. The key variables are date, precipitation, snow, snow depth, maximum and minimum temperatures. These variables will be able to give us a lot of information on the weather pattern in New York, especially for precipitation and snow in the winters.</p>
+<p>One problem with this dataset is that there are many missing values for snow, snwd, tmax and tmin. This is probably due to the fact that some stations only collect a subset of variables. The proportion of missing in precipitation column is 5.62%, snow is 14.7%, snow depth is 22.8%, tmax and tmin are both 43.7%. The extent in which data is missing is problematic for our analysis. It will be difficult to get accurate weather patterns across NY since we might be missing critical pieces of information from stations that may be situated in locations that are in particular warmer or colder than average.</p>
+<pre class="r"><code>noaa_data %&gt;% 
+  group_by(snow) %&gt;% 
+  summarize(n_snow = n()) %&gt;% 
+  arrange(desc(n_snow))</code></pre>
+<pre><code>## # A tibble: 282 x 2
+##     snow  n_snow
+##    &lt;int&gt;   &lt;int&gt;
+##  1     0 2008508
+##  2    NA  381221
+##  3    25   31022
+##  4    13   23095
+##  5    51   18274
+##  6    76   10173
+##  7     8    9962
+##  8     5    9748
+##  9    38    9197
+## 10     3    8790
+## # ... with 272 more rows</code></pre>
+<p>The most commonly observed value for snowfall is 0 mm, with 2008508 observations. This is the expected value because it does not snow on most days throughout the years. The second commonly observed value is NA because this information is missing for many observations. The third commonly observed value is 25 mm with 31022 observations. The fourth commonly observed value is 13 mm with 23095 observations. These values tell us that when it does snow in NY, it is usually very light.</p>
+</div>
+<div id="plot-of-average-max-temp-in-jan-and-july" class="section level3">
+<h3>Plot of average max temp in Jan and July</h3>
+<pre class="r"><code>noaa_data %&gt;% 
+  filter(month %in% c(&quot;01&quot;, &quot;07&quot;)) %&gt;% 
+  group_by(year, month, date) %&gt;%
+  summarize(tmax_mean = mean(tmax, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = year, y = tmax_mean)) +
+    geom_boxplot() +
+    facet_grid(. ~month) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = &quot;Average max temperature in Janurary and July across years&quot;,
+      x = &quot;Years&quot;,
+      y = &quot;Average max temperature (C)&quot;
+    )</code></pre>
+<p><img src="assignment_files/figure-html/avg%20max-1.png" width="90%" /></p>
+<p>The graphs show that there is an appreciable difference between the average maximum temperatures between Jan and July across all years. The range for the average max temp in Jan is anywhere from -15 C to 15 C whereas the average for July is between 20 C to 34 C. There are outliers in some of the years for both months. July has more outliers for low temperatures across years whereas Jan has a relatively equal number of outliers for warmer and cooler average maximum temperatures. Year 1988 had an outlier for especially low temperature (17C) in July. The average maximum temperatures in July also have a smaller variance compared to Janurary judging by the size of the box plots.</p>
+</div>
+<div id="two-panel-plot-for-temperatures-and-snowfall" class="section level3">
+<h3>Two panel plot for temperatures and snowfall</h3>
+<pre class="r"><code>tmin_tmax_plot = ggplot(noaa_data, aes(x = tmin, y = tmax)) +
+  geom_hex() +
+  labs(
+    title = &quot;Temperature Plot&quot;,
+    x = &quot;Minimum daily temperature (C)&quot;,
+    y = &quot;Maximum daily temperature (C)&quot;
+  )
+snowfall_plot = noaa_data %&gt;% 
+  filter(snow &gt; 0 &amp; snow &lt; 100) %&gt;% 
+  group_by(year) %&gt;% 
+  ggplot(aes(x = year, y = snow)) +
+  geom_boxplot() +
+  labs(
+    title = &quot;Distribution of Snowfall(0&gt;snow&lt;100) by Year&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Distribution of Snow&quot;
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+tmin_tmax_plot/snowfall_plot</code></pre>
+<pre><code>## Warning: Removed 1136276 rows containing non-finite values (stat_binhex).</code></pre>
+<p><img src="assignment_files/figure-html/two%20panel%20plot-1.png" width="90%" /></p>
+<p>The first tmax and tmin plot shows that the minimum daily temperatures can range from -45 C to 40 C, with outliers near -60 C on the cold end and up to 60 C on the warm end. On the other end, maximum temperatures can range from -30 C to 40 C, with outliers as cold as -40 C and as hot as 60 C. The light shade of blue in the center of the cluster represents the range for the most common maximum and minimum temperatures. This means the most observed minimum temperature in NY is from 0 C to 15 C, and the most observed maximum temperature is from 10 C to 30 C.</p>
+<p>The second box plot shows the distribution of snowfall across all years. This box plot shows a rather stable distribution of snowfall across most years because the boxes are very similar to one another. The average distribution of snowfall is around 25 mm across all years. Years 1998, 2004, 2006, 2007, and 2010 had noticibly less snowfalls than usual. However, year 2006 also had many outliers for high snall fall ranging up to 100 mm. Years 1998 and 2010 also had a few outliers for heavy snowfall.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

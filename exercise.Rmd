@@ -1,30 +1,189 @@
 ---
-title: "exercise"
-author: "Helen"
-date: "2/24/2019"
-output: html_document
+title: "Exercise Data"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
 ---
-
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r page, include = FALSE}
+knitr::opts_chunk$set(
+  	fig.width = 6,
+	fig.asp = .6,
+ 	out.width = "90%")
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r library, include = FALSE}
+library(tidyverse)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Description 
+This is a sample of my work for the Data Science course (P8105) that I took as a part of my masters program.  
+We were given a csv file with several months worth of data collected from a patient's accelerometerdevice. The goal was to understand patterns of physical activity over long periods of time.
+
+
+## Data Cleaning
+
+```{r load, include = FALSE}
+original_acce_data = read.csv(file = "./p8105_mtp_data.csv")
+```
+
+```{r clean}
+acce_data = original_acce_data %>% 
+  janitor::clean_names() %>% 
+  gather(key = minutes, value = activity, activity_1:activity_1440) %>% 
+  separate(minutes, into = c("remove_1", "min_day"), sep = "_") %>% 
+  select(-remove_1) %>% 
+  mutate(day = factor(day, levels = str_c(c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))), 
+         min_day = as.numeric(min_day)) 
+```
+
+The original dataset had `r ncol(original_acce_data)` columns and `r nrow(original_acce_data)` rows. There are 47 weeks of data and 1440 columns representing the activity level for every minute each day. To clean the data, I used "gather" to create a min_day variable specifying the minute of the day and an activity variable for the actual activity measurement data. 
+
+## Exploratory Analysis
+
+* The overall average activity is `r round(mean(acce_data$activity), 2)`, with standard deviation of `r round(sd(acce_data$activity), 2)`. The median activity is `r median(acce_data$activity)`. The activity levels range from `r round(max(acce_data$activity), 2)` to `r min(acce_data$activity)`. 
+
+* Top 5 weeks with highest average activity 
+
+```{r highest 5}
+acce_data %>% 
+  group_by(week) %>% 
+  summarize(avg_act = mean(activity),
+            sd_act = sd(activity)) %>%
+  filter(min_rank(desc(avg_act)) < 6) %>% 
+  arrange(desc(avg_act)) %>% 
+  knitr::kable(digits = 2)
+```
+
+* Top 5 weeks with lowest average activity 
+
+```{r lowest 5}
+acce_data %>% 
+  group_by(week) %>% 
+  summarize(avg_act = mean(activity),
+            sd_act = sd(activity)) %>%
+  filter(min_rank(avg_act) < 6) %>% 
+  arrange(avg_act) %>% 
+  knitr::kable(digits = 2)
+```
+
+* Comparing each week's average activity to overall average 
+
+```{r compare average}
+acce_data %>% 
+  group_by(week) %>% 
+  summarize(week_avg = mean(activity)) %>% 
+  mutate(week_change = week_avg - 240.337) %>% 
+  ggplot(aes(x = week, y = week_change)) +
+    geom_bar(stat = "identity", fill = "steelblue") +
+    scale_x_continuous(breaks = c(1:47)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Weekly average activity level in comparison to overall average",
+      x = "Week",
+      y = "Difference between week and overall average",
+      caption = "Overall average activity across all weeks is 240.337"
+    )
+```
+
+  * From this graph, we can see that the participant had activity levels below average within the first few weeks weeks. In the middle of the time period, participant had around average activity level with a few exceptions for dips. However, participant had consistently higher than average activity levels starting at week 35. 
+
+## Analysis
+
+### Linear Regression 
+
+```{r linear regression week with acivity}
+act_week_lm <- lm(acce_data$activity ~ acce_data$week)
+summary(act_week_lm)
+```
+
+* Results from linear regression shows that at an alpha level of 0.05, week is significantly associated with activity level (T-statistic 62.57, p-value: <2e-16). 
+
+* With every 1 week increase in time, the activity level rises by about 2.773 units on average. 
+
+```{r graph week}
+acce_data %>% 
+  group_by(week) %>% 
+  summarize(avg_act_wk = mean(activity)) %>% 
+  ggplot(aes(x = week, y = avg_act_wk)) +
+    geom_point() +
+    geom_line() +
+    geom_smooth(method = lm, se = FALSE) +
+    scale_x_continuous(breaks = c(1:47)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Average activity for each week",
+      x = "Week",
+      y = "Average activiy",
+      caption = "Blue line is the Linear Regression Line"
+    )
+```
+
+This graph shows that the average activity per minute has an overall upward trend as week increases. The linear regression line is also plotted, showing that on average the participant gains 2.773 units of activity per week. Additionally, we can see from the graph that weeks 3 and 4 had observably low to almost none activity levels. It could be hypothesized that the participant did not feel well during those two weeks. The activity levels became much more consistent beginning at week 20. 
+
+### Day of week
+
+* Overall average and SD of activity for each day of the week
+```{r overall average}
+acce_data %>% 
+  group_by(day) %>% 
+  summarize(avg_act_day = mean(activity),
+            sd_act_day = sd(activity)) %>%
+  knitr::kable(digits = 2)
+```
+
+```{r graph day}
+acce_data %>% 
+  group_by(week, day) %>% 
+  summarize(avg_act_day = mean(activity)) %>% 
+  ggplot(aes(x = day, y = avg_act_day, color = day)) +
+  geom_boxplot() +
+  labs(
+      title = "Average activity for each day of week",
+      x = "Day of week",
+      y = "Average activiy"
+  )
+```
+
+This graph shows that the participant has highest average activity around the end of week and weekends and lowest at the beginning of the week. Friday in particular has the highest average and Tuesday has the lowest average activity. Sunday has the largest range whereas midweek, especially Wednesday, has the smallest range. There are also multiple outliers for low average activity levels across days of the week. However, Saturday has two outliers for very high average activity levels.   
+
+```{r graph day time}
+acce_data %>% 
+  group_by(day, min_day) %>% 
+  ggplot(aes(x = min_day, y = activity, color = day)) +
+    geom_smooth(se = FALSE) +
+    facet_grid(~day) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Average activity at each minute across days of week",
+      x = "Minute of day",
+      y = "Average activiy"
+    )
+```
+
+This graph shows the average activity level per minute across days of the week. The participant is most active throughout the day on Sunday and during evenings of Thursdays and Fridays. The hook on Saturday also shows that he sleeps latest around Friday nights - Saturday midnight. Additionally, he has low activity levels on Mondays and Tuesdays. 
+
+### 24-Hour Activity
+
+```{r 24 hour}
+acce_data %>% 
+  group_by(min_day) %>% 
+  summarize(avg_all = mean(activity)) %>% 
+  ggplot(aes(x = min_day, y = avg_all)) +
+    geom_point() +
+    scale_x_continuous(breaks = c(1, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1260, 1320, 1380, 1440)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Average activity across minutes of day",
+      x = "Minutes of day",
+      y = "Average activity"
+    )
+    
+```
+
+This graph shows low activity for hours in which participant is asleep. Activity level is usually high during wake hours from 540th minute (9 AM) to 1260th minute (9 PM). The participant sometimes has more activity at midnight on some days compared to others.   
+
