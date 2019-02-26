@@ -24,7 +24,7 @@ output:
 <br/>
 <div id="line-break-and-tab"></div>
 
-### Texas Midterm Election Results  
+### Texas Midterm Results  
 
 <div id="just-line-break"></div>
 <br/>

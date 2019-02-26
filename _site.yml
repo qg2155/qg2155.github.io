@@ -2,12 +2,12 @@ name: "Helen Website"
 output_dir: "."
 navbar:
   title: "Home"
-  right:
+  left:
     - text: "About Me"
       href: about.html
     - text: "Resume"
       href: cv.html
-    - text: Sample Work 
+    - text: Sample Data Analysis Work 
       menu:
         - text: Exercise Data 
           href: exercise.html
@@ -19,10 +19,7 @@ navbar:
           href: dashboard_template.html
     - text: "Research Posters"
       href: research.html
-    - text: Personal 
-      menu:
-      - text: Travel 
-        href: travel.html
+  right:
     - icon: fa-envelope fa-lg
       href: mailto:<qg2155@cumc.columbia.edu>
     - icon: fa fa-linkedin

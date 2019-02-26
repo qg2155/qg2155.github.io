@@ -1,14 +1,3 @@
-<html>
-<head>
-<link rel="stylesheet" href="y.css">
+Hi!  
 
-
-  <section class="hero">
-      Aloha! Welcome to my page!
-      My name is Helen Guan and this is my website.
-      Click around to learn more about me and my research / data science related work!
-  </section class>
-
-
-</head>
-</html>
+Welcome to my website. This page is still under construction but feel free to explore all the other pages on here! :) 
