@@ -3,8 +3,6 @@ output_dir: "."
 navbar:
   title: "Home"
   left:
-    - text: "About Me"
-      href: about.html
     - text: "Resume"
       href: cv.html
     - text: Sample Data Analysis Work 
@@ -15,9 +13,9 @@ navbar:
           href: assignment.html
         - text: Elections Data
           href: election.html
-        - text: "NYC Restaurant Grades Plotly"
+        - text: NYC Restaurant Grades Plotly
           href: dashboard_template.html
-    - text: "Research Posters"
+    - text: "Research Projects"
       href: research.html
   right:
     - icon: fa-envelope fa-lg
