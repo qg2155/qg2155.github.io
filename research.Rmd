@@ -9,7 +9,7 @@ This is a project that I worked on for my Master's Thesis at Columbia University
 I presented this research project at the *6th Annual New York City Epidemiology Forum*.  
   
   
-<img src="./photos/thesis_poster.png" width="600" height="450"> <img src="./photos/thesis_me.jpg" width="300" height="150">
+<a href ="./photos/thesis_poster.pdf" target="_blank"><img src="./photos/thesis_poster.png" width="500" height="350"></a> <img src="./photos/thesis_me.jpg" width="300" height="150">
 
 <br>
 <br>
@@ -24,7 +24,8 @@ I presented this research project at the *9th Biennial Asian American, Native Ha
 <br>
   
     
-<img src="./photos/hp_poster.png" width="600" height="450"> <img src="./photos/hp_me.jpg" width="300" height="200">
+<a href ="./photos/hp_poster.pdf" target="_blank"><img src="./photos/hp_poster.png" width="500" height="350"></a> <img src="./photos/hp_me.jpg" width="350" height="200">
+
 
 <br>
 <br>
@@ -38,10 +39,9 @@ I presented this research project at the *Boston University’s 19th Annual Unde
 <br>
   
     
-<img src="./photos/urop_poster.png" width="600" height="450"> <img src="./photos/urop_me.jpg" width="300" height="200">
+<a href ="./photos/urop_poster.pdf" target="_blank"><img src="./photos/urop_poster.png" width="500" height="350"></a> <img src="./photos/urop_me.jpg" width="350" height="200">
 
-<br>
-<br>
+
 
 
 
