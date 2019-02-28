@@ -1,9 +1,9 @@
 <br><br>
   
-<img src="./photos/portrait.jpg" align="left" width="250" height="350">
 
-<center>
-<h1>Qiu Xia (Helen) Guan </h1>
+<img src="./photos/portrait.JPG" style="margin-right: 50px;" width="250" height="350" align="left">
+
+<h1>Helen (Qiu Xia) Guan </h1>
 
 I am a second-year Master of Public Health (MPH) student at Columbia University Mailman School of Public Health. My concentration is in Epidemiology with a certificate in Epidemiology of Chronic Diseases. My research interest is in neurological epidemiology, specifically risk factors for dementia in older adults. I am also passionate about using research and data to improve health outcomes in the elderly and immigrant populations. Read more about my research work [here](research.html)!
 
@@ -13,5 +13,5 @@ Since starting my masters program, I found a new interest in data science. My ep
 <br>
 Prior to New York City, I was in Boston for my undergradute studies. Although I am loving the East Coast, I am originally from Honolulu, Hawaii! I love going back home to visit my family and friends whenever I can. Below is a picture that I took of the beach when I was back home last year!  
 <br>
-<img src="./photos/waikiki2.png" width="500" height="350">
-</center>
+<center><img src="./photos/waikiki2.png" width="500" height="350"></center>
+
