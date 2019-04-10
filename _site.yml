@@ -9,6 +9,8 @@ navbar:
       menu:
         - text: Exercise Data 
           href: exercise.html
+        - text: Exercise Dashboard 
+          href: exercise_dashboard.html
         - text: Sample Assignment
           href: assignment.html
         - text: Elections Data

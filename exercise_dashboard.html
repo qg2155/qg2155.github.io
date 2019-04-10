@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Plotly Flexdashboard</title>
+
+<meta property="og:title" content="Plotly Flexdashboard" />
+
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+
+<link rel="icon" href="data:image/x-icon;" type="image/x-icon">
+
+
+<script type="text/javascript">
+window.FlexDashboardComponents = [];
+</script>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/stickytableheaders-0.1.19/jquery.stickytableheaders.min.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+<style type="text/css">
+
+/*
+ Dashboard CSS from Keen IO Dashboards
+ (https://github.com/keen/dashboards)
+*/
+
+body {
+  background: #f2f2f2;
+  padding: 60px 0 0 8px; /* padding-top overridden by theme */
+}
+
+body hr {
+  border-color: #d7d7d7;
+  margin: 10px 0;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar .navbar-brand {
+  text-decoration: none;
+}
+
+.navbar-logo {
+  margin-top: 1px;
+}
+
+.navbar-logo img {
+  margin-right: 12px;
+}
+
+.navbar-author {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.navbar .dropdown-menu .fa {
+  min-width: 20px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 150px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.chart-wrapper,
+.nav-tabs-custom,
+.sbframe-commentary
+{
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.chart-title {
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 7px 10px 4px;
+}
+
+.chart-wrapper .chart-title:empty {
+  display: none;
+}
+
+.chart-wrapper .chart-stage {
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.chart-wrapper .chart-notes {
+  background: #fbfbfb;
+  border-top: 1px solid #e2e2e2;
+  color: #808080;
+  font-size: 12px;
+  padding: 8px 10px 5px;
+}
+
+/*
+ CSS for handling flexbox layout
+*/
+
+#dashboard-container {
+  visibility: hidden;
+}
+
+.tab-content>.dashboard-page-wrapper.active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard-page-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-row-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dashboard-column-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-column {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-wrapper-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-stage-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+}
+
+.chart-shim {
+  position: absolute;
+  left: 8px; top: 8px; right: 8px; bottom: 8px;
+}
+
+.no-padding .chart-shim {
+  left: 0; top: 0; right: 0; bottom: 0;
+}
+
+.flowing-content-shim {
+  overflow: auto;
+  left: 0; top: 0; right: 0; bottom: 0;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.flowing-content-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.chart-stage .table-bordered {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > th,
+.chart-stage .table-bordered > tfoot > tr > th,
+.chart-stage .table-bordered > tbody > tr > td,
+.chart-stage .table-bordered > tfoot > tr > td {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > td {
+  border-top: 1px solid #dddddd;
+}
+
+.chart-stage .table-bordered > thead > tr > th {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+}
+
+.bootstrap-table table>thead {
+  background-color: #fff;
+}
+
+.bootstrap-table table.data,
+.bootstrap-table table.shiny-table {
+  width: inherit !important;
+}
+
+.bootstrap-table table.data>tbody>tr>th,
+.bootstrap-table table.shiny-table>tbody>tr>th {
+  border-top: none;
+  border-bottom: 2px solid #dddddd;
+  padding: 5px;
+}
+
+.bootstrap-table .data td[align=right] {
+  font-family: inherit;
+}
+
+.chart-wrapper form {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.shiny-input-container label {
+  font-weight: normal;
+}
+
+.chart-stage .html-widget {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .html-widget-static-bound {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .shiny-bound-output {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Omit display of empty paragraphs */
+
+.chart-shim>p:empty {
+  display: none;
+}
+
+.chart-stage>p:empty {
+  display: none;
+}
+
+/* Omit display of special knitr options div*/
+
+.chart-stage .knitr-options {
+  display: none;
+}
+
+/* Automatically resizing images */
+
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.image-container img {
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Value box */
+
+.value-box {
+  border-radius: 2px;
+  position: relative;
+  display: block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.value-box > .inner {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.value-box .value {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 3px 0;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.value-box .caption {
+  font-size: 15px;
+}
+.value-box .caption > small {
+  display: block;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.value-box .icon i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 80px;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+.linked-value:hover {
+  cursor: pointer;
+}
+
+.value-box.linked-value:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* STORYBOARD */
+
+.storyboard-nav button {
+  background: transparent;
+  border: 0;
+  opacity: .3;
+  outline: none;
+  padding: 0;
+}
+
+.storyboard-nav button:hover,
+.storyboard-nav button:hover {
+  opacity: .5;
+}
+
+.storyboard-nav button:disabled,
+.storyboard-nav button:disabled {
+  opacity: .1;
+}
+
+.storyboard-nav .sbnext,
+.storyboard-nav .sbprev {
+  float: left;
+  width: 2%;
+  height: 120px;
+  font-size: 50px;
+}
+
+.storyboard-nav .sbprev {
+  text-align: left;
+  width: 2%;
+}
+
+.storyboard-nav .sbnext {
+  float: right;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.storyboard-nav .sbframelist {
+  margin: 0 auto;
+  width: 94%;
+  height: 120px;
+  overflow: hidden;
+  text-shadow: none;
+  margin-bottom: 8px;
+}
+
+.storyboard-nav .sbframelist ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.storyboard-nav .sbframelist ul li {
+  float: left;
+  width: 270px;
+  height: 100%;
+  padding: 10px 10px 10px 10px;
+  margin-right: 8px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  color: #3a3c47;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.storyboard-nav .sbframelist ul li:last-child {
+  margin-right: 0px;
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  color: #fff;
+  background: #B8B8B8;
+}
+
+.sbframe-commentary {
+  width: 300px;
+  background: #fbfbfb;
+  font-size: 14px;
+}
+
+.sbframe-commentary ul {
+  padding-left: 22px;
+}
+
+.sbframe.active {
+  display: flex;
+}
+
+.sbframe:not(.active) {
+  display: none;
+}
+
+/* NAV TABS */
+
+.nav-tabs-custom > .nav-tabs {
+  margin: 0;
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.nav-tabs-custom > .nav-tabs > li {
+  border-top: 3px solid transparent;
+  margin-bottom: -1px;
+  margin-right: 5px;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  color: #666;
+  font-weight: 300;
+  font-size: 14px;
+  border-radius: 0;
+  padding: 3px 10px 5px;
+  text-transform: none;
+}
+
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a {
+  border-bottom-color: transparent;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a.text-muted {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  background: transparent;
+  margin: 0;
+}
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:focus,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:active {
+  border-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: #3c8dbc;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a,
+.nav-tabs-custom > .nav-tabs > li.active:hover > a {
+  background-color: #fff;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a {
+  border-top-color: transparent;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type {
+  margin-left: 0;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
+  border-left-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs.pull-right {
+  float: none !important;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li {
+  float: right;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type {
+  margin-right: 0;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type > a {
+  border-left-width: 1px;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a {
+  border-left-color: #d7d7d7;
+  border-right-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.header {
+  line-height: 35px;
+  padding: 0 10px;
+  font-size: 20px;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.header > .fa,
+.nav-tabs-custom > .nav-tabs > li.header > .glyphicon,
+.nav-tabs-custom > .nav-tabs > li.header > .ion {
+  margin-right: 5px;
+}
+.nav-tabs-custom > .tab-content {
+  background: #fff;
+  padding: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom > .tab-content > .chart-wrapper {
+  background: #fff;
+  border: none;
+  margin: 0;
+}
+
+
+.nav-tabs-custom > .tab-content > .active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom .dropdown.open > a:active,
+.nav-tabs-custom .dropdown.open > a:focus {
+  background: transparent;
+  color: #999;
+}
+
+
+@media (max-width: 767px) {
+  .value-box {
+    text-align: center;
+    margin-right: 8px;
+  }
+  .value-box .icon {
+    display: none;
+  }
+}
+
+/* Fixed position sidebar */
+
+.section.sidebar {
+  position: fixed;
+  top: 51px; /* overridden by theme */
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid #e2e2e2;
+  background-color: white; /* overridden by theme */
+  padding-left: 10px;
+  padding-right: 10px;
+  visibility: hidden;
+  overflow: auto;
+}
+
+.section.sidebar form p:first-child {
+  margin-top: 10px;
+}
+
+/* Embedded source code */
+
+#flexdashboard-source-code {
+  display: none;
+}
+
+.featherlight-content #flexdashboard-source-code {
+  display: inline-block;
+}
+
+.featherlight-content {
+  width: 80%;
+  max-width: 800px;
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+.featherlight:last-of-type {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.featherlight-inner {
+  width: 100%;
+}
+
+.featherlight-content pre {
+  margin: 0;
+  border: 0;
+  background: #fff;
+  font-size: 12px;
+}
+
+.unselectable {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#flexdashboard-source-code code {
+  -ms-user-select: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -o-user-select: text;
+  user-select: text;
+}
+
+/* DataTables Tweaks */
+
+.dataTables_filter input[type="search"] {
+  -webkit-appearance: searchfield;
+  outline: none;
+}
+
+.dataTables_wrapper.no-footer
+.dataTables_info {
+  padding-top: 0;
+}
+
+
+table.dataTable thead th {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+/* Mobile phone only CSS */
+
+.desktop-layout div.section.mobile {
+  display: none;
+}
+
+.mobile-layout div.section.no-mobile {
+  display: none;
+}
+
+.mobile-figure {
+  display: none;
+}
+
+
+
+body {
+  padding-top: 60px;
+}
+
+.section.sidebar {
+  top: 51px;
+  background-color: rgba(39, 128, 227, 0.1);
+}
+
+.value-box {
+  color: #f9f9f9;
+}
+
+.bg-primary {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: rgba(39, 128, 227, 0.7);
+}
+
+.bg-info {
+  background-color: rgba(153, 84, 187, 0.7);
+}
+
+.bg-warning {
+  background-color: rgba(255, 117, 24, 0.7);
+}
+
+.bg-danger {
+  background-color: rgba(255, 0, 57, 0.7);
+}
+
+.bg-success {
+  background-color: rgba(63, 182, 24, 0.7);
+}
+
+.chart-title {
+  font-weight: 500;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  font-weight: 500;
+}
+
+@media only screen and (min-width: 768px) {
+html, body {
+  height: 100%;
+}
+
+#dashboard-container {
+  height: 100%;
+}
+}
+</style>
+
+
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+
+<button id="navbar-button" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+
+<span class="navbar-logo pull-left">
+  
+</span>
+<span class="navbar-brand">
+  Plotly Flexdashboard
+  <span class="navbar-author">
+        </span>
+</span>
+
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav navbar-left">
+</ul>
+<ul class="nav navbar-nav navbar-right">
+</ul>
+</div><!--/.nav-collapse-->
+</div><!--/.container-->
+</div><!--/.navbar-->
+
+<script type="text/javascript">
+
+
+var FlexDashboard = (function () {
+
+  // initialize options
+  var _options = {};
+
+  var FlexDashboard = function() {
+
+    // default options
+    _options = $.extend(_options, {
+      theme: "cosmo",
+      fillPage: false,
+      orientation: 'columns',
+      storyboard: false,
+      defaultFigWidth: 576,
+      defaultFigHeight: 461,
+      defaultFigWidthMobile: 360,
+      defaultFigHeightMobile: 461,
+      isMobile: false,
+      isPortrait: false
+    });
+  };
+
+  function init(options) {
+
+    // extend default options
+    $.extend(true, _options, options);
+
+    // add ids to sections that don't have them (pandoc won't assign ids
+    // to e.g. sections with titles consisting of only chinese characters)
+    var nextId = 1;
+    $('.level1:not([id]),.level2:not([id]),.level3:not([id])').each(function() {
+      $(this).attr('id', 'dashboard-' + nextId++);
+    });
+
+    // find navbar items
+    var navbarItems = $('#flexdashboard-navbar');
+    if (navbarItems.length)
+      navbarItems = JSON.parse(navbarItems.html());
+    addNavbarItems(navbarItems);
+
+    // find the main dashboard container
+    var dashboardContainer = $('#dashboard-container');
+
+    // resolve mobile classes
+    resolveMobileClasses(dashboardContainer);
+
+    // one time global initialization for components
+    componentsInit(dashboardContainer);
+
+    // look for a global sidebar
+    var globalSidebar = dashboardContainer.find(".section.level1.sidebar");
+    if (globalSidebar.length > 0) {
+
+      // global layout for fullscreen displays
+      if (!isMobilePhone()) {
+
+         // hoist it up to the top level
+         globalSidebar.insertBefore(dashboardContainer);
+
+         // lay it out (set width/positions)
+         layoutSidebar(globalSidebar, dashboardContainer);
+
+      // tuck sidebar into first page for mobile phones
+      } else {
+
+        // convert it into a level3 section
+        globalSidebar.removeClass('sidebar');
+        globalSidebar.removeClass('level1');
+        globalSidebar.addClass('level3');
+        var h1 = globalSidebar.children('h1');
+        var h3 = $('<h3></h3>');
+        h3.html(h1.html());
+        h3.insertBefore(h1);
+        h1.remove();
+
+        // move it into the first page
+        var page = dashboardContainer.find('.section.level1').first();
+        if (page.length > 0)
+          page.prepend(globalSidebar);
+      }
+    }
+
+    // look for pages to layout
+    var pages = $('div.section.level1');
+    if (pages.length > 0) {
+
+        // find the navbar and collapse on clicked
+        var navbar = $('#navbar');
+        navbar.on("click", "a[data-toggle!=dropdown]", null, function () {
+           navbar.collapse('hide');
+        });
+
+        // envelop the dashboard container in a tab content div
+        dashboardContainer.wrapInner('<div class="tab-content"></div>');
+
+        pages.each(function(index) {
+
+          // lay it out
+          layoutDashboardPage($(this));
+
+          // add it to the navbar
+          addToNavbar($(this), index === 0);
+
+        });
+
+    } else {
+
+      // remove the navbar and navbar button if we don't
+      // have any navbuttons
+      if (navbarItems.length === 0) {
+        $('#navbar').remove();
+        $('#navbar-button').remove();
+      }
+
+      // add the storyboard class if requested
+      if (_options.storyboard)
+        dashboardContainer.addClass('storyboard');
+
+      // layout the entire page
+      layoutDashboardPage(dashboardContainer);
+    }
+
+    // if we are in shiny we need to trigger a window resize event to
+    // force correct layout of shiny-bound-output elements
+    if (isShinyDoc())
+      $(window).trigger('resize');
+
+    // make main components visible
+    $('.section.sidebar').css('visibility', 'visible');
+    dashboardContainer.css('visibility', 'visible');
+
+    // handle location hash
+    handleLocationHash();
+
+    // intialize prism highlighting
+    initPrismHighlighting();
+
+    // record mobile and orientation state then register a handler
+    // to refresh if it changes
+    _options.isMobile = isMobilePhone();
+    _options.isPortrait = isPortrait();
+    $(window).on('resize', function() {
+      if (_options.isMobile !== isMobilePhone() ||
+          _options.isPortrait !== isPortrait()) {
+        window.location.reload();
+      }
+    });
+
+    // trigger layoutcomplete event
+    dashboardContainer.trigger('flexdashboard:layoutcomplete');
+  }
+
+  function resolveMobileClasses(dashboardContainer) {
+     // add top level layout class
+    dashboardContainer.addClass(isMobilePhone() ? 'mobile-layout' :
+                                                  'desktop-layout');
+
+    // look for .mobile sections and add .no-mobile to their peers
+    var mobileSections = $('.section.mobile');
+    mobileSections.each(function() {
+       var id = $(this).attr('id');
+       var nomobileId = id.replace(/-\d+$/, '');
+       $('#' + nomobileId).addClass('no-mobile');
+    });
+  }
+
+  function addNavbarItems(navbarItems) {
+
+    var navbarLeft = $('ul.navbar-left');
+    var navbarRight = $('ul.navbar-right');
+
+    for (var i = 0; i<navbarItems.length; i++) {
+
+      // get the item
+      var item = navbarItems[i];
+
+      // determine the container
+      var container = null;
+      if (item.align === "left")
+        container = navbarLeft;
+      else
+        container = navbarRight;
+
+      // navbar menu if we have multiple items
+      if (item.items) {
+        var menu = navbarMenu(null, item.icon, item.title, container);
+        for (var j = 0; j<item.items.length; j++) {
+          var subItem = item.items[j];
+          var li = $('<li></li>');
+          li.append(navbarLink(subItem.icon, subItem.title, subItem.href, subItem.target));
+          menu.append(li);
+        }
+      } else {
+        var li = $('<li></li>');
+        li.append(navbarLink(item.icon, item.title, item.href, item.target));
+        container.append(li);
+      }
+    }
+  }
+
+  // create or get a reference to an existing dropdown menu
+  function navbarMenu(id, icon, title, container) {
+    var existingMenu = [];
+    if (id)
+      existingMenu = container.children('#' + id);
+    if (existingMenu.length > 0) {
+      return existingMenu.children('ul');
+    } else {
+      var li = $('<li></li>');
+      if (id)
+        li.attr('id', id);
+      li.addClass('dropdown');
+      // auto add "Share" title on mobile if necessary
+      if (!title && icon && (icon === "fa-share-alt") && isMobilePhone())
+        title = "Share";
+      if (title) {
+        title = title + ' <span class="caret"></span>';
+      }
+      var a = navbarLink(icon, title, "#");
+      a.addClass('dropdown-toggle');
+      a.attr('data-toggle', 'dropdown');
+      a.attr('role', 'button');
+      a.attr('aria-expanded', 'false');
+      li.append(a);
+      var ul = $('<ul class="dropdown-menu"></ul>');
+      ul.attr('role', 'menu');
+      li.append(ul);
+      container.append(li);
+      return ul;
+    }
+  }
+
+  function addToNavbar(page, active) {
+
+    // capture the id and data-icon attribute (if any)
+    var id = page.attr('id');
+    var icon = page.attr('data-icon');
+    var navmenu = page.attr('data-navmenu');
+
+    // get hidden state (transfer this to navbar)
+    var hidden = page.hasClass('hidden');
+    page.removeClass('hidden');
+
+    // sanitize the id for use with bootstrap tabs
+    id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+    page.attr('id', id);
+
+    // get the wrapper
+    var wrapper = page.closest('.dashboard-page-wrapper');
+
+    // move the id to the wrapper
+    page.removeAttr('id');
+    wrapper.attr('id', id);
+
+    // add the tab-pane class to the wrapper
+    wrapper.addClass('tab-pane');
+    if (active)
+      wrapper.addClass('active');
+
+    // get a reference to the h1, discover it's id and title, then remove it
+    var h1 = wrapper.find('h1').first();
+    var title = h1.html();
+    h1.remove();
+
+    // create a navbar item
+    var li = $('<li></li>');
+    var a = navbarLink(icon, title, '#' + id);
+    a.attr('data-toggle', 'tab');
+    li.append(a);
+
+    // add it to the navbar (or navbar menu if specified)
+    var container = $('ul.navbar-left');
+    if (navmenu) {
+      var menuId = navmenu.replace(/\s+/g, '');
+      var menu = navbarMenu(menuId, null, navmenu, container);
+      menu.append(li);
+    } else {
+      container.append(li);
+    }
+
+    // hide it if requested
+    if (hidden)
+      li.addClass('hidden');
+  }
+
+  function navbarLink(icon, title, href, target) {
+
+    var a = $('<a></a>');
+    if (icon) {
+
+      // get the name of the icon set and icon
+      var dashPos = icon.indexOf("-");
+      var iconSet = icon.substring(0, dashPos);
+      var iconName = icon.substring(dashPos + 1);
+
+      // create the icon
+      var iconElement = $('<span class="' + iconSet + ' ' + icon + '"></span>');
+      if (title)
+        iconElement.css('margin-right', '7px');
+      a.append(iconElement);
+      // if href is null see if we can auto-generate based on icon (e.g. social)
+      if (!href)
+        maybeGenerateLinkFromIcon(iconName, a);
+    }
+    if (title)
+      a.append(title);
+
+    // add the href.
+    if (href) {
+      if (href === "source_embed") {
+        a.attr('href', '#');
+        a.attr('data-featherlight', "#flexdashboard-source-code");
+        a.featherlight({
+            beforeOpen: function(event){
+              $('body').addClass('unselectable');
+            },
+            afterClose: function(event){
+              $('body').removeClass('unselectable');
+            }
+        });
+      } else {
+        a.attr('href', href);
+      }
+    }
+
+    // add the arget
+    if (target)
+      a.attr('target', target);
+
+    return a;
+  }
+
+  // auto generate a link from an icon name (e.g. twitter) when possible
+  function maybeGenerateLinkFromIcon(iconName, a) {
+
+     var serviceLinks = {
+      "twitter": "https://twitter.com/share?text=" + encodeURIComponent(document.title) + "&url="+encodeURIComponent(location.href),
+      "facebook": "https://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href),
+      "google-plus": "https://plus.google.com/share?url="+encodeURIComponent(location.href),
+      "linkedin": "https://www.linkedin.com/shareArticle?mini=true&url="+encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title),
+      "pinterest": "https://pinterest.com/pin/create/link/?url="+encodeURIComponent(location.href) + "&description=" + encodeURIComponent(document.title)
+    };
+
+    var makeSocialLink = function(a, href) {
+      a.attr('href', '#');
+      a.on('click', function(e) {
+        e.preventDefault();
+        window.open(href);
+      });
+    };
+
+    $.each(serviceLinks, function(key, value) {
+      if (iconName.indexOf(key) !== -1)
+        makeSocialLink(a, value);
+    });
+  }
+
+  // layout a dashboard page
+  function layoutDashboardPage(page) {
+
+    // use a page wrapper so that free form content above the
+    // dashboard appears at the top rather than the side (as it
+    // would without the wrapper in a column orientation)
+    var wrapper = $('<div class="dashboard-page-wrapper"></div>');
+    page.wrap(wrapper);
+
+    // if there are no level2 or level3 headers synthesize a level3
+    // header to contain the (e.g. frame it, scroll container, etc.)
+    var headers = page.find('h2,h3');
+    if (headers.length === 0)
+      page.wrapInner('<div class="section level3"></div>');
+
+    // hoist up any content before level 2 or level 3 headers
+    var children = page.children();
+    children.each(function(index) {
+      if ($(this).hasClass('level2') || $(this).hasClass('level3'))
+        return false;
+      $(this).insertBefore(page);
+    });
+
+    // determine orientation and fillPage behavior for distinct media
+    var orientation, fillPage, storyboard;
+
+    // media: mobile phone
+    if (isMobilePhone()) {
+
+      // if there is a sidebar we need to ensure it's content
+      // is properly framed as an h3
+      var sidebar = page.find('.section.sidebar');
+      sidebar.removeClass('sidebar');
+      sidebar.wrapInner('<div class="section level3"></div>');
+      var h2 = sidebar.find('h2');
+      var h3 = $('<h3></h3>');
+      h3.html(h2.html());
+      h3.insertBefore(h2);
+      h2.remove();
+
+      // wipeout h2 elements then enclose them in a single h2
+      var level2 = page.find('div.section.level2');
+      level2.each(function() {
+        level2.children('h2').remove();
+        level2.children().unwrap();
+      });
+      page.wrapInner('<div class="section level2"></div>');
+
+      // substitute mobile images
+      if (isPortrait()) {
+        var mobileFigures = $('img.mobile-figure');
+        mobileFigures.each(function() {
+          // get the src (might be base64 encoded)
+          var src = $(this).attr('src');
+
+          // find it's peer
+          var id = $(this).attr('data-mobile-figure-id');
+          var img = $('img[data-figure-id=' + id + "]");
+          img.attr('src', src)
+             .attr('width', _options.defaultFigWidthMobile)
+             .attr('height', _options.defaultFigHeightMobile);
+        });
+      }
+
+      // hoist storyboard commentary into it's own section
+      if (page.hasClass('storyboard')) {
+        var commentaryHR = page.find('div.section.level3 hr');
+        commentaryHR.each(function() {
+          var commentary = $(this).nextAll().detach();
+          var commentarySection = $('<div class="section level3"></div>');
+          commentarySection.append(commentary);
+          commentarySection.insertAfter($(this).closest('div.section.level3'));
+          $(this).remove();
+        });
+      }
+
+      // force a non full screen layout by columns
+      orientation = _options.orientation = 'columns';
+      fillPage = _options.fillPage = false;
+      storyboard = _options.storyboard = false;
+
+    // media: desktop
+    } else {
+
+      // determine orientation
+      orientation = page.attr('data-orientation');
+      if (orientation !== 'rows' && orientation != 'columns')
+        orientation = _options.orientation;
+
+      // determine storyboard mode
+      storyboard = page.hasClass('storyboard');
+
+      // fillPage based on options (force for storyboard)
+      fillPage = _options.fillPage || storyboard;
+
+      // handle sidebar
+      var sidebar = page.find('.section.level2.sidebar');
+      if (sidebar.length > 0)
+        layoutSidebar(sidebar, page);
+    }
+
+    // give it and it's parent divs height: 100% if we are in fillPage mode
+    if (fillPage) {
+      page.addClass('vertical-layout-fill');
+      page.css('height', '100%');
+      page.parents('div').css('height', '100%');
+    } else {
+      page.addClass('vertical-layout-scroll');
+    }
+
+    // perform the layout
+    if (storyboard)
+      layoutPageAsStoryboard(page);
+    else if (orientation === 'rows')
+      layoutPageByRows(page, fillPage);
+    else if (orientation === 'columns')
+      layoutPageByColumns(page, fillPage);
+  }
+
+  function layoutSidebar(sidebar, content) {
+
+    // get it out of the header hierarchy
+    sidebar = sidebar.first();
+    if (sidebar.hasClass('level1')) {
+      sidebar.removeClass('level1');
+      sidebar.children('h1').remove();
+    } else if (sidebar.hasClass('level2')) {
+      sidebar.removeClass('level2');
+      sidebar.children('h2').remove();
+    }
+
+    // determine width
+    var sidebarWidth = isTablet() ? 220 : 250;
+    var dataWidth = parseInt(sidebar.attr('data-width'));
+    if (dataWidth)
+      sidebarWidth = dataWidth;
+
+    // set the width and shift the page right to accomodate the sidebar
+    sidebar.css('width', sidebarWidth + 'px');
+    content.css('padding-left', sidebarWidth + 'px');
+
+    // wrap it's contents in a form
+    sidebar.wrapInner($('<form></form>'));
+  }
+
+  function layoutPageAsStoryboard(page) {
+
+    // create storyboard navigation
+    var nav = $('<div class="storyboard-nav"></div>');
+
+    // add navigation buttons
+    var prev = $('<button class="sbprev"><i class="fa fa-angle-left"></i></button>');
+    nav.append(prev);
+    var next= $('<button class="sbnext"><i class="fa fa-angle-right"></i></button>');
+    nav.append(next);
+
+    // add navigation frame
+    var frameList = $('<div class="sbframelist"></div>');
+    nav.append(frameList);
+    var ul = $('<ul></ul>');
+    frameList.append(ul);
+
+     // find all the level3 sections (those are the storyboard frames)
+    var frames = page.find('div.section.level3');
+    frames.each(function() {
+
+      // mark it
+      $(this).addClass('sbframe');
+
+      // divide it into chart content and (optional) commentary
+      $(this).addClass('dashboard-column-orientation');
+
+      // stuff the chart into it's own div w/ flex
+      $(this).wrapInner('<div class="sbframe-component"></div>');
+      setFlex($(this), 1);
+      var frame = $(this).children('.sbframe-component');
+
+      // extract the title from the h3
+      var li = $('<li></li>');
+      var h3 = frame.children('h3');
+      li.html(h3.html());
+      h3.remove();
+      ul.append(li);
+
+      // extract commentary
+      var hr = frame.children('hr');
+      if (hr.length) {
+        var commentary = hr.nextAll().detach();
+        hr.remove();
+        var commentaryFrame = $('<div class="sbframe-commentary"></div>');
+        commentaryFrame.addClass('flowing-content-shim');
+        commentaryFrame.addClass('flowing-content-container');
+        commentaryFrame.append(commentary);
+        $(this).append(commentaryFrame);
+
+        // look for a data-commentary-width attribute
+        var commentaryWidth = $(this).attr('data-commentary-width');
+        if (commentaryWidth)
+          commentaryFrame.css('width', commentaryWidth + 'px');
+      }
+
+      // layout the chart (force flex)
+      var result = layoutChart(frame, true);
+
+      // ice the notes if there are none
+      if (!result.notes)
+        frame.find('.chart-notes').remove();
+
+      // set flex on chart
+      setFlex(frame, 1);
+    });
+
+    // create a div to hold all the frames
+    var frameContent = $('<div class="sbframe-content"></div>');
+    frameContent.addClass('dashboard-row-orientation');
+    frameContent.append(frames.detach());
+
+    // row orientation to stack nav and frame content
+    page.addClass('dashboard-row-orientation');
+    page.append(nav);
+    page.append(frameContent);
+    setFlex(frameContent, 1);
+
+    // initialize sly
+    var sly = new Sly(frameList, {
+    		horizontal: true,
+    		itemNav: 'basic',
+    		smart: true,
+    		activateOn: 'click',
+    		startAt: 0,
+    		scrollBy: 1,
+    		activatePageOn: 'click',
+    		speed: 200,
+    		moveBy: 600,
+    		dragHandle: true,
+    		dynamicHandle: true,
+    		clickBar: true,
+    		keyboardNavBy: 'items',
+    		next: next,
+    		prev: prev
+    	}).init();
+
+    // make first frame active
+    frames.removeClass('active');
+    frames.first().addClass('active');
+
+    // subscribe to frame changed events
+    sly.on('active', function (eventName, itemIndex) {
+      frames.removeClass('active');
+      frames.eq(itemIndex).addClass('active')
+                          .trigger('shown');
+    });
+  }
+
+  function layoutPageByRows(page, fillPage) {
+
+    // row orientation
+    page.addClass('dashboard-row-orientation');
+
+    // find all the level2 sections (those are the rows)
+    var rows = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (rows.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      rows = page.find('div.section.level2');
+    }
+
+    rows.each(function () {
+
+      // flags
+      var haveNotes = false;
+      var haveFlexHeight = true;
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // give it row layout semantics if it's not a tabset
+      if (!isTabset)
+        $(this).addClass('dashboard-row');
+
+      // find all of the level 3 subheads
+      var columns = $(this).find('div.section.level3');
+
+      // determine figureSizes sizes
+      var figureSizes = chartFigureSizes(columns);
+
+      // fixup the columns
+      columns.each(function(index) {
+
+        // layout the chart (force flex if we are in a tabset)
+        var result = layoutChart($(this), isTabset);
+
+        // update flexHeight state
+        if (!result.flex)
+          haveFlexHeight = false;
+
+        // update state
+        if (result.notes)
+          haveNotes = true;
+
+        // set the column flex based on the figure width
+        // (value boxes will just get the default figure width)
+        var chartWidth = figureSizes[index].width;
+        setFlex($(this), chartWidth + ' ' + chartWidth + ' 0px');
+
+      });
+
+      // remove empty chart note divs
+      if (isTabset)
+        $(this).find('.chart-notes').filter(function() {
+            return $(this).html() === "&nbsp;";
+        }).remove();
+      if (!haveNotes)
+        $(this).find('.chart-notes').remove();
+
+       // make it a flexbox row
+      if (haveFlexHeight)
+        $(this).addClass('dashboard-row-flex');
+
+      // now we can set the height on all the wrappers (based on maximum
+      // figure height + room for title and notes, or data-height on the
+      // container if specified). However, don't do this if there is
+      // no flex on any of the constituent columns
+      var flexHeight = null;
+      var dataHeight = parseInt($(this).attr('data-height'));
+      if (dataHeight)
+        flexHeight = adjustedHeight(dataHeight, columns.first());
+      else if (haveFlexHeight)
+        flexHeight = maxChartHeight(figureSizes, columns);
+      if (flexHeight) {
+        if (fillPage)
+          setFlex($(this), flexHeight + ' ' + flexHeight + ' 0px');
+        else {
+          $(this).css('height', flexHeight + 'px');
+          setFlex($(this), '0 0 ' + flexHeight + 'px');
+        }
+      }
+
+    });
+  }
+
+  function layoutPageByColumns(page, fillPage) {
+
+    // column orientation
+    page.addClass('dashboard-column-orientation');
+
+    // find all the level2 sections (those are the columns)
+    var columns = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (columns.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      columns = page.find('div.section.level2');
+    }
+
+    // layout each column
+    columns.each(function (index) {
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // make it a flexbox column
+      $(this).addClass('dashboard-column');
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // find all the h3 elements
+      var rows = $(this).find('div.section.level3');
+
+      // get the figure sizes for the rows
+      var figureSizes = chartFigureSizes(rows);
+
+      // column flex is the max row width (or data-width if specified)
+      var flexWidth;
+      var dataWidth = parseInt($(this).attr('data-width'));
+      if (dataWidth)
+        flexWidth = dataWidth;
+      else
+        flexWidth = maxChartWidth(figureSizes);
+      setFlex($(this), flexWidth + ' ' + flexWidth + ' 0px');
+
+      // layout each chart
+      rows.each(function(index) {
+
+        // perform the layout
+        var result = layoutChart($(this), false);
+
+        // ice the notes if there are none
+        if (!result.notes)
+          $(this).find('.chart-notes').remove();
+
+        // set flex height based on figHeight, then adjust
+        if (result.flex) {
+          var chartHeight = figureSizes[index].height;
+          chartHeight = adjustedHeight(chartHeight, $(this));
+          if (fillPage)
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' 0px');
+          else {
+            $(this).css('height', chartHeight + 'px');
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' ' + chartHeight + 'px');
+          }
+        }
+      });
+    });
+  }
+
+  function chartFigureSizes(charts) {
+
+    // sizes
+    var figureSizes = new Array(charts.length);
+
+    // check each chart
+    charts.each(function(index) {
+
+      // start with default
+      figureSizes[index] = {
+        width: _options.defaultFigWidth,
+        height: _options.defaultFigHeight
+      };
+
+      // look for data-height or data-width then knit options
+      var dataWidth = parseInt($(this).attr('data-width'));
+      var dataHeight = parseInt($(this).attr('data-height'));
+      var knitrOptions = $(this).find('.knitr-options:first');
+      var knitrWidth, knitrHeight;
+      if (knitrOptions) {
+        knitrWidth = parseInt(knitrOptions.attr('data-fig-width'));
+        knitrHeight =  parseInt(knitrOptions.attr('data-fig-height'));
+      }
+
+      // width
+      if (dataWidth)
+        figureSizes[index].width = dataWidth;
+      else if (knitrWidth)
+        figureSizes[index].width = knitrWidth;
+
+      // height
+      if (dataHeight)
+        figureSizes[index].height = dataHeight;
+      else if (knitrHeight)
+        figureSizes[index].height = knitrHeight;
+    });
+
+    // return sizes
+    return figureSizes;
+  }
+
+  function maxChartHeight(figureSizes, charts) {
+
+    // first compute the maximum height
+    var maxHeight = _options.defaultFigHeight;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].height > maxHeight)
+        maxHeight = figureSizes[i].height;
+
+    // now add offests for chart title and chart notes
+    if (charts.length)
+      maxHeight = adjustedHeight(maxHeight, charts.first());
+
+    return maxHeight;
+  }
+
+  function adjustedHeight(height, chart) {
+    if (chart.length > 0) {
+      var chartTitle = chart.find('.chart-title');
+      if (chartTitle.length)
+        height += chartTitle.first().outerHeight();
+      var chartNotes = chart.find('.chart-notes');
+      if (chartNotes.length)
+        height += chartNotes.first().outerHeight();
+    }
+    return height;
+  }
+
+  function maxChartWidth(figureSizes) {
+    var maxWidth = _options.defaultFigWidth;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].width > maxWidth)
+        maxWidth = figureSizes[i].width;
+    return maxWidth;
+  }
+
+  // layout a chart
+  function layoutChart(chart, forceFlex) {
+
+    // state to return
+    var result = {
+      notes: false,
+      flex: false
+    };
+
+    // extract the title
+    var title = extractTitle(chart);
+
+    // find components that apply to this container
+    var components = componentsFind(chart);
+
+    // if it's a custom component then call it and return
+    var customComponents = componentsCustom(components);
+    if (customComponents.length) {
+      componentsLayout(customComponents, title, chart);
+      result.notes = false;
+      result.flex = forceFlex || componentsFlex(customComponents);
+      return result;
+    }
+
+    // put all the content in a chart wrapper div
+    chart.addClass('chart-wrapper');
+    chart.wrapInner('<div class="chart-stage"></div>');
+    var chartContent = chart.children('.chart-stage');
+
+    // flex the content if appropriate
+    result.flex = forceFlex || componentsFlex(components);
+    if (result.flex) {
+      // add flex classes
+      chart.addClass('chart-wrapper-flex');
+      chartContent.addClass('chart-stage-flex');
+
+      // additional shim to break out of flexbox sizing
+      chartContent.wrapInner('<div class="chart-shim"></div>');
+      chartContent = chartContent.children('.chart-shim');
+    }
+
+    // set custom data-padding attribute
+    var pad = chart.attr('data-padding');
+    if (pad) {
+      if (pad === "0")
+        chart.addClass('no-padding');
+      else {
+        pad = pad + 'px';
+        chartContent.css('left', pad)
+                    .css('top', pad)
+                    .css('right', pad)
+                    .css('bottom', pad)
+      }
+    }
+
+    // call compoents
+    componentsLayout(components, title, chartContent);
+
+    // also activate components on shiny output
+    findShinyOutput(chartContent).on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+
+          // see if we opted out of flex based on our output (for shiny
+          // we can't tell what type of output we have until after the
+          // value is bound)
+          var components = componentsFind(element);
+          var flex = forceFlex || componentsFlex(components);
+          if (!flex) {
+            chart.css('height', "");
+            setFlex(chart, "");
+            chart.removeClass('chart-wrapper-flex');
+            chartContent.removeClass('chart-stage-flex');
+            chartContent.children().unwrap();
+          }
+
+          // perform layout
+          componentsLayout(components, title, element.parent());
+        }, 10);
+      });
+
+    // add the title
+    var chartTitle = $('<div class="chart-title"></div>');
+    chartTitle.html(title);
+    chart.prepend(chartTitle);
+
+    // add the notes section
+    var chartNotes = $('<div class="chart-notes"></div>');
+    chartNotes.html('&nbsp;');
+    chart.append(chartNotes);
+
+    // attempt to extract notes if we have a component
+    if (components.length)
+      result.notes = extractChartNotes(chartContent, chartNotes);
+
+    // return result
+    return result;
+  }
+
+  // build a tabset from a section div with the .tabset class
+  function layoutTabset(tabset) {
+
+    // check for fade option
+    var fade = tabset.hasClass("tabset-fade");
+    var navClass = "nav-tabs";
+
+    // determine the heading level of the tabset and tabs
+    var match = tabset.attr('class').match(/level(\d) /);
+    if (match === null)
+      return;
+    var tabsetLevel = Number(match[1]);
+    var tabLevel = tabsetLevel + 1;
+
+    // find all subheadings immediately below
+    var tabs = tabset.find("div.section.level" + tabLevel);
+    if (!tabs.length)
+      return;
+
+    // create tablist and tab-content elements
+    var tabList = $('<ul class="nav ' + navClass + '" role="tablist"></ul>');
+    $(tabs[0]).before(tabList);
+    var tabContent = $('<div class="tab-content"></div>');
+    $(tabs[0]).before(tabContent);
+
+    // build the tabset
+    tabs.each(function(i) {
+
+      // get the tab div
+      var tab = $(tabs[i]);
+
+      // get the id then sanitize it for use with bootstrap tabs
+      var id = tab.attr('id');
+
+      // sanitize the id for use with bootstrap tabs
+      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+      tab.attr('id', id);
+
+      // get the heading element within it and grab it's text
+      var heading = tab.find('h' + tabLevel + ':first');
+      var headingText = heading.html();
+
+      // build and append the tab list item
+      var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
+      a.attr('href', '#' + id);
+      a.attr('aria-controls', id);
+      var li = $('<li role="presentation"></li>');
+      li.append(a);
+      if (i === 0)
+        li.attr('class', 'active');
+      tabList.append(li);
+
+      // set it's attributes
+      tab.attr('role', 'tabpanel');
+      tab.addClass('tab-pane');
+      tab.addClass('tabbed-pane');
+      tab.addClass('no-title');
+      if (fade)
+        tab.addClass('fade');
+      if (i === 0) {
+        tab.addClass('active');
+        if (fade)
+          tab.addClass('in');
+      }
+
+      // move it into the tab content div
+      tab.detach().appendTo(tabContent);
+    });
+
+    // add nav-tabs-custom
+    tabset.addClass('nav-tabs-custom');
+
+    // internal layout is dashboard-column with tab-content flexing
+    tabset.addClass('dashboard-column');
+    setFlex(tabContent, 1);
+  }
+
+  // one time global initialization for components
+  function componentsInit(dashboardContainer) {
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.init)
+        component.init(dashboardContainer);
+    }
+  }
+
+  // find components that apply within a container
+  function componentsFind(container) {
+
+    // look for components
+    var components = [];
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.find(container).length)
+        components.push(component);
+    }
+
+    // if there were none then use a special flowing content component
+    // that just adds a scrollbar in fillPage mode
+    if (components.length == 0) {
+      components.push({
+        find: function(container) {
+          return container;
+        },
+
+        flex: function(fillPage) {
+          return fillPage;
+        },
+
+        layout: function(title, container, element, fillPage) {
+          if (fillPage) {
+            container.addClass('flowing-content-shim');
+            container.addClass('flowing-content-container');
+          }
+        }
+      });
+    }
+
+    return components;
+  }
+
+  // if there is a custom component then pick it out
+  function componentsCustom(components) {
+    var customComponent = [];
+    for (var i=0; i<components.length; i++)
+      if (components[i].type === "custom") {
+        customComponent.push(components[i]);
+        break;
+      }
+    return customComponent;
+  }
+
+  // query all components for flex
+  function componentsFlex(components) {
+
+    // no components at all means no flex
+    if (components.length === 0)
+      return false;
+
+    // otherwise query components (assume true unless we see false)
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++)
+      if (components[i].flex && !components[i].flex(_options.fillPage))
+        return false;
+    return true;
+  }
+
+  // layout all components
+  function componentsLayout(components, title, container) {
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++) {
+      var element = components[i].find(container);
+      if (components[i].layout) {
+        // call layout (don't call other components if it returns false)
+        var result = components[i].layout(title, container, element, _options.fillPage);
+        if (result === false)
+          return;
+      }
+    }
+  }
+
+  // get a reference to the h3, discover it's inner html, and remove it
+  function extractTitle(container) {
+    var h3 = container.children('h3').first();
+    var title = '';
+    if (!container.hasClass('no-title'))
+      title = h3.html();
+    h3.remove();
+    return title;
+  }
+
+  // extract chart notes
+  function extractChartNotes(chartContent, chartNotes) {
+    // look for a terminating blockquote or image caption
+    var blockquote = chartContent.children('blockquote:last-child');
+    var caption = chartContent.children('div.image-container')
+                              .children('p.caption');
+    if (blockquote.length) {
+      chartNotes.html(blockquote.children('p:first-child').html());
+      blockquote.remove();
+      return true;
+    } else if (caption.length) {
+      chartNotes.html(caption.html());
+      caption.remove();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function findShinyOutput(chartContent) {
+    return chartContent.find('.shiny-text-output, .shiny-html-output');
+  }
+
+  // safely detect rendering on a mobile phone
+  function isMobilePhone() {
+    try
+    {
+      return ! window.matchMedia("only screen and (min-width: 768px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  function isFillPage() {
+    return _options.fillPage;
+  }
+
+  // detect portrait mode
+  function isPortrait() {
+    return ($(window).width() < $(window).height());
+  }
+
+  // safely detect rendering on a tablet
+  function isTablet() {
+    try
+    {
+      return window.matchMedia("only screen and (min-width: 769px) and (max-width: 992px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  // test whether this is a shiny doc
+  function isShinyDoc() {
+    return (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings);
+  }
+
+  // set flex using vendor specific prefixes
+  function setFlex(el, flex) {
+    el.css('-webkit-box-flex', flex)
+      .css('-webkit-flex', flex)
+      .css('-ms-flex', flex)
+      .css('flex', flex);
+  }
+
+  // support bookmarking of pages
+  function handleLocationHash() {
+
+    // restore tab/page from bookmark
+    var hash = window.location.hash;
+    if (hash.length > 0)
+      $('ul.nav a[href="' + hash + '"]').tab('show');
+    FlexDashboardUtils.manageActiveNavbarMenu();
+
+    // navigate to a tab when the history changes
+    window.addEventListener("popstate", function(e) {
+      var hash = window.location.hash;
+      var activeTab = $('ul.nav a[href="' + hash + '"]');
+      if (activeTab.length) {
+        activeTab.tab('show');
+      } else {
+        $('ul.nav a:first').tab('show');
+      }
+      FlexDashboardUtils.manageActiveNavbarMenu();
+    });
+
+    // add a hash to the URL when the user clicks on a tab/page
+    $('.navbar-nav a[data-toggle="tab"]').on('click', function(e) {
+      var baseUrl = FlexDashboardUtils.urlWithoutHash(window.location.href);
+      var hash = FlexDashboardUtils.urlHash($(this).attr('href'));
+      var href = baseUrl + hash;
+      FlexDashboardUtils.setLocation(href);
+    });
+
+    // handle clicks of other links that should activate pages
+    var navPages = $('ul.navbar-nav li a[data-toggle=tab]');
+    navPages.each(function() {
+      var href =  $(this).attr('href');
+      var links = $('a[href="' + href + '"][data-toggle!=tab]');
+      links.each(function() {
+        $(this).on('click', function(e) {
+          window.FlexDashboardUtils.showPage(href);
+        });
+      });
+    });
+  }
+
+  // tweak Prism highlighting
+  function initPrismHighlighting() {
+
+    if (window.Prism) {
+      Prism.languages.insertBefore('r', 'comment', {
+        'heading': [
+          {
+            // title 1
+        	  // =======
+
+        	  // title 2
+        	  // -------
+        	  pattern: /\w+.*(?:\r?\n|\r)(?:====+|----+)/,
+            alias: 'operator'
+          },
+          {
+            // ### title 3
+            pattern: /(^\s*)###[^#].+/m,
+            lookbehind: true,
+            alias: 'operator'
+          }
+        ]
+      });
+
+      // prism highlight
+      Prism.highlightAll();
+    }
+  }
+
+
+  // get theme color
+  var themeColors = {
+    bootstrap: {
+      primary: "rgba(51, 122, 183, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cerulean: {
+      primary: "rgb(47, 164, 231)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    journal: {
+      primary: "rgba(235, 104, 100, 0.70)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    flatly: {
+      primary: "rgba(44, 62, 80, 0.70)",
+      info: "rgba(52, 152, 219, 0.70)",
+      success: "rgba(24, 188, 156, 0.70)",
+      warning: "rgba(243, 156, 18, 0.70)",
+      danger: "rgba(231, 76, 60, 0.70)"
+    },
+    readable: {
+      primary: "rgba(69, 130, 236, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    spacelab: {
+      primary: "rgba(68, 110, 155, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    united: {
+      primary: "rgba(221, 72, 20, 0.30)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cosmo: {
+      primary: "rgba(39, 128, 227, 0.7)",
+      info: "rgba(153, 84, 187, 0.7)",
+      success: "rgba(63, 182, 24, 0.7)",
+      warning: "rgba(255, 117, 24, 0.7)",
+      danger: "rgba(255, 0, 57, 0.7)"
+    },
+    lumen: {
+      primary: "rgba(21, 140, 186, 0.70)",
+      info: "rgba(117, 202, 235, 0.90)",
+      success: "rgba(40, 182, 44, 0.70)",
+      warning: "rgba(255, 133, 27, 0.70)",
+      danger: "rgba(255, 65, 54, 0.70)"
+    },
+    paper: {
+      primary: "rgba(33, 150, 243, 0.35)",
+      info: "rgb(225, 190, 231)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(255, 224, 178)",
+      danger: "rgb(249, 189, 187)"
+    },
+    sandstone: {
+      primary: "rgba(50, 93, 136, 0.3)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    simplex: {
+      primary: "rgba(217, 35, 15, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    yeti: {
+      primary: "rgba(0, 140, 186, 0.298039)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    }
+  }
+  function themeColor(color) {
+    return themeColors[_options.theme][color];
+  }
+
+  FlexDashboard.prototype = {
+    constructor: FlexDashboard,
+    init: init,
+    isMobilePhone: isMobilePhone,
+    isFillPage: isFillPage,
+    themeColor: themeColor
+  };
+
+  return FlexDashboard;
+
+})();
+
+// utils
+window.FlexDashboardUtils = {
+  resizableImage: function(img) {
+    var src = img.attr('src');
+    var url = 'url("' + src + '")';
+    img.parent().css('background', url)
+                .css('background-size', 'contain')
+                .css('background-repeat', 'no-repeat')
+                .css('background-position', 'center')
+                .addClass('image-container');
+  },
+  setLocation: function(href) {
+    if (history && history.pushState) {
+      history.pushState(null, null, href);
+    } else {
+      window.location.replace(href);
+    }
+    setTimeout(function() {
+        window.scrollTo(0, 0);
+    }, 10);
+    this.manageActiveNavbarMenu();
+  },
+  showPage: function(href) {
+    $('ul.navbar-nav li a[href="' + href + '"]').tab('show');
+    var baseUrl = this.urlWithoutHash(window.location.href);
+    var loc = baseUrl + href;
+    this.setLocation(loc);
+  },
+  showLinkedValue: function(href) {
+    // check for a page link
+    if ($('ul.navbar-nav li a[data-toggle=tab][href="' + href + '"]').length > 0)
+      this.showPage(href);
+    else
+      window.open(href);
+  },
+  urlWithoutHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(0, hashLoc);
+    else
+      return url;
+  },
+  urlHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(hashLoc);
+    else
+      return "";
+  },
+  manageActiveNavbarMenu: function () {
+    // remove active from anyone currently active
+    $('.navbar ul.nav').find('li').removeClass('active');
+    // find the active tab
+    var activeTab = $('.dashboard-page-wrapper.tab-pane.active');
+    if (activeTab.length > 0) {
+      var tabId = activeTab.attr('id');
+      if (tabId)
+        $(".navbar ul.nav a[href='#" + tabId + "']").parents('li').addClass('active');
+    }
+  }
+};
+
+window.FlexDashboard = new FlexDashboard();
+
+// empty content
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    if (container.find('p').length == 0)
+      return container;
+    else
+      return $();
+  }
+})
+
+// plot image
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('p')
+                    .children('img:only-child');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// plot image (figure style)
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.figure').children('img');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// htmlwidget
+window.FlexDashboardComponents.push({
+
+  init: function(dashboardContainer) {
+    // trigger "shown" after initial layout to force static htmlwidgets
+    // in runtime: shiny to be resized after the dom has been transformed
+    dashboardContainer.on('flexdashboard:layoutcomplete', function(event) {
+      setTimeout(function() {
+        dashboardContainer.trigger('shown');
+      }, 200);
+    });
+  },
+
+  find: function(container) {
+    return container.children('div[id^="htmlwidget-"],div.html-widget');
+  }
+});
+
+// gauge
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.html-widget.gauge');
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+
+  }
+
+});
+
+// shiny output
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.children('div[class^="shiny-"]');
+  }
+});
+
+// datatables
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.find('.datatables');
+  },
+  flex: function(fillPage) {
+    return fillPage;
+  }
+});
+
+// bootstrap table
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    var bsTable = container.find('table.table');
+    if (bsTable.length !== 0)
+      return bsTable;
+    else
+      return container.find('tr.header').parent('thead').parent('table');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var bsTable = element;
+
+    // fixup xtable generated tables with a proper thead
+    var headerRow = bsTable.find('tbody > tr:first-child > th').parent();
+    if (headerRow.length > 0) {
+      var thead = $('<thead></thead>');
+      bsTable.prepend(thead);
+      headerRow.detach().appendTo(thead);
+    }
+
+    // improve appearance
+    container.addClass('bootstrap-table');
+
+    // for fill page provide scrolling w/ sticky headers
+    if (fillPage) {
+      // force scrollbar on overflow
+      container.addClass('flowing-content-shim');
+
+      // stable table headers when scrolling
+      bsTable.stickyTableHeaders({
+        scrollableArea: container
+      });
+    }
+  }
+});
+
+// embedded shiny app
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('iframe.shiny-frame');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage) {
+      element.attr('height', '100%');
+    } else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (!height)
+        height = element.attr('height');
+      if (!height)
+        element.attr('height', 500);
+    }
+  }
+});
+
+// shiny fillRow or fillCol
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('.flexfill-container');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage)
+      element.css('height', '100%');
+    else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (height === "100%" || height === "auto" || height === "initial" ||
+          height === "inherit" || !height) {
+        element.css('height', 500);
+      }
+    }
+  }
+});
+
+// valueBox
+window.FlexDashboardComponents.push({
+
+  type: "custom",
+
+  find: function(container) {
+    if (container.find('span.value-output, .shiny-valuebox-output').length)
+      return container;
+    else
+      return $();
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var chartTitle = title;
+    var valueBox = element;
+
+    // add value-box class to container
+    container.addClass('value-box');
+
+    // value paragraph
+    var value = $('<p class="value"></p>');
+
+    // if we have shiny-text-output then just move it in
+    var valueOutputSpan = [];
+    var shinyOutput = valueBox.find('.shiny-valuebox-output').detach();
+    if (shinyOutput.length) {
+      valueBox.children().remove();
+      shinyOutput.html("&mdash;");
+      value.append(shinyOutput);
+    } else {
+      // extract the value (remove leading vector index)
+      var chartValue = valueBox.text().trim();
+      chartValue = chartValue.replace("[1] ", "");
+      valueOutputSpan = valueBox.find('span.value-output').detach();
+      valueBox.children().remove();
+      value.text(chartValue);
+    }
+
+    // caption
+    var caption = $('<p class="caption"></p>');
+    caption.html(chartTitle);
+
+    // build inner div for value box and add it
+    var inner = $('<div class="inner"></div>');
+    inner.append(value);
+    inner.append(caption);
+    valueBox.append(inner);
+
+    // add icon if specified
+    var icon = $('<div class="icon"><i></i></div>');
+    valueBox.append(icon);
+    function setIcon(chartIcon) {
+      var iconLib = "";
+      var components = chartIcon.split("-");
+      if (components.length > 1)
+        iconLib = components[0];
+      icon.children('i').attr('class', iconLib + ' ' + chartIcon);
+    }
+    var chartIcon = valueBox.attr('data-icon');
+    if (chartIcon)
+      setIcon(chartIcon);
+
+    // set color based on data-background if necessary
+    var dataBackground = valueBox.attr('data-background');
+    if (dataBackground)
+      valueBox.css('background-color', bgColor);
+    else {
+      // default to bg-primary if no other background is specified
+      if (!valueBox.hasClass('bg-primary') &&
+          !valueBox.hasClass('bg-info') &&
+          !valueBox.hasClass('bg-warning') &&
+          !valueBox.hasClass('bg-success') &&
+          !valueBox.hasClass('bg-danger')) {
+        valueBox.addClass('bg-primary');
+      }
+    }
+
+    // handle data attributes in valueOutputSpan
+    function handleValueOutput(valueOutput) {
+
+      // caption
+      var dataCaption = valueOutput.attr('data-caption');
+      if (dataCaption)
+        caption.html(dataCaption);
+
+      // icon
+      var dataIcon = valueOutput.attr('data-icon');
+      if (dataIcon)
+        setIcon(dataIcon);
+
+      // color
+      var dataColor = valueOutput.attr('data-color');
+      if (dataColor) {
+        if (dataColor.indexOf('bg-') === 0) {
+          valueBox.css('background-color', '');
+          if (!valueBox.hasClass(dataColor)) {
+             valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+             valueBox.addClass(dataColor);
+          }
+        } else {
+          valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+          valueBox.css('background-color', dataColor);
+        }
+      }
+
+      // url
+      var dataHref = valueOutput.attr('data-href');
+      if (dataHref) {
+        valueBox.addClass('linked-value');
+        valueBox.off('click.value-box');
+        valueBox.on('click.value-box', function(e) {
+          window.FlexDashboardUtils.showLinkedValue(dataHref);
+        });
+      }
+    }
+
+    // check for a valueOutputSpan
+    if (valueOutputSpan.length > 0) {
+      handleValueOutput(valueOutputSpan);
+    }
+
+    // if we have a shinyOutput then bind a listener to handle
+    // new valueOutputSpan values
+    shinyOutput.on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+          var valueOutputSpan = element.find('span.value-output');
+          if (valueOutputSpan.length > 0)
+            handleValueOutput(valueOutputSpan);
+        }, 10);
+      }
+    );
+  }
+});
+
+
+</script>
+
+<div id="dashboard-container">
+
+<div id="column" class="section level2" data-width="600">
+<h2>Column</h2>
+<div id="chart-a" class="section level3">
+<h3>Chart A</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-9e6998340d9bea5da3a8" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9e6998340d9bea5da3a8">{"x":{"data":[{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[59.8502512528598,55.4343183422222,51.134548718553,47.0671056688203,43.3481524799925,40.0938524390378,37.4203688329244,35.4438649486208,34.2805040730952,34.0463226393317,34.8367591646446,36.7040583847588,39.6950261708305,43.8564683940156,49.2351909254703,55.8779996363507,63.8317003978129,73.143099081013,83.8622110105661,96.1363882167724,110.225514191837,126.395740891752,144.913220272509,166.044104290101,190.05454490052,217.210694059757,247.778703723805,281.925378113751,318.662604032404,356.257160270781,392.963407153038,427.035705003329,456.728414145808,480.295894904631,495.992507603951,502.072612567924,497.295049070072,483.241570817398,462.475300723097,437.560347010812,411.060817904185,385.540821626862,363.564466402485,347.695860454697,340.498002147864,343.428470005881,354.765095722371,372.21746304084,393.495155704788,416.307757457718,438.364852043135,457.37602320454,471.050854685436,477.121560973622,474.678201214699,464.915493773853,449.209202970647,428.935093124641,405.468928555397,380.186473582477,354.463492525441,329.675749703852,307.146947147589,287.266164662171,269.614058818944,253.744630296936,239.211879775176,225.569807932694,212.372415448516,199.173703001673,185.527671271193,171.032161332657,155.633181142717,139.442769780829,122.573988842985,105.139899925178,87.2535646234006,69.0280445336453,50.5764012519046,32.0116963741712],"text":["min_day:    1.00000<br />activity:  59.85025<br />day: Sunday","min_day:   19.21519<br />activity:  55.43432<br />day: Sunday","min_day:   37.43038<br />activity:  51.13455<br />day: Sunday","min_day:   55.64557<br />activity:  47.06711<br />day: Sunday","min_day:   73.86076<br />activity:  43.34815<br />day: Sunday","min_day:   92.07595<br />activity:  40.09385<br />day: Sunday","min_day:  110.29114<br />activity:  37.42037<br />day: Sunday","min_day:  128.50633<br />activity:  35.44386<br />day: Sunday","min_day:  146.72152<br />activity:  34.28050<br />day: Sunday","min_day:  164.93671<br />activity:  34.04632<br />day: Sunday","min_day:  183.15190<br />activity:  34.83676<br />day: Sunday","min_day:  201.36709<br />activity:  36.70406<br />day: Sunday","min_day:  219.58228<br />activity:  39.69503<br />day: Sunday","min_day:  237.79747<br />activity:  43.85647<br />day: Sunday","min_day:  256.01266<br />activity:  49.23519<br />day: Sunday","min_day:  274.22785<br />activity:  55.87800<br />day: Sunday","min_day:  292.44304<br />activity:  63.83170<br />day: Sunday","min_day:  310.65823<br />activity:  73.14310<br />day: Sunday","min_day:  328.87342<br />activity:  83.86221<br />day: Sunday","min_day:  347.08861<br />activity:  96.13639<br />day: Sunday","min_day:  365.30380<br />activity: 110.22551<br />day: Sunday","min_day:  383.51899<br />activity: 126.39574<br />day: Sunday","min_day:  401.73418<br />activity: 144.91322<br />day: Sunday","min_day:  419.94937<br />activity: 166.04410<br />day: Sunday","min_day:  438.16456<br />activity: 190.05454<br />day: Sunday","min_day:  456.37975<br />activity: 217.21069<br />day: Sunday","min_day:  474.59494<br />activity: 247.77870<br />day: Sunday","min_day:  492.81013<br />activity: 281.92538<br />day: Sunday","min_day:  511.02532<br />activity: 318.66260<br />day: Sunday","min_day:  529.24051<br />activity: 356.25716<br />day: Sunday","min_day:  547.45570<br />activity: 392.96341<br />day: Sunday","min_day:  565.67089<br />activity: 427.03571<br />day: Sunday","min_day:  583.88608<br />activity: 456.72841<br />day: Sunday","min_day:  602.10127<br />activity: 480.29589<br />day: Sunday","min_day:  620.31646<br />activity: 495.99251<br />day: Sunday","min_day:  638.53165<br />activity: 502.07261<br />day: Sunday","min_day:  656.74684<br />activity: 497.29505<br />day: Sunday","min_day:  674.96203<br />activity: 483.24157<br />day: Sunday","min_day:  693.17722<br />activity: 462.47530<br />day: Sunday","min_day:  711.39241<br />activity: 437.56035<br />day: Sunday","min_day:  729.60759<br />activity: 411.06082<br />day: Sunday","min_day:  747.82278<br />activity: 385.54082<br />day: Sunday","min_day:  766.03797<br />activity: 363.56447<br />day: Sunday","min_day:  784.25316<br />activity: 347.69586<br />day: Sunday","min_day:  802.46835<br />activity: 340.49800<br />day: Sunday","min_day:  820.68354<br />activity: 343.42847<br />day: Sunday","min_day:  838.89873<br />activity: 354.76510<br />day: Sunday","min_day:  857.11392<br />activity: 372.21746<br />day: Sunday","min_day:  875.32911<br />activity: 393.49516<br />day: Sunday","min_day:  893.54430<br />activity: 416.30776<br />day: Sunday","min_day:  911.75949<br />activity: 438.36485<br />day: Sunday","min_day:  929.97468<br />activity: 457.37602<br />day: Sunday","min_day:  948.18987<br />activity: 471.05085<br />day: Sunday","min_day:  966.40506<br />activity: 477.12156<br />day: Sunday","min_day:  984.62025<br />activity: 474.67820<br />day: Sunday","min_day: 1002.83544<br />activity: 464.91549<br />day: Sunday","min_day: 1021.05063<br />activity: 449.20920<br />day: Sunday","min_day: 1039.26582<br />activity: 428.93509<br />day: Sunday","min_day: 1057.48101<br />activity: 405.46893<br />day: Sunday","min_day: 1075.69620<br />activity: 380.18647<br />day: Sunday","min_day: 1093.91139<br />activity: 354.46349<br />day: Sunday","min_day: 1112.12658<br />activity: 329.67575<br />day: Sunday","min_day: 1130.34177<br />activity: 307.14695<br />day: Sunday","min_day: 1148.55696<br />activity: 287.26616<br />day: Sunday","min_day: 1166.77215<br />activity: 269.61406<br />day: Sunday","min_day: 1184.98734<br />activity: 253.74463<br />day: Sunday","min_day: 1203.20253<br />activity: 239.21188<br />day: Sunday","min_day: 1221.41772<br />activity: 225.56981<br />day: Sunday","min_day: 1239.63291<br />activity: 212.37242<br />day: Sunday","min_day: 1257.84810<br />activity: 199.17370<br />day: Sunday","min_day: 1276.06329<br />activity: 185.52767<br />day: Sunday","min_day: 1294.27848<br />activity: 171.03216<br />day: Sunday","min_day: 1312.49367<br />activity: 155.63318<br />day: Sunday","min_day: 1330.70886<br />activity: 139.44277<br />day: Sunday","min_day: 1348.92405<br />activity: 122.57399<br />day: Sunday","min_day: 1367.13924<br />activity: 105.13990<br />day: Sunday","min_day: 1385.35443<br />activity:  87.25356<br />day: Sunday","min_day: 1403.56962<br />activity:  69.02804<br />day: Sunday","min_day: 1421.78481<br />activity:  50.57640<br />day: Sunday","min_day: 1440.00000<br />activity:  32.01170<br />day: Sunday"],"type":"scatter","mode":"lines","name":"Sunday","line":{"width":3.77952755905512,"color":"rgba(248,118,109,1)","dash":"solid"},"hoveron":"points","legendgroup":"Sunday","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[23.3194302336369,26.4457478539832,29.4944846103035,32.3880596385718,35.048892074762,37.3994010548481,39.3620057148041,40.859125190604,41.8131786182218,42.147648165792,41.9586258485084,41.7041661322117,41.8879009866237,43.0134623814659,45.5844822864598,50.1045926713273,57.0774255057898,67.0066127595691,80.3771139954152,97.1075896833977,116.46199902415,137.667831673439,159.952577287033,182.543725520697,204.668766030201,225.555188471311,244.430482499793,260.574392345553,273.874121662827,284.608783411876,293.064022374728,299.525483333409,304.278811069948,307.60965036637,309.803646004705,311.146442766978,311.900209848829,312.195754033784,312.118214753721,311.752685589765,311.184260123041,310.498031934674,309.779094605788,309.112541717508,308.583448871589,308.258984218543,308.154805017492,308.277363090778,308.63311026074,309.228498349717,310.069979180049,311.164004574075,312.517026354137,314.135258230132,316.010627165567,318.112915667038,320.41000134162,322.869761796391,325.460074638425,328.148817474801,330.903867912593,333.693103558878,336.469933461045,338.928027082981,340.536386093749,340.756604259853,339.050275347799,334.878993124091,327.704351355232,316.987943807728,302.191364248083,282.860756955409,259.213740250634,231.788139789606,201.123753251788,167.760378316647,132.237812663646,95.0958539722505,56.8742999219253,18.1129481921354],"text":["min_day:    1.00000<br />activity:  23.31943<br />day: Monday","min_day:   19.21519<br />activity:  26.44575<br />day: Monday","min_day:   37.43038<br />activity:  29.49448<br />day: Monday","min_day:   55.64557<br />activity:  32.38806<br />day: Monday","min_day:   73.86076<br />activity:  35.04889<br />day: Monday","min_day:   92.07595<br />activity:  37.39940<br />day: Monday","min_day:  110.29114<br />activity:  39.36201<br />day: Monday","min_day:  128.50633<br />activity:  40.85913<br />day: Monday","min_day:  146.72152<br />activity:  41.81318<br />day: Monday","min_day:  164.93671<br />activity:  42.14765<br />day: Monday","min_day:  183.15190<br />activity:  41.95863<br />day: Monday","min_day:  201.36709<br />activity:  41.70417<br />day: Monday","min_day:  219.58228<br />activity:  41.88790<br />day: Monday","min_day:  237.79747<br />activity:  43.01346<br />day: Monday","min_day:  256.01266<br />activity:  45.58448<br />day: Monday","min_day:  274.22785<br />activity:  50.10459<br />day: Monday","min_day:  292.44304<br />activity:  57.07743<br />day: Monday","min_day:  310.65823<br />activity:  67.00661<br />day: Monday","min_day:  328.87342<br />activity:  80.37711<br />day: Monday","min_day:  347.08861<br />activity:  97.10759<br />day: Monday","min_day:  365.30380<br />activity: 116.46200<br />day: Monday","min_day:  383.51899<br />activity: 137.66783<br />day: Monday","min_day:  401.73418<br />activity: 159.95258<br />day: Monday","min_day:  419.94937<br />activity: 182.54373<br />day: Monday","min_day:  438.16456<br />activity: 204.66877<br />day: Monday","min_day:  456.37975<br />activity: 225.55519<br />day: Monday","min_day:  474.59494<br />activity: 244.43048<br />day: Monday","min_day:  492.81013<br />activity: 260.57439<br />day: Monday","min_day:  511.02532<br />activity: 273.87412<br />day: Monday","min_day:  529.24051<br />activity: 284.60878<br />day: Monday","min_day:  547.45570<br />activity: 293.06402<br />day: Monday","min_day:  565.67089<br />activity: 299.52548<br />day: Monday","min_day:  583.88608<br />activity: 304.27881<br />day: Monday","min_day:  602.10127<br />activity: 307.60965<br />day: Monday","min_day:  620.31646<br />activity: 309.80365<br />day: Monday","min_day:  638.53165<br />activity: 311.14644<br />day: Monday","min_day:  656.74684<br />activity: 311.90021<br />day: Monday","min_day:  674.96203<br />activity: 312.19575<br />day: Monday","min_day:  693.17722<br />activity: 312.11821<br />day: Monday","min_day:  711.39241<br />activity: 311.75269<br />day: Monday","min_day:  729.60759<br />activity: 311.18426<br />day: Monday","min_day:  747.82278<br />activity: 310.49803<br />day: Monday","min_day:  766.03797<br />activity: 309.77909<br />day: Monday","min_day:  784.25316<br />activity: 309.11254<br />day: Monday","min_day:  802.46835<br />activity: 308.58345<br />day: Monday","min_day:  820.68354<br />activity: 308.25898<br />day: Monday","min_day:  838.89873<br />activity: 308.15481<br />day: Monday","min_day:  857.11392<br />activity: 308.27736<br />day: Monday","min_day:  875.32911<br />activity: 308.63311<br />day: Monday","min_day:  893.54430<br />activity: 309.22850<br />day: Monday","min_day:  911.75949<br />activity: 310.06998<br />day: Monday","min_day:  929.97468<br />activity: 311.16400<br />day: Monday","min_day:  948.18987<br />activity: 312.51703<br />day: Monday","min_day:  966.40506<br />activity: 314.13526<br />day: Monday","min_day:  984.62025<br />activity: 316.01063<br />day: Monday","min_day: 1002.83544<br />activity: 318.11292<br />day: Monday","min_day: 1021.05063<br />activity: 320.41000<br />day: Monday","min_day: 1039.26582<br />activity: 322.86976<br />day: Monday","min_day: 1057.48101<br />activity: 325.46007<br />day: Monday","min_day: 1075.69620<br />activity: 328.14882<br />day: Monday","min_day: 1093.91139<br />activity: 330.90387<br />day: Monday","min_day: 1112.12658<br />activity: 333.69310<br />day: Monday","min_day: 1130.34177<br />activity: 336.46993<br />day: Monday","min_day: 1148.55696<br />activity: 338.92803<br />day: Monday","min_day: 1166.77215<br />activity: 340.53639<br />day: Monday","min_day: 1184.98734<br />activity: 340.75660<br />day: Monday","min_day: 1203.20253<br />activity: 339.05028<br />day: Monday","min_day: 1221.41772<br />activity: 334.87899<br />day: Monday","min_day: 1239.63291<br />activity: 327.70435<br />day: Monday","min_day: 1257.84810<br />activity: 316.98794<br />day: Monday","min_day: 1276.06329<br />activity: 302.19136<br />day: Monday","min_day: 1294.27848<br />activity: 282.86076<br />day: Monday","min_day: 1312.49367<br />activity: 259.21374<br />day: Monday","min_day: 1330.70886<br />activity: 231.78814<br />day: Monday","min_day: 1348.92405<br />activity: 201.12375<br />day: Monday","min_day: 1367.13924<br />activity: 167.76038<br />day: Monday","min_day: 1385.35443<br />activity: 132.23781<br />day: Monday","min_day: 1403.56962<br />activity:  95.09585<br />day: Monday","min_day: 1421.78481<br />activity:  56.87430<br />day: Monday","min_day: 1440.00000<br />activity:  18.11295<br />day: Monday"],"type":"scatter","mode":"lines","name":"Monday","line":{"width":3.77952755905512,"color":"rgba(196,154,0,1)","dash":"solid"},"hoveron":"points","legendgroup":"Monday","showlegend":true,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[40.4805687256218,40.0482734861089,39.6532787395585,39.332884978933,39.1243926971951,39.0651023873071,39.1923145422315,39.5433296549308,40.1554482183675,41.0662659593307,42.3613171971888,44.2266633692366,46.8610240630808,50.4631188663276,55.2316673665838,61.3653891514557,69.0630038085499,78.5232309254728,89.9370218195967,103.259730737595,118.174336951051,134.348647328748,151.450468739469,169.147608051996,187.107872135112,204.9990678576,222.489002088241,239.25240197458,255.044442904737,269.672202357533,282.943622846633,294.666646885701,304.649216988402,312.6992756684,318.624765439361,322.233628814949,323.417825643662,322.539451837073,320.124043278423,316.697299947309,312.78492182333,308.912608886084,305.606061115167,303.390978490177,302.792846467123,304.123485005651,307.080103977993,311.250077177932,316.220778399249,321.579581435726,326.913860081146,331.810988129291,335.858339373942,338.646812660023,339.978809900948,339.984562766289,338.82250333475,336.651063685036,333.628675895851,329.913772045901,325.664784213889,321.040144478519,316.185254953411,311.01160381893,305.228349957566,298.537980909687,290.642984215657,281.245847415841,270.049058050605,256.755103660315,241.066471785336,222.73362210006,201.887994142105,178.842706172412,153.911995335516,127.41009877595,99.651253638249,70.9496970669463,41.6196662065753,11.9753982016703],"text":["min_day:    1.00000<br />activity:  40.48057<br />day: Tuesday","min_day:   19.21519<br />activity:  40.04827<br />day: Tuesday","min_day:   37.43038<br />activity:  39.65328<br />day: Tuesday","min_day:   55.64557<br />activity:  39.33288<br />day: Tuesday","min_day:   73.86076<br />activity:  39.12439<br />day: Tuesday","min_day:   92.07595<br />activity:  39.06510<br />day: Tuesday","min_day:  110.29114<br />activity:  39.19231<br />day: Tuesday","min_day:  128.50633<br />activity:  39.54333<br />day: Tuesday","min_day:  146.72152<br />activity:  40.15545<br />day: Tuesday","min_day:  164.93671<br />activity:  41.06627<br />day: Tuesday","min_day:  183.15190<br />activity:  42.36132<br />day: Tuesday","min_day:  201.36709<br />activity:  44.22666<br />day: Tuesday","min_day:  219.58228<br />activity:  46.86102<br />day: Tuesday","min_day:  237.79747<br />activity:  50.46312<br />day: Tuesday","min_day:  256.01266<br />activity:  55.23167<br />day: Tuesday","min_day:  274.22785<br />activity:  61.36539<br />day: Tuesday","min_day:  292.44304<br />activity:  69.06300<br />day: Tuesday","min_day:  310.65823<br />activity:  78.52323<br />day: Tuesday","min_day:  328.87342<br />activity:  89.93702<br />day: Tuesday","min_day:  347.08861<br />activity: 103.25973<br />day: Tuesday","min_day:  365.30380<br />activity: 118.17434<br />day: Tuesday","min_day:  383.51899<br />activity: 134.34865<br />day: Tuesday","min_day:  401.73418<br />activity: 151.45047<br />day: Tuesday","min_day:  419.94937<br />activity: 169.14761<br />day: Tuesday","min_day:  438.16456<br />activity: 187.10787<br />day: Tuesday","min_day:  456.37975<br />activity: 204.99907<br />day: Tuesday","min_day:  474.59494<br />activity: 222.48900<br />day: Tuesday","min_day:  492.81013<br />activity: 239.25240<br />day: Tuesday","min_day:  511.02532<br />activity: 255.04444<br />day: Tuesday","min_day:  529.24051<br />activity: 269.67220<br />day: Tuesday","min_day:  547.45570<br />activity: 282.94362<br />day: Tuesday","min_day:  565.67089<br />activity: 294.66665<br />day: Tuesday","min_day:  583.88608<br />activity: 304.64922<br />day: Tuesday","min_day:  602.10127<br />activity: 312.69928<br />day: Tuesday","min_day:  620.31646<br />activity: 318.62477<br />day: Tuesday","min_day:  638.53165<br />activity: 322.23363<br />day: Tuesday","min_day:  656.74684<br />activity: 323.41783<br />day: Tuesday","min_day:  674.96203<br />activity: 322.53945<br />day: Tuesday","min_day:  693.17722<br />activity: 320.12404<br />day: Tuesday","min_day:  711.39241<br />activity: 316.69730<br />day: Tuesday","min_day:  729.60759<br />activity: 312.78492<br />day: Tuesday","min_day:  747.82278<br />activity: 308.91261<br />day: Tuesday","min_day:  766.03797<br />activity: 305.60606<br />day: Tuesday","min_day:  784.25316<br />activity: 303.39098<br />day: Tuesday","min_day:  802.46835<br />activity: 302.79285<br />day: Tuesday","min_day:  820.68354<br />activity: 304.12349<br />day: Tuesday","min_day:  838.89873<br />activity: 307.08010<br />day: Tuesday","min_day:  857.11392<br />activity: 311.25008<br />day: Tuesday","min_day:  875.32911<br />activity: 316.22078<br />day: Tuesday","min_day:  893.54430<br />activity: 321.57958<br />day: Tuesday","min_day:  911.75949<br />activity: 326.91386<br />day: Tuesday","min_day:  929.97468<br />activity: 331.81099<br />day: Tuesday","min_day:  948.18987<br />activity: 335.85834<br />day: Tuesday","min_day:  966.40506<br />activity: 338.64681<br />day: Tuesday","min_day:  984.62025<br />activity: 339.97881<br />day: Tuesday","min_day: 1002.83544<br />activity: 339.98456<br />day: Tuesday","min_day: 1021.05063<br />activity: 338.82250<br />day: Tuesday","min_day: 1039.26582<br />activity: 336.65106<br />day: Tuesday","min_day: 1057.48101<br />activity: 333.62868<br />day: Tuesday","min_day: 1075.69620<br />activity: 329.91377<br />day: Tuesday","min_day: 1093.91139<br />activity: 325.66478<br />day: Tuesday","min_day: 1112.12658<br />activity: 321.04014<br />day: Tuesday","min_day: 1130.34177<br />activity: 316.18525<br />day: Tuesday","min_day: 1148.55696<br />activity: 311.01160<br />day: Tuesday","min_day: 1166.77215<br />activity: 305.22835<br />day: Tuesday","min_day: 1184.98734<br />activity: 298.53798<br />day: Tuesday","min_day: 1203.20253<br />activity: 290.64298<br />day: Tuesday","min_day: 1221.41772<br />activity: 281.24585<br />day: Tuesday","min_day: 1239.63291<br />activity: 270.04906<br />day: Tuesday","min_day: 1257.84810<br />activity: 256.75510<br />day: Tuesday","min_day: 1276.06329<br />activity: 241.06647<br />day: Tuesday","min_day: 1294.27848<br />activity: 222.73362<br />day: Tuesday","min_day: 1312.49367<br />activity: 201.88799<br />day: Tuesday","min_day: 1330.70886<br />activity: 178.84271<br />day: Tuesday","min_day: 1348.92405<br />activity: 153.91200<br />day: Tuesday","min_day: 1367.13924<br />activity: 127.41010<br />day: Tuesday","min_day: 1385.35443<br />activity:  99.65125<br />day: Tuesday","min_day: 1403.56962<br />activity:  70.94970<br />day: Tuesday","min_day: 1421.78481<br />activity:  41.61967<br />day: Tuesday","min_day: 1440.00000<br />activity:  11.97540<br />day: Tuesday"],"type":"scatter","mode":"lines","name":"Tuesday","line":{"width":3.77952755905512,"color":"rgba(83,180,0,1)","dash":"solid"},"hoveron":"points","legendgroup":"Tuesday","showlegend":true,"xaxis":"x3","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[33.016249874588,33.1890972962162,33.4101848645412,33.7277527262595,34.1900410280679,34.8452899166631,35.7417395387417,36.9276300410006,38.4512015701363,40.3608508732832,42.7304026936239,45.68700422333,49.3645168983332,53.8968021545652,59.4177214279576,66.0611361544424,73.9609077699511,83.2508977104156,94.0606310465988,106.388119024386,120.079329085938,134.971759210196,150.902907376101,167.710271562597,185.231349748622,203.30363991312,221.764640035031,240.443670245995,259.074983202774,277.331497707369,294.885110330868,311.407717644359,326.571216218929,340.047502625668,351.508473435664,360.626025220004,367.150983542159,371.275837174934,373.346616446625,373.709505843719,372.710689852702,370.69635296006,368.01267965228,365.005854415847,362.021977406528,359.323155383185,356.929887592495,354.819495952607,352.969302381669,351.356628797831,349.95879711924,348.753129264045,347.716947150394,346.828052653231,346.093045055155,345.563159620636,345.2934712685,345.339054917568,345.754985486665,346.596337894615,347.918187060243,349.775607902371,352.200654462744,354.812109997766,356.87128958454,357.627721611106,356.330934465504,352.230456535773,344.575816209953,332.616541876083,315.602161922203,292.894410259525,264.746122388538,231.835075426646,194.84166352969,154.446280853516,111.329321553966,66.1711797868863,19.6522497081182,-27.5470745264936],"text":["min_day:    1.00000<br />activity:  33.01625<br />day: Wednesday","min_day:   19.21519<br />activity:  33.18910<br />day: Wednesday","min_day:   37.43038<br />activity:  33.41018<br />day: Wednesday","min_day:   55.64557<br />activity:  33.72775<br />day: Wednesday","min_day:   73.86076<br />activity:  34.19004<br />day: Wednesday","min_day:   92.07595<br />activity:  34.84529<br />day: Wednesday","min_day:  110.29114<br />activity:  35.74174<br />day: Wednesday","min_day:  128.50633<br />activity:  36.92763<br />day: Wednesday","min_day:  146.72152<br />activity:  38.45120<br />day: Wednesday","min_day:  164.93671<br />activity:  40.36085<br />day: Wednesday","min_day:  183.15190<br />activity:  42.73040<br />day: Wednesday","min_day:  201.36709<br />activity:  45.68700<br />day: Wednesday","min_day:  219.58228<br />activity:  49.36452<br />day: Wednesday","min_day:  237.79747<br />activity:  53.89680<br />day: Wednesday","min_day:  256.01266<br />activity:  59.41772<br />day: Wednesday","min_day:  274.22785<br />activity:  66.06114<br />day: Wednesday","min_day:  292.44304<br />activity:  73.96091<br />day: Wednesday","min_day:  310.65823<br />activity:  83.25090<br />day: Wednesday","min_day:  328.87342<br />activity:  94.06063<br />day: Wednesday","min_day:  347.08861<br />activity: 106.38812<br />day: Wednesday","min_day:  365.30380<br />activity: 120.07933<br />day: Wednesday","min_day:  383.51899<br />activity: 134.97176<br />day: Wednesday","min_day:  401.73418<br />activity: 150.90291<br />day: Wednesday","min_day:  419.94937<br />activity: 167.71027<br />day: Wednesday","min_day:  438.16456<br />activity: 185.23135<br />day: Wednesday","min_day:  456.37975<br />activity: 203.30364<br />day: Wednesday","min_day:  474.59494<br />activity: 221.76464<br />day: Wednesday","min_day:  492.81013<br />activity: 240.44367<br />day: Wednesday","min_day:  511.02532<br />activity: 259.07498<br />day: Wednesday","min_day:  529.24051<br />activity: 277.33150<br />day: Wednesday","min_day:  547.45570<br />activity: 294.88511<br />day: Wednesday","min_day:  565.67089<br />activity: 311.40772<br />day: Wednesday","min_day:  583.88608<br />activity: 326.57122<br />day: Wednesday","min_day:  602.10127<br />activity: 340.04750<br />day: Wednesday","min_day:  620.31646<br />activity: 351.50847<br />day: Wednesday","min_day:  638.53165<br />activity: 360.62603<br />day: Wednesday","min_day:  656.74684<br />activity: 367.15098<br />day: Wednesday","min_day:  674.96203<br />activity: 371.27584<br />day: Wednesday","min_day:  693.17722<br />activity: 373.34662<br />day: Wednesday","min_day:  711.39241<br />activity: 373.70951<br />day: Wednesday","min_day:  729.60759<br />activity: 372.71069<br />day: Wednesday","min_day:  747.82278<br />activity: 370.69635<br />day: Wednesday","min_day:  766.03797<br />activity: 368.01268<br />day: Wednesday","min_day:  784.25316<br />activity: 365.00585<br />day: Wednesday","min_day:  802.46835<br />activity: 362.02198<br />day: Wednesday","min_day:  820.68354<br />activity: 359.32316<br />day: Wednesday","min_day:  838.89873<br />activity: 356.92989<br />day: Wednesday","min_day:  857.11392<br />activity: 354.81950<br />day: Wednesday","min_day:  875.32911<br />activity: 352.96930<br />day: Wednesday","min_day:  893.54430<br />activity: 351.35663<br />day: Wednesday","min_day:  911.75949<br />activity: 349.95880<br />day: Wednesday","min_day:  929.97468<br />activity: 348.75313<br />day: Wednesday","min_day:  948.18987<br />activity: 347.71695<br />day: Wednesday","min_day:  966.40506<br />activity: 346.82805<br />day: Wednesday","min_day:  984.62025<br />activity: 346.09305<br />day: Wednesday","min_day: 1002.83544<br />activity: 345.56316<br />day: Wednesday","min_day: 1021.05063<br />activity: 345.29347<br />day: Wednesday","min_day: 1039.26582<br />activity: 345.33905<br />day: Wednesday","min_day: 1057.48101<br />activity: 345.75499<br />day: Wednesday","min_day: 1075.69620<br />activity: 346.59634<br />day: Wednesday","min_day: 1093.91139<br />activity: 347.91819<br />day: Wednesday","min_day: 1112.12658<br />activity: 349.77561<br />day: Wednesday","min_day: 1130.34177<br />activity: 352.20065<br />day: Wednesday","min_day: 1148.55696<br />activity: 354.81211<br />day: Wednesday","min_day: 1166.77215<br />activity: 356.87129<br />day: Wednesday","min_day: 1184.98734<br />activity: 357.62772<br />day: Wednesday","min_day: 1203.20253<br />activity: 356.33093<br />day: Wednesday","min_day: 1221.41772<br />activity: 352.23046<br />day: Wednesday","min_day: 1239.63291<br />activity: 344.57582<br />day: Wednesday","min_day: 1257.84810<br />activity: 332.61654<br />day: Wednesday","min_day: 1276.06329<br />activity: 315.60216<br />day: Wednesday","min_day: 1294.27848<br />activity: 292.89441<br />day: Wednesday","min_day: 1312.49367<br />activity: 264.74612<br />day: Wednesday","min_day: 1330.70886<br />activity: 231.83508<br />day: Wednesday","min_day: 1348.92405<br />activity: 194.84166<br />day: Wednesday","min_day: 1367.13924<br />activity: 154.44628<br />day: Wednesday","min_day: 1385.35443<br />activity: 111.32932<br />day: Wednesday","min_day: 1403.56962<br />activity:  66.17118<br />day: Wednesday","min_day: 1421.78481<br />activity:  19.65225<br />day: Wednesday","min_day: 1440.00000<br />activity: -27.54707<br />day: Wednesday"],"type":"scatter","mode":"lines","name":"Wednesday","line":{"width":3.77952755905512,"color":"rgba(0,192,148,1)","dash":"solid"},"hoveron":"points","legendgroup":"Wednesday","showlegend":true,"xaxis":"x4","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[34.2948517662559,33.2721152102383,32.3671676748062,31.6977981805448,31.38179574804,31.5369493978767,32.2810481506406,33.7318810269172,36.0072370472919,39.2248491478506,43.4933435440768,48.9022496793823,55.538692374264,63.4897964492185,72.8426867247425,83.684488021333,96.1023251594866,110.1833229597,126.006546761094,143.406632944166,161.935632323652,181.129854539722,200.525609232548,219.659206042302,238.066954609154,255.285164573276,270.85014557484,284.332680866251,295.704309442154,305.195122388957,313.039519994598,319.471902547017,324.72667033415,329.038223643938,332.640962764318,335.769287983228,338.612800217067,341.110416398906,343.113904684369,344.474945730306,345.045220193568,344.676408731004,343.220191999465,340.528250655801,336.452441117651,331.019677548549,324.760428772653,318.295153138117,312.244308993093,307.228354685733,303.867748564192,302.78294897662,304.594414271172,309.913422674864,318.800445146546,330.462201379413,344.03197009757,358.643030025121,373.428659886171,387.522138404827,400.056744305192,410.165756311372,417.007875564054,420.198186426418,419.746532546336,415.675773848972,408.008770259491,396.768381703056,381.977468104831,363.65888938998,341.835505483666,316.559444911287,288.115278376186,256.898421805332,223.30497377526,187.731032862507,150.57269764361,112.226066695104,73.087238593525,33.5523119154102],"text":["min_day:    1.00000<br />activity:  34.29485<br />day: Thursday","min_day:   19.21519<br />activity:  33.27212<br />day: Thursday","min_day:   37.43038<br />activity:  32.36717<br />day: Thursday","min_day:   55.64557<br />activity:  31.69780<br />day: Thursday","min_day:   73.86076<br />activity:  31.38180<br />day: Thursday","min_day:   92.07595<br />activity:  31.53695<br />day: Thursday","min_day:  110.29114<br />activity:  32.28105<br />day: Thursday","min_day:  128.50633<br />activity:  33.73188<br />day: Thursday","min_day:  146.72152<br />activity:  36.00724<br />day: Thursday","min_day:  164.93671<br />activity:  39.22485<br />day: Thursday","min_day:  183.15190<br />activity:  43.49334<br />day: Thursday","min_day:  201.36709<br />activity:  48.90225<br />day: Thursday","min_day:  219.58228<br />activity:  55.53869<br />day: Thursday","min_day:  237.79747<br />activity:  63.48980<br />day: Thursday","min_day:  256.01266<br />activity:  72.84269<br />day: Thursday","min_day:  274.22785<br />activity:  83.68449<br />day: Thursday","min_day:  292.44304<br />activity:  96.10233<br />day: Thursday","min_day:  310.65823<br />activity: 110.18332<br />day: Thursday","min_day:  328.87342<br />activity: 126.00655<br />day: Thursday","min_day:  347.08861<br />activity: 143.40663<br />day: Thursday","min_day:  365.30380<br />activity: 161.93563<br />day: Thursday","min_day:  383.51899<br />activity: 181.12985<br />day: Thursday","min_day:  401.73418<br />activity: 200.52561<br />day: Thursday","min_day:  419.94937<br />activity: 219.65921<br />day: Thursday","min_day:  438.16456<br />activity: 238.06695<br />day: Thursday","min_day:  456.37975<br />activity: 255.28516<br />day: Thursday","min_day:  474.59494<br />activity: 270.85015<br />day: Thursday","min_day:  492.81013<br />activity: 284.33268<br />day: Thursday","min_day:  511.02532<br />activity: 295.70431<br />day: Thursday","min_day:  529.24051<br />activity: 305.19512<br />day: Thursday","min_day:  547.45570<br />activity: 313.03952<br />day: Thursday","min_day:  565.67089<br />activity: 319.47190<br />day: Thursday","min_day:  583.88608<br />activity: 324.72667<br />day: Thursday","min_day:  602.10127<br />activity: 329.03822<br />day: Thursday","min_day:  620.31646<br />activity: 332.64096<br />day: Thursday","min_day:  638.53165<br />activity: 335.76929<br />day: Thursday","min_day:  656.74684<br />activity: 338.61280<br />day: Thursday","min_day:  674.96203<br />activity: 341.11042<br />day: Thursday","min_day:  693.17722<br />activity: 343.11390<br />day: Thursday","min_day:  711.39241<br />activity: 344.47495<br />day: Thursday","min_day:  729.60759<br />activity: 345.04522<br />day: Thursday","min_day:  747.82278<br />activity: 344.67641<br />day: Thursday","min_day:  766.03797<br />activity: 343.22019<br />day: Thursday","min_day:  784.25316<br />activity: 340.52825<br />day: Thursday","min_day:  802.46835<br />activity: 336.45244<br />day: Thursday","min_day:  820.68354<br />activity: 331.01968<br />day: Thursday","min_day:  838.89873<br />activity: 324.76043<br />day: Thursday","min_day:  857.11392<br />activity: 318.29515<br />day: Thursday","min_day:  875.32911<br />activity: 312.24431<br />day: Thursday","min_day:  893.54430<br />activity: 307.22835<br />day: Thursday","min_day:  911.75949<br />activity: 303.86775<br />day: Thursday","min_day:  929.97468<br />activity: 302.78295<br />day: Thursday","min_day:  948.18987<br />activity: 304.59441<br />day: Thursday","min_day:  966.40506<br />activity: 309.91342<br />day: Thursday","min_day:  984.62025<br />activity: 318.80045<br />day: Thursday","min_day: 1002.83544<br />activity: 330.46220<br />day: Thursday","min_day: 1021.05063<br />activity: 344.03197<br />day: Thursday","min_day: 1039.26582<br />activity: 358.64303<br />day: Thursday","min_day: 1057.48101<br />activity: 373.42866<br />day: Thursday","min_day: 1075.69620<br />activity: 387.52214<br />day: Thursday","min_day: 1093.91139<br />activity: 400.05674<br />day: Thursday","min_day: 1112.12658<br />activity: 410.16576<br />day: Thursday","min_day: 1130.34177<br />activity: 417.00788<br />day: Thursday","min_day: 1148.55696<br />activity: 420.19819<br />day: Thursday","min_day: 1166.77215<br />activity: 419.74653<br />day: Thursday","min_day: 1184.98734<br />activity: 415.67577<br />day: Thursday","min_day: 1203.20253<br />activity: 408.00877<br />day: Thursday","min_day: 1221.41772<br />activity: 396.76838<br />day: Thursday","min_day: 1239.63291<br />activity: 381.97747<br />day: Thursday","min_day: 1257.84810<br />activity: 363.65889<br />day: Thursday","min_day: 1276.06329<br />activity: 341.83551<br />day: Thursday","min_day: 1294.27848<br />activity: 316.55944<br />day: Thursday","min_day: 1312.49367<br />activity: 288.11528<br />day: Thursday","min_day: 1330.70886<br />activity: 256.89842<br />day: Thursday","min_day: 1348.92405<br />activity: 223.30497<br />day: Thursday","min_day: 1367.13924<br />activity: 187.73103<br />day: Thursday","min_day: 1385.35443<br />activity: 150.57270<br />day: Thursday","min_day: 1403.56962<br />activity: 112.22607<br />day: Thursday","min_day: 1421.78481<br />activity:  73.08724<br />day: Thursday","min_day: 1440.00000<br />activity:  33.55231<br />day: Thursday"],"type":"scatter","mode":"lines","name":"Thursday","line":{"width":3.77952755905512,"color":"rgba(0,182,235,1)","dash":"solid"},"hoveron":"points","legendgroup":"Thursday","showlegend":true,"xaxis":"x5","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[46.4554640683589,43.1661556037689,40.0231092048067,37.1725869370996,34.7608508662756,32.934163057962,31.8387855777866,31.620980491377,32.4270098643608,34.4030560278616,37.6823544229049,42.3709908918808,48.5716326603178,56.3869469537439,65.9196009976874,77.2722620176768,90.5475972392401,105.848273887906,123.267032608378,142.595559461317,163.277489767252,184.737070993539,206.398550607536,227.686176076599,248.024194868085,266.836854449353,283.548402287758,297.629823151648,309.095422933391,318.310037282786,325.644344012254,331.469020934217,336.154745861099,340.072196605322,343.592050979308,347.084986795479,350.844322331927,354.730494878733,358.453453256853,361.722995194397,364.248918419481,365.741020660215,365.909099644714,364.46295310109,361.112598588668,355.787005553828,349.044959865056,341.557800971329,333.996868321626,327.033501364927,321.33903955021,317.584822326453,316.442189142635,318.575194773295,324.21081352646,332.898544987075,344.12961134455,357.395234788294,372.186637507716,387.995041692226,404.311669531233,420.627743214148,436.426567238758,451.049307702892,463.7141847889,473.635364821026,480.027014123509,482.103299020594,479.078385836521,470.166440895532,454.581630521871,431.667938259948,401.800315898339,365.845355368479,324.672676408689,279.151898757292,230.152642152609,178.544526332962,125.197171036671,70.9801960020586],"text":["min_day:    1.00000<br />activity:  46.45546<br />day: Friday","min_day:   19.21519<br />activity:  43.16616<br />day: Friday","min_day:   37.43038<br />activity:  40.02311<br />day: Friday","min_day:   55.64557<br />activity:  37.17259<br />day: Friday","min_day:   73.86076<br />activity:  34.76085<br />day: Friday","min_day:   92.07595<br />activity:  32.93416<br />day: Friday","min_day:  110.29114<br />activity:  31.83879<br />day: Friday","min_day:  128.50633<br />activity:  31.62098<br />day: Friday","min_day:  146.72152<br />activity:  32.42701<br />day: Friday","min_day:  164.93671<br />activity:  34.40306<br />day: Friday","min_day:  183.15190<br />activity:  37.68235<br />day: Friday","min_day:  201.36709<br />activity:  42.37099<br />day: Friday","min_day:  219.58228<br />activity:  48.57163<br />day: Friday","min_day:  237.79747<br />activity:  56.38695<br />day: Friday","min_day:  256.01266<br />activity:  65.91960<br />day: Friday","min_day:  274.22785<br />activity:  77.27226<br />day: Friday","min_day:  292.44304<br />activity:  90.54760<br />day: Friday","min_day:  310.65823<br />activity: 105.84827<br />day: Friday","min_day:  328.87342<br />activity: 123.26703<br />day: Friday","min_day:  347.08861<br />activity: 142.59556<br />day: Friday","min_day:  365.30380<br />activity: 163.27749<br />day: Friday","min_day:  383.51899<br />activity: 184.73707<br />day: Friday","min_day:  401.73418<br />activity: 206.39855<br />day: Friday","min_day:  419.94937<br />activity: 227.68618<br />day: Friday","min_day:  438.16456<br />activity: 248.02419<br />day: Friday","min_day:  456.37975<br />activity: 266.83685<br />day: Friday","min_day:  474.59494<br />activity: 283.54840<br />day: Friday","min_day:  492.81013<br />activity: 297.62982<br />day: Friday","min_day:  511.02532<br />activity: 309.09542<br />day: Friday","min_day:  529.24051<br />activity: 318.31004<br />day: Friday","min_day:  547.45570<br />activity: 325.64434<br />day: Friday","min_day:  565.67089<br />activity: 331.46902<br />day: Friday","min_day:  583.88608<br />activity: 336.15475<br />day: Friday","min_day:  602.10127<br />activity: 340.07220<br />day: Friday","min_day:  620.31646<br />activity: 343.59205<br />day: Friday","min_day:  638.53165<br />activity: 347.08499<br />day: Friday","min_day:  656.74684<br />activity: 350.84432<br />day: Friday","min_day:  674.96203<br />activity: 354.73049<br />day: Friday","min_day:  693.17722<br />activity: 358.45345<br />day: Friday","min_day:  711.39241<br />activity: 361.72300<br />day: Friday","min_day:  729.60759<br />activity: 364.24892<br />day: Friday","min_day:  747.82278<br />activity: 365.74102<br />day: Friday","min_day:  766.03797<br />activity: 365.90910<br />day: Friday","min_day:  784.25316<br />activity: 364.46295<br />day: Friday","min_day:  802.46835<br />activity: 361.11260<br />day: Friday","min_day:  820.68354<br />activity: 355.78701<br />day: Friday","min_day:  838.89873<br />activity: 349.04496<br />day: Friday","min_day:  857.11392<br />activity: 341.55780<br />day: Friday","min_day:  875.32911<br />activity: 333.99687<br />day: Friday","min_day:  893.54430<br />activity: 327.03350<br />day: Friday","min_day:  911.75949<br />activity: 321.33904<br />day: Friday","min_day:  929.97468<br />activity: 317.58482<br />day: Friday","min_day:  948.18987<br />activity: 316.44219<br />day: Friday","min_day:  966.40506<br />activity: 318.57519<br />day: Friday","min_day:  984.62025<br />activity: 324.21081<br />day: Friday","min_day: 1002.83544<br />activity: 332.89854<br />day: Friday","min_day: 1021.05063<br />activity: 344.12961<br />day: Friday","min_day: 1039.26582<br />activity: 357.39523<br />day: Friday","min_day: 1057.48101<br />activity: 372.18664<br />day: Friday","min_day: 1075.69620<br />activity: 387.99504<br />day: Friday","min_day: 1093.91139<br />activity: 404.31167<br />day: Friday","min_day: 1112.12658<br />activity: 420.62774<br />day: Friday","min_day: 1130.34177<br />activity: 436.42657<br />day: Friday","min_day: 1148.55696<br />activity: 451.04931<br />day: Friday","min_day: 1166.77215<br />activity: 463.71418<br />day: Friday","min_day: 1184.98734<br />activity: 473.63536<br />day: Friday","min_day: 1203.20253<br />activity: 480.02701<br />day: Friday","min_day: 1221.41772<br />activity: 482.10330<br />day: Friday","min_day: 1239.63291<br />activity: 479.07839<br />day: Friday","min_day: 1257.84810<br />activity: 470.16644<br />day: Friday","min_day: 1276.06329<br />activity: 454.58163<br />day: Friday","min_day: 1294.27848<br />activity: 431.66794<br />day: Friday","min_day: 1312.49367<br />activity: 401.80032<br />day: Friday","min_day: 1330.70886<br />activity: 365.84536<br />day: Friday","min_day: 1348.92405<br />activity: 324.67268<br />day: Friday","min_day: 1367.13924<br />activity: 279.15190<br />day: Friday","min_day: 1385.35443<br />activity: 230.15264<br />day: Friday","min_day: 1403.56962<br />activity: 178.54453<br />day: Friday","min_day: 1421.78481<br />activity: 125.19717<br />day: Friday","min_day: 1440.00000<br />activity:  70.98020<br />day: Friday"],"type":"scatter","mode":"lines","name":"Friday","line":{"width":3.77952755905512,"color":"rgba(165,138,255,1)","dash":"solid"},"hoveron":"points","legendgroup":"Friday","showlegend":true,"xaxis":"x6","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,19.2151898734177,37.4303797468354,55.6455696202532,73.8607594936709,92.0759493670886,110.291139240506,128.506329113924,146.721518987342,164.936708860759,183.151898734177,201.367088607595,219.582278481013,237.79746835443,256.012658227848,274.227848101266,292.443037974684,310.658227848101,328.873417721519,347.088607594937,365.303797468354,383.518987341772,401.73417721519,419.949367088608,438.164556962025,456.379746835443,474.594936708861,492.810126582278,511.025316455696,529.240506329114,547.455696202532,565.670886075949,583.886075949367,602.101265822785,620.316455696203,638.53164556962,656.746835443038,674.962025316456,693.177215189873,711.392405063291,729.607594936709,747.822784810127,766.037974683544,784.253164556962,802.46835443038,820.683544303797,838.898734177215,857.113924050633,875.329113924051,893.544303797468,911.759493670886,929.974683544304,948.189873417722,966.405063291139,984.620253164557,1002.83544303797,1021.05063291139,1039.26582278481,1057.48101265823,1075.69620253165,1093.91139240506,1112.12658227848,1130.3417721519,1148.55696202532,1166.77215189873,1184.98734177215,1203.20253164557,1221.41772151899,1239.63291139241,1257.84810126582,1276.06329113924,1294.27848101266,1312.49367088608,1330.70886075949,1348.92405063291,1367.13924050633,1385.35443037975,1403.56962025316,1421.78481012658,1440],"y":[78.1740558866865,71.2881005962314,64.5038600220347,57.9230488803551,51.6473818874508,45.7785737595805,40.4183392130025,35.6683929639755,31.6304497287578,28.4067854465505,26.1908046318508,25.3670082110935,26.3439595443751,29.5302219917921,35.3343589134411,44.1649336694186,56.4305096198211,72.5396501247451,92.8786380774704,117.158031588601,144.30717990098,173.211915720699,202.758071753849,231.831480706522,259.317975284809,284.103388194802,305.073552142593,321.21016107523,332.609295865896,340.085996694956,344.467286397894,346.580187810195,347.251723767343,347.308917104824,347.578790658121,348.888367262719,351.915490380842,356.503239989563,362.204495566409,368.571845222943,375.157877070729,381.515179221328,387.196339786303,391.753946877218,394.74074067212,395.860919567827,395.254352439846,393.138766203855,389.731887775533,385.251444070557,379.915162004608,373.940768493362,367.545990452498,360.948122388542,354.338514258812,347.868301969357,341.685162153002,335.936771442567,330.770806470876,326.334943870751,322.776860275014,320.244232316488,318.861934908531,318.345506496678,318.056420426624,317.344475563697,315.559470773225,312.051204920536,306.16947687096,297.264085489823,284.684829642455,267.872416289299,246.989516388154,222.543085490271,195.042199452327,164.995934130998,132.913365382962,99.3035690648958,64.6756210334755,29.5385971453784],"text":["min_day:    1.00000<br />activity:  78.17406<br />day: Saturday","min_day:   19.21519<br />activity:  71.28810<br />day: Saturday","min_day:   37.43038<br />activity:  64.50386<br />day: Saturday","min_day:   55.64557<br />activity:  57.92305<br />day: Saturday","min_day:   73.86076<br />activity:  51.64738<br />day: Saturday","min_day:   92.07595<br />activity:  45.77857<br />day: Saturday","min_day:  110.29114<br />activity:  40.41834<br />day: Saturday","min_day:  128.50633<br />activity:  35.66839<br />day: Saturday","min_day:  146.72152<br />activity:  31.63045<br />day: Saturday","min_day:  164.93671<br />activity:  28.40679<br />day: Saturday","min_day:  183.15190<br />activity:  26.19080<br />day: Saturday","min_day:  201.36709<br />activity:  25.36701<br />day: Saturday","min_day:  219.58228<br />activity:  26.34396<br />day: Saturday","min_day:  237.79747<br />activity:  29.53022<br />day: Saturday","min_day:  256.01266<br />activity:  35.33436<br />day: Saturday","min_day:  274.22785<br />activity:  44.16493<br />day: Saturday","min_day:  292.44304<br />activity:  56.43051<br />day: Saturday","min_day:  310.65823<br />activity:  72.53965<br />day: Saturday","min_day:  328.87342<br />activity:  92.87864<br />day: Saturday","min_day:  347.08861<br />activity: 117.15803<br />day: Saturday","min_day:  365.30380<br />activity: 144.30718<br />day: Saturday","min_day:  383.51899<br />activity: 173.21192<br />day: Saturday","min_day:  401.73418<br />activity: 202.75807<br />day: Saturday","min_day:  419.94937<br />activity: 231.83148<br />day: Saturday","min_day:  438.16456<br />activity: 259.31798<br />day: Saturday","min_day:  456.37975<br />activity: 284.10339<br />day: Saturday","min_day:  474.59494<br />activity: 305.07355<br />day: Saturday","min_day:  492.81013<br />activity: 321.21016<br />day: Saturday","min_day:  511.02532<br />activity: 332.60930<br />day: Saturday","min_day:  529.24051<br />activity: 340.08600<br />day: Saturday","min_day:  547.45570<br />activity: 344.46729<br />day: Saturday","min_day:  565.67089<br />activity: 346.58019<br />day: Saturday","min_day:  583.88608<br />activity: 347.25172<br />day: Saturday","min_day:  602.10127<br />activity: 347.30892<br />day: Saturday","min_day:  620.31646<br />activity: 347.57879<br />day: Saturday","min_day:  638.53165<br />activity: 348.88837<br />day: Saturday","min_day:  656.74684<br />activity: 351.91549<br />day: Saturday","min_day:  674.96203<br />activity: 356.50324<br />day: Saturday","min_day:  693.17722<br />activity: 362.20450<br />day: Saturday","min_day:  711.39241<br />activity: 368.57185<br />day: Saturday","min_day:  729.60759<br />activity: 375.15788<br />day: Saturday","min_day:  747.82278<br />activity: 381.51518<br />day: Saturday","min_day:  766.03797<br />activity: 387.19634<br />day: Saturday","min_day:  784.25316<br />activity: 391.75395<br />day: Saturday","min_day:  802.46835<br />activity: 394.74074<br />day: Saturday","min_day:  820.68354<br />activity: 395.86092<br />day: Saturday","min_day:  838.89873<br />activity: 395.25435<br />day: Saturday","min_day:  857.11392<br />activity: 393.13877<br />day: Saturday","min_day:  875.32911<br />activity: 389.73189<br />day: Saturday","min_day:  893.54430<br />activity: 385.25144<br />day: Saturday","min_day:  911.75949<br />activity: 379.91516<br />day: Saturday","min_day:  929.97468<br />activity: 373.94077<br />day: Saturday","min_day:  948.18987<br />activity: 367.54599<br />day: Saturday","min_day:  966.40506<br />activity: 360.94812<br />day: Saturday","min_day:  984.62025<br />activity: 354.33851<br />day: Saturday","min_day: 1002.83544<br />activity: 347.86830<br />day: Saturday","min_day: 1021.05063<br />activity: 341.68516<br />day: Saturday","min_day: 1039.26582<br />activity: 335.93677<br />day: Saturday","min_day: 1057.48101<br />activity: 330.77081<br />day: Saturday","min_day: 1075.69620<br />activity: 326.33494<br />day: Saturday","min_day: 1093.91139<br />activity: 322.77686<br />day: Saturday","min_day: 1112.12658<br />activity: 320.24423<br />day: Saturday","min_day: 1130.34177<br />activity: 318.86193<br />day: Saturday","min_day: 1148.55696<br />activity: 318.34551<br />day: Saturday","min_day: 1166.77215<br />activity: 318.05642<br />day: Saturday","min_day: 1184.98734<br />activity: 317.34448<br />day: Saturday","min_day: 1203.20253<br />activity: 315.55947<br />day: Saturday","min_day: 1221.41772<br />activity: 312.05120<br />day: Saturday","min_day: 1239.63291<br />activity: 306.16948<br />day: Saturday","min_day: 1257.84810<br />activity: 297.26409<br />day: Saturday","min_day: 1276.06329<br />activity: 284.68483<br />day: Saturday","min_day: 1294.27848<br />activity: 267.87242<br />day: Saturday","min_day: 1312.49367<br />activity: 246.98952<br />day: Saturday","min_day: 1330.70886<br />activity: 222.54309<br />day: Saturday","min_day: 1348.92405<br />activity: 195.04220<br />day: Saturday","min_day: 1367.13924<br />activity: 164.99593<br />day: Saturday","min_day: 1385.35443<br />activity: 132.91337<br />day: Saturday","min_day: 1403.56962<br />activity:  99.30357<br />day: Saturday","min_day: 1421.78481<br />activity:  64.67562<br />day: Saturday","min_day: 1440.00000<br />activity:  29.53860<br />day: Saturday"],"type":"scatter","mode":"lines","name":"Saturday","line":{"width":3.77952755905512,"color":"rgba(251,97,215,1)","dash":"solid"},"hoveron":"points","legendgroup":"Saturday","showlegend":true,"xaxis":"x7","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":54.3561643835616,"r":18.9954337899543,"b":50.7762557077626,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Average activity at each minute across days of week","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,0.130173226063637],"automargin":true,"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"annotations":[{"text":"Minute of day","x":0.5,"y":-0.0745180111618468,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis"},{"text":"Average activiy","x":-0.0494672754946728,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis"},{"text":"Sunday","x":0.0650866130318185,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Monday","x":0.214285714285714,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Tuesday","x":0.357142857142857,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Wednesday","x":0.5,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Thursday","x":0.642857142857143,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Friday","x":0.785714285714286,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Saturday","x":0.934913386968181,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"day","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-54.0280588812145,528.553596922645],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.130173226063637,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.130173226063637,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.155541059650649,"x1":0.27303036892078,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.155541059650649,"x1":0.27303036892078,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.298398202507792,"x1":0.415887511777923,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.298398202507792,"x1":0.415887511777923,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.441255345364934,"x1":0.558744654635066,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.441255345364934,"x1":0.558744654635066,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.584112488222077,"x1":0.701601797492208,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.584112488222077,"x1":0.701601797492208,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.72696963107922,"x1":0.844458940349351,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.72696963107922,"x1":0.844458940349351,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.869826773936363,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.869826773936363,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.155541059650649,0.27303036892078],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"xaxis3":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.298398202507792,0.415887511777923],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"xaxis4":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.441255345364934,0.558744654635066],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"xaxis5":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.584112488222077,0.701601797492208],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"xaxis6":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.72696963107922,0.844458940349351],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"xaxis7":{"type":"linear","autorange":false,"range":[-70.95,1511.95],"tickmode":"array","ticktext":["0","500","1000","1500"],"tickvals":[0,500,1000,1500],"categoryorder":"array","categoryarray":["0","500","1000","1500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.869826773936363,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.909776902887139},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"31246f4a3f8f":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"31246f4a3f8f","visdat":{"31246f4a3f8f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="column-1" class="section level2" data-width="400">
+<h2>Column</h2>
+<div id="chart-b" class="section level3">
+<h3>Chart B</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-7c4cff3252619d0f90d4" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7c4cff3252619d0f90d4">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47],"y":[206.38244047619,163.718551587302,1.11309523809524,53.5237103174603,194.592059559465,229.716567460317,225.87251984127,209.343650793651,262.922004094097,246.624206349206,249.615277777778,73.0248015873016,198.431547619048,273.255257936508,235.309226190476,254.946685113226,320.606944444444,319.932142857143,190.46378968254,249.270734126984,216.829067460317,246.953393154272,262.910912698413,229.619047619048,262.067162698413,244.916369047619,266.407638888889,274.878812680375,247.421924603175,235.766765873016,166.735714285714,268.728174603175,246.205853174603,242.703144409938,253.207870978967,315.387301587302,316.442063492063,280.155952380952,262.726686507936,300.724503968254,283.14926242236,265.772222222222,307.276785714286,291.61121031746,269.692559523809,307.398611111111,271.484424603175],"text":["week:  1<br />avg_act_wk: 206.382440","week:  2<br />avg_act_wk: 163.718552","week:  3<br />avg_act_wk:   1.113095","week:  4<br />avg_act_wk:  53.523710","week:  5<br />avg_act_wk: 194.592060","week:  6<br />avg_act_wk: 229.716567","week:  7<br />avg_act_wk: 225.872520","week:  8<br />avg_act_wk: 209.343651","week:  9<br />avg_act_wk: 262.922004","week: 10<br />avg_act_wk: 246.624206","week: 11<br />avg_act_wk: 249.615278","week: 12<br />avg_act_wk:  73.024802","week: 13<br />avg_act_wk: 198.431548","week: 14<br />avg_act_wk: 273.255258","week: 15<br />avg_act_wk: 235.309226","week: 16<br />avg_act_wk: 254.946685","week: 17<br />avg_act_wk: 320.606944","week: 18<br />avg_act_wk: 319.932143","week: 19<br />avg_act_wk: 190.463790","week: 20<br />avg_act_wk: 249.270734","week: 21<br />avg_act_wk: 216.829067","week: 22<br />avg_act_wk: 246.953393","week: 23<br />avg_act_wk: 262.910913","week: 24<br />avg_act_wk: 229.619048","week: 25<br />avg_act_wk: 262.067163","week: 26<br />avg_act_wk: 244.916369","week: 27<br />avg_act_wk: 266.407639","week: 28<br />avg_act_wk: 274.878813","week: 29<br />avg_act_wk: 247.421925","week: 30<br />avg_act_wk: 235.766766","week: 31<br />avg_act_wk: 166.735714","week: 32<br />avg_act_wk: 268.728175","week: 33<br />avg_act_wk: 246.205853","week: 34<br />avg_act_wk: 242.703144","week: 35<br />avg_act_wk: 253.207871","week: 36<br />avg_act_wk: 315.387302","week: 37<br />avg_act_wk: 316.442063","week: 38<br />avg_act_wk: 280.155952","week: 39<br />avg_act_wk: 262.726687","week: 40<br />avg_act_wk: 300.724504","week: 41<br />avg_act_wk: 283.149262","week: 42<br />avg_act_wk: 265.772222","week: 43<br />avg_act_wk: 307.276786","week: 44<br />avg_act_wk: 291.611210","week: 45<br />avg_act_wk: 269.692560","week: 46<br />avg_act_wk: 307.398611","week: 47<br />avg_act_wk: 271.484425"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"frame":null},{"x":[1,1.58227848101266,2.16455696202532,2.74683544303797,3.32911392405063,3.91139240506329,4.49367088607595,5.07594936708861,5.65822784810127,6.24050632911392,6.82278481012658,7.40506329113924,7.9873417721519,8.56962025316456,9.15189873417722,9.73417721518987,10.3164556962025,10.8987341772152,11.4810126582278,12.0632911392405,12.6455696202532,13.2278481012658,13.8101265822785,14.3924050632911,14.9746835443038,15.5569620253165,16.1392405063291,16.7215189873418,17.3037974683544,17.8860759493671,18.4683544303797,19.0506329113924,19.6329113924051,20.2151898734177,20.7974683544304,21.379746835443,21.9620253164557,22.5443037974684,23.126582278481,23.7088607594937,24.2911392405063,24.873417721519,25.4556962025316,26.0379746835443,26.620253164557,27.2025316455696,27.7848101265823,28.3670886075949,28.9493670886076,29.5316455696203,30.1139240506329,30.6962025316456,31.2784810126582,31.8607594936709,32.4430379746835,33.0253164556962,33.6075949367089,34.1898734177215,34.7721518987342,35.3544303797468,35.9367088607595,36.5189873417722,37.1012658227848,37.6835443037975,38.2658227848101,38.8481012658228,39.4303797468354,40.0126582278481,40.5949367088608,41.1772151898734,41.7594936708861,42.3417721518987,42.9240506329114,43.5063291139241,44.0886075949367,44.6708860759494,45.253164556962,45.8354430379747,46.4177215189873,47],"y":[176.54992216378,178.164784704788,179.779647245796,181.394509786804,183.009372327813,184.624234868821,186.239097409829,187.853959950837,189.468822491845,191.083685032854,192.698547573862,194.31341011487,195.928272655878,197.543135196886,199.157997737895,200.772860278903,202.387722819911,204.002585360919,205.617447901927,207.232310442936,208.847172983944,210.462035524952,212.07689806596,213.691760606968,215.306623147977,216.921485688985,218.536348229993,220.151210771001,221.766073312009,223.380935853017,224.995798394026,226.610660935034,228.225523476042,229.84038601705,231.455248558058,233.070111099067,234.684973640075,236.299836181083,237.914698722091,239.529561263099,241.144423804108,242.759286345116,244.374148886124,245.989011427132,247.60387396814,249.218736509149,250.833599050157,252.448461591165,254.063324132173,255.678186673181,257.29304921419,258.907911755198,260.522774296206,262.137636837214,263.752499378222,265.367361919231,266.982224460239,268.597087001247,270.211949542255,271.826812083263,273.441674624272,275.05653716528,276.671399706288,278.286262247296,279.901124788304,281.515987329312,283.130849870321,284.745712411329,286.360574952337,287.975437493345,289.590300034353,291.205162575362,292.82002511637,294.434887657378,296.049750198386,297.664612739394,299.279475280403,300.894337821411,302.509200362419,304.124062903427],"text":["week:  1.000000<br />avg_act_wk: 176.5499","week:  1.582278<br />avg_act_wk: 178.1648","week:  2.164557<br />avg_act_wk: 179.7796","week:  2.746835<br />avg_act_wk: 181.3945","week:  3.329114<br />avg_act_wk: 183.0094","week:  3.911392<br />avg_act_wk: 184.6242","week:  4.493671<br />avg_act_wk: 186.2391","week:  5.075949<br />avg_act_wk: 187.8540","week:  5.658228<br />avg_act_wk: 189.4688","week:  6.240506<br />avg_act_wk: 191.0837","week:  6.822785<br />avg_act_wk: 192.6985","week:  7.405063<br />avg_act_wk: 194.3134","week:  7.987342<br />avg_act_wk: 195.9283","week:  8.569620<br />avg_act_wk: 197.5431","week:  9.151899<br />avg_act_wk: 199.1580","week:  9.734177<br />avg_act_wk: 200.7729","week: 10.316456<br />avg_act_wk: 202.3877","week: 10.898734<br />avg_act_wk: 204.0026","week: 11.481013<br />avg_act_wk: 205.6174","week: 12.063291<br />avg_act_wk: 207.2323","week: 12.645570<br />avg_act_wk: 208.8472","week: 13.227848<br />avg_act_wk: 210.4620","week: 13.810127<br />avg_act_wk: 212.0769","week: 14.392405<br />avg_act_wk: 213.6918","week: 14.974684<br />avg_act_wk: 215.3066","week: 15.556962<br />avg_act_wk: 216.9215","week: 16.139241<br />avg_act_wk: 218.5363","week: 16.721519<br />avg_act_wk: 220.1512","week: 17.303797<br />avg_act_wk: 221.7661","week: 17.886076<br />avg_act_wk: 223.3809","week: 18.468354<br />avg_act_wk: 224.9958","week: 19.050633<br />avg_act_wk: 226.6107","week: 19.632911<br />avg_act_wk: 228.2255","week: 20.215190<br />avg_act_wk: 229.8404","week: 20.797468<br />avg_act_wk: 231.4552","week: 21.379747<br />avg_act_wk: 233.0701","week: 21.962025<br />avg_act_wk: 234.6850","week: 22.544304<br />avg_act_wk: 236.2998","week: 23.126582<br />avg_act_wk: 237.9147","week: 23.708861<br />avg_act_wk: 239.5296","week: 24.291139<br />avg_act_wk: 241.1444","week: 24.873418<br />avg_act_wk: 242.7593","week: 25.455696<br />avg_act_wk: 244.3741","week: 26.037975<br />avg_act_wk: 245.9890","week: 26.620253<br />avg_act_wk: 247.6039","week: 27.202532<br />avg_act_wk: 249.2187","week: 27.784810<br />avg_act_wk: 250.8336","week: 28.367089<br />avg_act_wk: 252.4485","week: 28.949367<br />avg_act_wk: 254.0633","week: 29.531646<br />avg_act_wk: 255.6782","week: 30.113924<br />avg_act_wk: 257.2930","week: 30.696203<br />avg_act_wk: 258.9079","week: 31.278481<br />avg_act_wk: 260.5228","week: 31.860759<br />avg_act_wk: 262.1376","week: 32.443038<br />avg_act_wk: 263.7525","week: 33.025316<br />avg_act_wk: 265.3674","week: 33.607595<br />avg_act_wk: 266.9822","week: 34.189873<br />avg_act_wk: 268.5971","week: 34.772152<br />avg_act_wk: 270.2119","week: 35.354430<br />avg_act_wk: 271.8268","week: 35.936709<br />avg_act_wk: 273.4417","week: 36.518987<br />avg_act_wk: 275.0565","week: 37.101266<br />avg_act_wk: 276.6714","week: 37.683544<br />avg_act_wk: 278.2863","week: 38.265823<br />avg_act_wk: 279.9011","week: 38.848101<br />avg_act_wk: 281.5160","week: 39.430380<br />avg_act_wk: 283.1308","week: 40.012658<br />avg_act_wk: 284.7457","week: 40.594937<br />avg_act_wk: 286.3606","week: 41.177215<br />avg_act_wk: 287.9754","week: 41.759494<br />avg_act_wk: 289.5903","week: 42.341772<br />avg_act_wk: 291.2052","week: 42.924051<br />avg_act_wk: 292.8200","week: 43.506329<br />avg_act_wk: 294.4349","week: 44.088608<br />avg_act_wk: 296.0498","week: 44.670886<br />avg_act_wk: 297.6646","week: 45.253165<br />avg_act_wk: 299.2795","week: 45.835443<br />avg_act_wk: 300.8943","week: 46.417722<br />avg_act_wk: 302.5092","week: 47.000000<br />avg_act_wk: 304.1241"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":42.6666666666667,"r":7.30593607305936,"b":39.0867579908676,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Average activity for each week","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.3,49.3],"tickmode":"array","ticktext":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47],"categoryorder":"array","categoryarray":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"Week","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-14.8615972222222,336.581636904762],"tickmode":"array","ticktext":["0","100","200","300"],"tickvals":[1.77635683940025e-15,100,200,300],"categoryorder":"array","categoryarray":["0","100","200","300"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"Average activiy","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"31246c70362d":{"x":{},"y":{},"type":"scatter"},"31243af4fbf9":{"x":{},"y":{}},"312429cab6ac":{"x":{},"y":{}}},"cur_data":"31246c70362d","visdat":{"31246c70362d":["function (y) ","x"],"31243af4fbf9":["function (y) ","x"],"312429cab6ac":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</div>
+<div id="chart-c" class="section level3">
+<h3>Chart C</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-8651cff3d99af81b427a" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8651cff3d99af81b427a">{"x":{"data":[{"x":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"y":[136.761805555556,311.634027777778,299.361805555555,24.3243055555556,266.901388888889,237.514583333333,180.984027777778,1,179.251388888889,253.761111111111,1.01388888888889,169.425694444444,244.221527777778,96.1256944444444,1,202.527777777778,300.970138888889,373.43125,1.00694444444444,402.861111111111,289.529166666667,211.904166666667,432.713888888889,249.511805555556,233.104166666667,438.267361111111,330.854861111111,292.827777777778,172.440972222222,381.329166666667,391.497222222222,247.83520531401,293.068055555555,476.591666666667,238.672222222222,346.290277777778,185.168055555556,1,249.377777777778,324.341666666667,283.588888888889,350.819444444444,385.01875,356.910416666667,224.733333333333,317.123611111111,347.6125],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(248,118,109,1)","width":1.88976377952756},"name":"Sunday","legendgroup":"Sunday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"y":[237.435416666667,175.028472222222,1,357.963888888889,250.321527777778,211.222916666667,284.906944444444,300.521527777778,10.7069444444444,228.015972222222,247.824305555556,1,355.863194444444,259.893055555556,191.09375,278.347916666667,247.569444444444,331.761111111111,193.15,54.741712962963,293.850694444444,1.7625,152.73125,277.681944444444,173.095138888889,248.240972222222,205.160416666667,238.370833333333,1,209.506944444444,228.998611111111,231.147916666667,220.347117552335,476.326388888889,268.025694444444,230.863888888889,265.279861111111,241.086111111111,227.643055555556,371.861111111111,284.340277777778,223.213888888889,2.15625,270.194444444444,303.636111111111,254.197222222222,237.227777777778],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(196,154,0,1)","width":1.88976377952756},"name":"Monday","legendgroup":"Monday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],"y":[186.425694444444,181.334027777778,225.851388888889,307.434722222222,18.6722222222222,55.9340277777778,188.859722222222,257.236111111111,242.881944444444,267.539583333333,126.840277777778,191.05625,257.624305555556,213.259891975309,104.410416666667,1.01458333333333,201.403472222222,231.829166666667,187.518055555556,202.975694444444,293.920138888889,203.6125,1.02152777777778,191.084722222222,283.127777777778,255.272916666667,213.259891975309,264.935416666667,206.546527777778,251.894444444444,312.353472222222,221.541666666667,246.921527777778,382.5,221.922222222222,233.834027777778,146.692361111111,117.602083333333,297.811111111111,201.870833333333,238.944444444444,255.433333333333,193.597916666667,336.155555555556,278.047916666667,178.759722222222,344.449305555555],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(83,180,0,1)","width":1.88976377952756},"name":"Tuesday","legendgroup":"Tuesday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"y":[220.265972222222,224.046527777778,309.659027777778,311.633333333333,304.661805555555,228.8875,180.422222222222,299.739583333333,194.536111111111,249.497916666667,226.129861111111,299.550994318182,283.719444444444,1,138.588194444444,240.574305555556,1,214.716666666667,287.900694444444,20.7381944444444,236.190978886083,165.257638888889,256.552777777778,240.750694444444,222.145138888889,167.813194444444,297.397222222222,261.647916666667,301.708333333333,243.314583333333,293.832638888889,318.65625,234.650694444444,267.804166666667,311.988194444444,309.281944444444,240.7125,264.110416666667,206.943055555556,284.145138888889,212.855555555556,194.457638888889,306.223611111111,236.190978886083,325.603472222222,272.070833333333,191.402083333333],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(0,192,148,1)","width":1.88976377952756},"name":"Wednesday","legendgroup":"Wednesday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],"y":[279.625694444444,322.795138888889,200.811111111111,205.820138888889,203.671527777778,276.242361111111,277.95,322.625,278.221527777778,239.795138888889,295.064583333333,1,217.147222222222,1.01458333333333,1,166.292361111111,254.290277777778,239.261805555556,215.338194444444,268.734722222222,107.867361111111,362.465277777778,236.313194444444,308.048611111111,267.744444444444,327.586805555555,243.991666666667,298.529861111111,324.059027777778,381.706944444444,277.405555555556,233.234722222222,216.176388888889,381.145833333333,279.69375,260.4,217.71875,270.148611111111,262.99375,184.851388888889,329.2,247.169197530864,247.169197530864,245.005555555556,346.782638888889,235.04375,257.798611111111],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(0,182,235,1)","width":1.88976377952756},"name":"Thursday","legendgroup":"Thursday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"y":[281.125694444444,333.003472222222,245.356916916256,74.26875,256.935416666667,1,293.993055555556,268.918055555555,1,273.730555555556,289.004166666667,148.28125,353.511111111111,396.429166666667,398.482638888889,355.375,106.978472222222,304.555555555556,479.731944444444,1,199.749305555555,300.204861111111,343.952083333333,431.152777777778,411.857638888889,289.374305555556,355.490139769791,279.972222222222,423.127083333333,309.563888888889,263.743055555555,405.420833333333,435.888194444444,129.836805555556,236.844444444444,333.710153326249,316.509027777778,195.496668746574,395.027083333333,260.743055555555,161.872222222222,249.886111111111,329.871225845411,215.650694444444,262.381660908177,324.597222222222,1],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(165,138,255,1)","width":1.88976377952756},"name":"Friday","legendgroup":"Friday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7],"y":[1.01458333333333,1.03611111111111,157.740277777778,255.853472222222,1,173.402083333333,27.2041666666667,289.765972222222,298.7,370.772916666667,1,260.45,205.670833333333,171.454861111111,218.166666666667,382.654166666667,559.274305555555,1,274.756944444444,258.923611111111,309.19375,477.980555555555,219.920833333333,262.392361111111,300.311111111111,300.671527777778,350.738194444444,252.080555555556,358.869444444444,261.2875,228.425,270.6875,292.774305555556,383.249305555556,254.540277777778,290.261805555555,421.649305555555,403.563194444444,226.002083333333,263.072222222222,235.618055555555,1,343.728472222222,265.922222222222,203.657638888889,184.647222222222,239.5125],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,255,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(251,97,215,1)","width":1.88976377952756},"name":"Saturday","legendgroup":"Saturday","showlegend":true,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":42.6666666666667,"r":7.30593607305936,"b":39.0867579908676,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Average activity for each day of week","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,7.6],"tickmode":"array","ticktext":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"tickvals":[1,2,3,4,5,6,7],"categoryorder":"array","categoryarray":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"Day of week","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-26.9137152777778,587.188020833333],"tickmode":"array","ticktext":["0","200","400"],"tickvals":[0,200,400],"categoryorder":"array","categoryarray":["0","200","400"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"Average activiy","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.909776902887139},"annotations":[{"text":"day","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"31244fb0da3e":{"x":{},"y":{},"colour":{},"type":"box"}},"cur_data":"31244fb0da3e","visdat":{"31244fb0da3e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</div>
+</div>
+
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+  // add bootstrap table styles to pandoc tables
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+
+  // initialize mathjax
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  document.getElementsByTagName("head")[0].appendChild(script);
+
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  FlexDashboard.init({
+    theme: "cosmo",
+    fillPage: true,
+    orientation: "columns",
+    storyboard: false,
+    defaultFigWidth: 576,
+    defaultFigHeight: 460,
+    defaultFigWidthMobile: 360,
+    defaultFigHeightMobile: 460
+  });
+});
+</script>
+
+</body>
+</html>

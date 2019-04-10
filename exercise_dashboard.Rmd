@@ -1,0 +1,94 @@
+---
+title: "Plotly Flexdashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
+library(flexdashboard)
+```
+
+
+```{r load, include = FALSE}
+original_acce_data = read.csv(file = "./p8105_mtp_data.csv")
+
+acce_data = original_acce_data %>% 
+  janitor::clean_names() %>% 
+  gather(key = minutes, value = activity, activity_1:activity_1440) %>% 
+  separate(minutes, into = c("remove_1", "min_day"), sep = "_") %>% 
+  select(-remove_1) %>% 
+  mutate(day = factor(day, levels = str_c(c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))), 
+         min_day = as.numeric(min_day)) 
+```
+
+
+Column {data-width=600}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+plot1 = acce_data %>% 
+  group_by(day, min_day) %>% 
+  ggplot(aes(x = min_day, y = activity, color = day)) +
+    geom_smooth(se = FALSE) +
+    facet_grid(~day) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Average activity at each minute across days of week",
+      x = "Minute of day",
+      y = "Average activiy"
+    )
+
+ggplotly(plot1)
+```
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+plot2 = acce_data %>% 
+  group_by(week) %>% 
+  summarize(avg_act_wk = mean(activity)) %>% 
+  ggplot(aes(x = week, y = avg_act_wk)) +
+    geom_point() +
+    geom_line() +
+    geom_smooth(method = lm, se = FALSE) +
+    scale_x_continuous(breaks = c(1:47)) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(
+      title = "Average activity for each week",
+      x = "Week",
+      y = "Average activiy",
+      caption = "Blue line is the Linear Regression Line"
+    )
+
+ggplotly(plot2)
+```
+
+### Chart C
+
+```{r}
+plot3 = acce_data %>% 
+  group_by(week, day) %>% 
+  summarize(avg_act_day = mean(activity)) %>% 
+  ggplot(aes(x = day, y = avg_act_day, color = day)) +
+  geom_boxplot() +
+  labs(
+      title = "Average activity for each day of week",
+      x = "Day of week",
+      y = "Average activiy"
+  )
+
+ggplotly(plot3)
+```
+
+
+
